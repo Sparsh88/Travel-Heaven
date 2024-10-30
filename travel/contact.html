@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Heaven - Contact Us</title>
+    <link rel="stylesheet" href="nav.css">
+</head>
+<body>
+    <header>
+        <h1>Travel Heaven</h1>
+        <nav class="navbar">
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="contact">
+        <h2>Contact Us</h2>
+        <form onsubmit="return(sub())" name="myform">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Full Name">
+            <span class="error" id="nameerror"></span>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Email">
+            <span class="error" id="emailerror"></span>
+            <label for="phone no">Phone No:</label>
+            <input type="integer" id="phone no" name="phone no" placeholder="Phone No" maxlength="10" minlength="10">
+            <span class="error" id="phonenoerror"></span>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Message" rows="7"></textarea>
+            <span class="error" id="textareaerror"></span>
+            <input type="submit" value="Send Message">
+            <input type="reset" value="RESET">
+        </form>
+    </div>
+
+    <script>
+        function sub(){
+            var isvalid= true;
+            if (document.getElementById('name').value==""){
+                document.getElementById('nameerror').innertext="can't be empty";isvalid= false;
+            }
+            else{
+                document.getElementById('nameerror').innertext="";
+            }
+
+            if (document.getElementById('email').value==""){
+                document.getElementById('emailerror').innertext="can't be empty";isvalid= false;
+            }
+            else{
+                document.getElementById('emailerror').innertext="";
+            }
+            if (document.getElementById('phone no').value==""){
+                document.getElementById('phonenoerror').innertext="can't be empty";isvalid= false;
+            }
+            else{
+                document.getElementById('phonenoerror').innertext="";
+            }
+            if (document.getElementById('message').value==""){
+                document.getElementById('textareaerror').innertext="can't be empty";isvalid= false;
+            }
+            else{
+                document.getElementById('textareaerror').innertext="";
+            }
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2024 Travel Heaven. All rights reserved.</p>
+    </footer>
+</body>
+</html>
