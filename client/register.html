@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up | Travel Heaven</title>
+  <meta name="description" content="Create a free Travel Heaven account to start booking premium customized tour packages.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('th-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(rgba(11, 12, 16, 0.4), rgba(15, 52, 96, 0.5)), url('https://images.unsplash.com/photo-1506013013546-f401a0e17676?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+      padding: 40px 24px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .auth-card h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      text-align: center;
+      color: var(--primary);
+    }
+
+    .auth-card p {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .form-group input {
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.1);
+      outline: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.8);
+      transition: var(--transition);
+    }
+
+    .form-group input:focus {
+      border-color: var(--secondary);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 576px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <div class="auth-page">
+    <div class="glass-card auth-card animate-fade-in">
+      
+      <!-- Back Home Logo -->
+      <div style="text-align: center; margin-bottom: 20px;">
+        <a href="index.html" class="logo" style="justify-content: center;">
+          <img src="images/logo.png" alt="Travel Heaven Logo">
+          <span style="font-size: 20px;">Travel Heaven</span>
+        </a>
+      </div>
+
+      <h2>Create Account</h2>
+      <p>Register to search destinations and book customized tour packages</p>
+
+      <form id="register-form" onsubmit="handleRegister(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="register-name" placeholder="John Doe" required>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="register-email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="register-phone" placeholder="1234567890" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="register-password" placeholder="••••••••" required minlength="6">
+          </div>
+          <div class="form-group">
+            <label>Confirm Password</label>
+            <input type="password" id="register-confirm" placeholder="••••••••" required minlength="6">
+          </div>
+        </div>
+
+        <div class="checkbox-container" style="margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+          <input type="checkbox" id="register-terms" required style="width: 16px; height: 16px; accent-color: var(--secondary);">
+          <span style="font-size: 13px;">I agree to the Terms of Service & Privacy Policy</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px;">Sign Up</button>
+      </form>
+
+      <div style="text-align: center; margin-top: 25px; font-size: 14px; color: var(--text-dark);">
+        Already have an account? <a href="login.html" style="color: var(--secondary); font-weight: 700;">Sign In</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    async function handleRegister(e) {
+      e.preventDefault();
+
+      const fullName = document.getElementById('register-name').value;
+      const email = document.getElementById('register-email').value;
+      const phoneNumber = document.getElementById('register-phone').value;
+      const password = document.getElementById('register-password').value;
+      const confirmPassword = document.getElementById('register-confirm').value;
+
+      if (password !== confirmPassword) {
+        showAlert('Passwords do not match', 'error');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ fullName, email, phoneNumber, password, confirmPassword })
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          showAlert('Registration successful! Redirecting to dashboard...', 'success');
+          
+          // Save credentials
+          localStorage.setItem('token', json.token);
+          localStorage.setItem('user', JSON.stringify(json.user));
+
+          // Redirect to target booking page or default dashboard
+          setTimeout(() => {
+            const redirect = localStorage.getItem('redirectAfterLogin');
+            if (redirect) {
+              localStorage.removeItem('redirectAfterLogin');
+              window.location.href = redirect;
+            } else {
+              window.location.href = 'dashboard.html';
+            }
+          }, 1200);
+        } else {
+          showAlert(json.message || 'Registration failed', 'error');
+        }
+      } catch (err) {
+        showAlert('Error contacting backend server', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

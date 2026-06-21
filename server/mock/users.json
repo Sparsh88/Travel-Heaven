@@ -1,0 +1,11 @@
+[
+  {
+    "fullName": "Demo User",
+    "email": "user@travelheaven.com",
+    "password": "$2a$10$4o10FlhMquIERTDZouLJduQZOa4NV2kwloHuLTkki9n3vzff517n2",
+    "phoneNumber": "9876543210",
+    "_id": "6kngw4hd77cuzl4hx5cqs",
+    "createdAt": "2026-06-19T07:24:43.833Z",
+    "updatedAt": "2026-06-19T07:24:43.833Z"
+  }
+]

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Packages | Travel Heaven</title>
+  <meta name="description" content="Browse curated standard and adventure tour packages at every budget. Book with Travel Heaven today.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('th-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .packages-layout {
+      margin-top: 120px;
+      margin-bottom: 80px;
+    }
+
+    .packages-filter-bar {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 20px 30px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .filter-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .filter-item label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .filter-item select, .filter-item input {
+      padding: 10px 15px;
+      border-radius: 8px;
+      border: 1px solid var(--theme-input-border);
+      outline: none;
+      font-size: 14px;
+      background: var(--theme-input-bg);
+      color: var(--theme-text);
+    }
+
+    .packages-filter-bar {
+      background: var(--theme-card);
+      border-radius: var(--border-radius);
+      padding: 20px 30px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+      border: 1px solid var(--theme-border);
+    }
+
+    .pkg-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .pkg-card {
+      background: var(--theme-card);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--theme-border);
+    }
+
+    .pkg-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pkg-img {
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pkg-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .pkg-card:hover .pkg-img img {
+      transform: scale(1.06);
+    }
+
+    .pkg-duration {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(15, 52, 96, 0.85);
+      backdrop-filter: blur(5px);
+      color: var(--white);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .pkg-body {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .pkg-destination {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .pkg-body h3 {
+      font-size: 19px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .pkg-body p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      height: 60px;
+      overflow: hidden;
+    }
+
+    .pkg-inclusions {
+      list-style: none;
+      margin-bottom: 25px;
+      font-size: 13px;
+      color: var(--text-dark);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pkg-inclusions li {
+      background: #f1f3f5;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .pkg-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      padding-top: 15px;
+    }
+
+    .pkg-price {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .pkg-price small {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .pkg-price strong {
+      font-size: 22px;
+      color: var(--secondary);
+      font-weight: 800;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .pkg-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .pkg-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span>Travel Heaven</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html" class="active" style="color: var(--secondary);">Packages</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="nav-auth" id="nav-auth">
+        <a href="login.html" class="btn btn-outline" style="padding: 8px 20px;">Login</a>
+        <a href="register.html" class="btn btn-primary" style="padding: 8px 20px;">Sign Up</a>
+      </div>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Packages Layout -->
+  <div class="container packages-layout">
+    <div class="section-header">
+      <h2>Tour Packages</h2>
+      <p>Browse our curated standard holiday and adventure packages</p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="packages-filter-bar">
+      <div class="filter-item">
+        <label>Budget Level</label>
+        <select id="filter-price" onchange="fetchPackages()">
+          <option value="">All Prices</option>
+          <option value="15000">Under ₹15,000</option>
+          <option value="40000">Under ₹40,000</option>
+          <option value="80000">Under ₹80,000</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label>Duration</label>
+        <select id="filter-duration" onchange="fetchPackages()">
+          <option value="">Any Duration</option>
+          <option value="4">Up to 4 Days</option>
+          <option value="6">Up to 6 Days</option>
+          <option value="10">Up to 10 Days</option>
+        </select>
+      </div>
+      <button onclick="resetFilters()" style="background: none; border: none; color: var(--secondary); font-weight: 600; cursor: pointer; font-size: 13px; margin-left: auto;">Reset</button>
+    </div>
+
+    <!-- Grid Container -->
+    <div class="pkg-grid" id="packages-container">
+      <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Loading packages...</div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/logo.svg" alt="Travel Heaven Logo">
+          <span>Travel Heaven</span>
+        </a>
+        <p>Premium customized travel tours, flights booking, and hotel reservations designed around comfort and affordability.</p>
+        <div class="social-links">
+          <a href="#">📘</a>
+          <a href="#">🐦</a>
+          <a href="#">📷</a>
+          <a href="#">💼</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Support Desk</h3>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="dashboard.html">User Dashboard</a></li>
+          <li><a href="admin.html">Admin Portal</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Sign up to get discounts and latest travel reviews.</p>
+        <form class="newsletter-form" onsubmit="alert('Thank you!'); this.reset(); return false;">
+          <input type="email" placeholder="Your Email" required>
+          <button type="submit">🚀</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
+      <p>Developed with ❤️ by Antigravity</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    function resetFilters() {
+      document.getElementById('filter-price').value = '';
+      document.getElementById('filter-duration').value = '';
+      fetchPackages();
+    }
+
+    async function fetchPackages() {
+      const maxPrice = document.getElementById('filter-price').value;
+      const maxDays = document.getElementById('filter-duration').value;
+
+      const params = new URLSearchParams();
+      if (maxPrice) params.append('maxPrice', maxPrice);
+      if (maxDays) params.append('maxDays', maxDays);
+
+      const container = document.getElementById('packages-container');
+      try {
+        const res = await fetch(`/api/packages?${params.toString()}`);
+        const json = await res.json();
+
+        if (json.success) {
+          container.innerHTML = '';
+          if (json.data.length === 0) {
+            container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">No tour packages match your filters.</div>`;
+            return;
+          }
+
+          json.data.forEach(pkg => {
+            const card = document.createElement('div');
+            card.className = 'pkg-card';
+            
+            // Map icons for inclusions
+            const inclusionsHtml = pkg.inclusions.slice(0, 3).map(inc => `<li>✓ ${inc}</li>`).join('');
+
+            card.innerHTML = `
+              <div class="pkg-img">
+                <span class="pkg-duration">⏰ ${pkg.durationDays} Days / ${pkg.durationNights} Nights</span>
+                <img src="${pkg.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}" alt="${pkg.title}">
+              </div>
+              <div class="pkg-body">
+                <span class="pkg-destination">📍 ${pkg.destination ? pkg.destination.name : 'Tour'}</span>
+                <h3>${pkg.title}</h3>
+                <p>${pkg.description}</p>
+                <ul class="pkg-inclusions">
+                  ${inclusionsHtml}
+                  ${pkg.inclusions.length > 3 ? `<li style="background: none; color: var(--secondary); font-weight: 700;">+${pkg.inclusions.length - 3} more</li>` : ''}
+                </ul>
+                <div class="pkg-footer">
+                  <div class="pkg-price">
+                    <small>Price per traveler</small>
+                    <strong>₹${pkg.price}</strong>
+                  </div>
+                  <a href="destination-details.html?id=${pkg.destination?._id}&pkgId=${pkg._id}" class="btn btn-secondary" style="font-size: 12px; padding: 8px 18px; border-radius: 8px;">Explore Details</a>
+                </div>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching packages:', err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', fetchPackages);
+  </script>
+</body>
+</html>

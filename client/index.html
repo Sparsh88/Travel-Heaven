@@ -1,0 +1,660 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Travel Heaven | Premium Travel Booking Portal</title>
+  <meta name="description" content="Find the best destinations and premium customized tour packages. Book now and start your dream journey with Travel Heaven.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    // Apply saved theme BEFORE render to prevent flash
+    (function() {
+      const t = localStorage.getItem('th-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    /* Hero Section styling inside index page */
+    .hero {
+      height: 90vh;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(rgba(11, 12, 16, 0.4), rgba(15, 52, 96, 0.6)), url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--white);
+      text-align: center;
+      padding: 0 24px;
+      margin-bottom: 80px;
+    }
+
+    .hero-content h1 {
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 20px;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      font-weight: 500;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      animation: fadeInUp 1s ease;
+    }
+
+    /* Search Bar Glassmorphism */
+    .search-container {
+      width: 100%;
+      max-width: 850px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: var(--glass-shadow);
+      animation: fadeInUp 1.2s ease;
+    }
+
+    .search-input-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .search-input-group:last-of-type {
+      border-right: none;
+    }
+
+    .search-input-group label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--secondary);
+      margin-bottom: 4px;
+    }
+
+    .search-input-group input,
+    .search-input-group select {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    .search-input-group input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .search-input-group select option {
+      background: var(--primary-light);
+      color: var(--white);
+    }
+
+    .search-btn {
+      width: 55px;
+      height: 55px;
+      background: var(--secondary);
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 18px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .search-btn:hover {
+      background: var(--secondary-hover);
+      transform: scale(1.05);
+    }
+
+    /* Categories styling */
+    .categories {
+      margin-bottom: 80px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .category-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--secondary);
+    }
+
+    .category-icon {
+      width: 65px;
+      height: 65px;
+      background: rgba(255, 122, 0, 0.1);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+
+    .category-card h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .category-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Destination Card Grid styling */
+    .destinations-home {
+      margin-bottom: 80px;
+    }
+
+    .destination-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .destination-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .destination-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .destination-img {
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .destination-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .destination-card:hover .destination-img img {
+      transform: scale(1.08);
+    }
+
+    .destination-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .destination-body {
+      padding: 25px;
+    }
+
+    .destination-body h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .destination-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .destination-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #ffd166;
+      font-weight: 600;
+    }
+
+    /* Why Choose Us styling */
+    .why-us {
+      background: var(--primary);
+      color: var(--text-light);
+      padding: 80px 0;
+      border-radius: var(--border-radius);
+      margin-bottom: 80px;
+    }
+
+    .why-us h2, .why-us .section-header p {
+      color: var(--white);
+    }
+
+    .why-us-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .why-item {
+      text-align: center;
+    }
+
+    .why-icon {
+      font-size: 40px;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+
+    .why-item h3 {
+      color: var(--white);
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .why-item p {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .category-grid, .destination-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .why-us-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 38px;
+      }
+      .search-container {
+        flex-direction: column;
+        border-radius: 20px;
+        padding: 20px;
+      }
+      .search-input-group {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        width: 100%;
+        padding-bottom: 12px;
+        padding-left: 0;
+      }
+      .search-btn {
+        width: 100%;
+        border-radius: 10px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .category-grid, .destination-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Header / Navbar -->
+  <header class="navbar navbar-hero" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span>Travel Heaven</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-auth" id="nav-auth">
+        <!-- Rendered dynamically by main.js based on auth state -->
+        <a href="login.html" class="btn btn-outline" style="padding: 8px 20px;">Login</a>
+        <a href="register.html" class="btn btn-primary" style="padding: 8px 20px;">Sign Up</a>
+      </div>
+
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <video autoplay loop muted playsinline class="hero-video-bg">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-thick-forest-and-river-42205-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay" style="background: linear-gradient(rgba(11, 12, 16, 0.4), rgba(15, 52, 96, 0.6));"></div>
+    <div class="hero-content container">
+      <h1>Explore The World, Live The Heaven</h1>
+      <p>Find the best destinations and premium customized tour packages. Book now and start your dream journey with us.</p>
+      
+      <!-- Search Destination Bar -->
+      <form class="search-container" id="hero-search-form" action="destinations.html">
+        <div class="search-input-group">
+          <label>Where to?</label>
+          <input type="text" name="search" id="search-dest" placeholder="Search destination, country..." required>
+        </div>
+        <div class="search-input-group">
+          <label>Category</label>
+          <select name="category" id="search-category">
+            <option value="">All Categories</option>
+            <option value="Domestic">Domestic</option>
+            <option value="International">International</option>
+          </select>
+        </div>
+        <div class="search-input-group">
+          <label>Budget</label>
+          <select name="budget" id="search-budget">
+            <option value="">All Budgets</option>
+            <option value="Budget">Budget</option>
+            <option value="Mid-Range">Mid-Range</option>
+            <option value="Luxury">Luxury</option>
+          </select>
+        </div>
+        <button type="submit" class="search-btn">
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories container">
+    <div class="section-header">
+      <h2>Travel Categories</h2>
+      <p>Pick a category to filter your favorite escape</p>
+    </div>
+    <div class="category-grid">
+      <div class="category-card" onclick="window.location.href='destinations.html?category=Domestic'">
+        <div class="category-icon">🏞️</div>
+        <h3>Domestic Escapes</h3>
+        <p>Explore beautiful nature within national borders.</p>
+      </div>
+      <div class="category-card" onclick="window.location.href='destinations.html?category=International'">
+        <div class="category-icon">✈️</div>
+        <h3>Global Journeys</h3>
+        <p>Experience foreign cultures, foods, and marvels.</p>
+      </div>
+      <div class="category-card" onclick="window.location.href='destinations.html?budget=Budget'">
+        <div class="category-icon">🎒</div>
+        <h3>Backpack Budgets</h3>
+        <p>Affordable adventures for budget-oriented travelers.</p>
+      </div>
+      <div class="category-card" onclick="window.location.href='destinations.html?budget=Luxury'">
+        <div class="category-icon">🏨</div>
+        <h3>Luxury Heavens</h3>
+        <p>Relax in ultimate luxury resorts and customized VIP travel.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Destinations Section -->
+  <section class="destinations-home container">
+    <div class="section-header">
+      <h2>Featured Destinations</h2>
+      <p>Explore our highly-recommended premium locations</p>
+    </div>
+    <div class="destination-grid" id="featured-destinations">
+      <!-- Dynamic Content loaded from JS -->
+      <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Loading featured destinations...</div>
+    </div>
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="destinations.html" class="btn btn-secondary">View All Destinations</a>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  <section class="why-us container">
+    <div class="section-header">
+      <h2>Why Choose Travel Heaven</h2>
+      <p>We provide standard services and customized tour packages for all customers</p>
+    </div>
+    <div class="why-us-grid">
+      <div class="why-item">
+        <div class="why-icon">🔒</div>
+        <h3>Safe & Secure Bookings</h3>
+        <p>Our payment checkouts are fully secured and encrypted via modern token systems.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🌟</div>
+        <h3>Experienced Guides</h3>
+        <p>Our tour operators have over 10+ years of local expertise to give you the dream tour.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🎧</div>
+        <h3>24/7 Premium Support</h3>
+        <p>Contact our support desks anytime for issues during bookings, travel, or post-trip.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="container" style="margin-bottom: 80px;">
+    <div class="section-header">
+      <h2>What Our Travelers Say</h2>
+      <p>Real experiences from our global travel community</p>
+    </div>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;">
+      <div class="glass-card" style="padding: 25px;">
+        <p style="font-style: italic; font-size: 14px; color: var(--text-dark); margin-bottom: 20px;">"Our Bali trip was amazing. The itinerary was perfectly structured and the private villa stay was gorgeous. Recommended Travel Heaven to all!"</p>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="width: 45px; height: 45px; border-radius: 50%; background: #ffd166; font-size: 18px; display: inline-flex; align-items: center; justify-content: center;">👤</div>
+          <div>
+            <h4 style="font-size: 15px;">Sarah Miller</h4>
+            <small style="color: var(--text-muted);">Visited Bali</small>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card" style="padding: 25px;">
+        <p style="font-style: italic; font-size: 14px; color: var(--text-dark); margin-bottom: 20px;">"The Manali trek booking was completely seamless. Loved the Solang valley river camping and rafting setup. Will book again next winter!"</p>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="width: 45px; height: 45px; border-radius: 50%; background: #fd7e14; font-size: 18px; display: inline-flex; align-items: center; justify-content: center;">👤</div>
+          <div>
+            <h4 style="font-size: 15px;">Raj Malhotra</h4>
+            <small style="color: var(--text-muted);">Visited Manali</small>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card" style="padding: 25px;">
+        <p style="font-style: italic; font-size: 14px; color: var(--text-dark); margin-bottom: 20px;">"Paris romantic gateway package exceeded our expectations. The dinner cruise view was outstanding. Fast support replies!"</p>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div style="width: 45px; height: 45px; border-radius: 50%; background: #845ef7; font-size: 18px; display: inline-flex; align-items: center; justify-content: center;">👤</div>
+          <div>
+            <h4 style="font-size: 15px;">Emma Dupont</h4>
+            <small style="color: var(--text-muted);">Visited Paris</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Subscription -->
+  <section class="container" style="margin-bottom: 80px; text-align: center;">
+    <div class="glass-card" style="padding: 50px 30px; background: radial-gradient(circle at 10% 20%, rgba(255, 122, 0, 0.08) 0%, rgba(15, 52, 96, 0.05) 90%); border-radius: 30px;">
+      <h2 style="font-size: 32px; margin-bottom: 10px;">Get Travel Updates & Offers</h2>
+      <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 30px;">Subscribe to our weekly newsletter and get a 10% discount coupon directly in your mail.</p>
+      <form class="newsletter-form" style="max-width: 500px; margin: 0 auto;" onsubmit="alert('Thank you for subscribing!'); this.reset(); return false;">
+        <input type="email" placeholder="Enter your email address" required>
+        <button type="submit">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/logo.svg" alt="Travel Heaven Logo">
+          <span>Travel Heaven</span>
+        </a>
+        <p>Premium customized travel tours, flights booking, and hotel reservations designed around comfort and affordability.</p>
+        <div class="social-links">
+          <a href="#">📘</a>
+          <a href="#">🐦</a>
+          <a href="#">📷</a>
+          <a href="#">💼</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Support Desk</h3>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="dashboard.html">User Dashboard</a></li>
+          <li><a href="admin.html">Admin Portal</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Sign up to get discounts and latest travel reviews.</p>
+        <form class="newsletter-form" onsubmit="alert('Thank you!'); this.reset(); return false;">
+          <input type="email" placeholder="Your Email" required>
+          <button type="submit">🚀</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
+      <p>Developed with ❤️ by Antigravity</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    // Load Featured Destinations on Home Page
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const res = await fetch('/api/destinations');
+        const json = await res.json();
+        if (json.success && json.data.length > 0) {
+          const grid = document.getElementById('featured-destinations');
+          grid.innerHTML = '';
+          
+          // Get featured or first 3 destinations
+          const featured = json.data.filter(d => d.featured).slice(0, 3);
+          const displayList = featured.length > 0 ? featured : json.data.slice(0, 3);
+
+          displayList.forEach(dest => {
+            const card = document.createElement('div');
+            card.className = 'destination-card';
+            card.innerHTML = `
+              <div class="destination-img">
+                <span class="destination-badge">${dest.category}</span>
+                <img src="${dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}" alt="${dest.name}">
+              </div>
+              <div class="destination-body">
+                <h3>${dest.name}, ${dest.country}</h3>
+                <p style="font-size: 14px; color: var(--text-muted); height: 65px; overflow: hidden;">${dest.description}</p>
+                <div class="destination-meta">
+                  <div class="destination-rating">
+                    <span>★</span>
+                    <span>${dest.rating || 'N/A'}</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--primary);">${dest.budgetCategory}</span>
+                </div>
+                <div style="margin-top: 20px;">
+                  <a href="destination-details.html?id=${dest._id}" class="btn btn-outline" style="width: 100%; font-size: 13px; padding: 8px 12px; border-radius: 8px;">Explore Details</a>
+                </div>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching featured destinations:', err);
+      }
+    });
+  </script>
+</body>
+</html>

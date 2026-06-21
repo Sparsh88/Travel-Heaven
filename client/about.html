@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Travel Heaven</title>
+  <meta name="description" content="Learn about Travel Heaven — our story, mission, vision, team and statistics as a premium travel booking platform.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('th-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .about-hero {
+      height: 40vh;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(rgba(11, 12, 16, 0.5), rgba(15, 52, 96, 0.7)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .about-hero h1 {
+      font-size: 48px;
+      color: var(--white);
+      font-weight: 800;
+      position: relative;
+      z-index: 1;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .story-content h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .story-img img {
+      width: 100%;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Vision / Mission Cards */
+    .mission-vision {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 80px;
+    }
+
+    /* Statistics styling */
+    .stats-banner {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      padding: 60px 30px;
+      border-radius: var(--border-radius);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .stat-val {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--secondary);
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 500;
+    }
+
+    /* Team Members styling */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .team-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 30px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+
+    .team-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: #dee2e6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 44px;
+      margin: 0 auto 20px;
+    }
+
+    .team-card h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .team-card span {
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 13px;
+      display: block;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .team-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .story-grid, .mission-vision, .stats-banner, .team-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-hero h1 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar navbar-hero" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span>Travel Heaven</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active" style="color: var(--secondary);">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="nav-auth" id="nav-auth">
+        <a href="login.html" class="btn btn-outline" style="padding: 8px 20px;">Login</a>
+        <a href="register.html" class="btn btn-primary" style="padding: 8px 20px;">Sign Up</a>
+      </div>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="about-hero">
+    <video autoplay loop muted playsinline class="hero-video-bg">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-curved-road-on-a-mountainside-with-dense-greenery-41945-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay" style="background: linear-gradient(rgba(11, 12, 16, 0.5), rgba(15, 52, 96, 0.7));"></div>
+    <h1>Our Story & Mission</h1>
+  </section>
+
+  <!-- Story Section -->
+  <section class="container story-grid">
+    <div class="story-content">
+      <h2>Crafting Memorable Journeys Since 2015</h2>
+      <p style="margin-bottom: 15px; font-size: 15px;">Travel Heaven started as a small local tour organizer in San Francisco. Within 10 years, we have grown into a leading worldwide travel booking platform, servicing over 50,000+ happy travelers from 20 different countries.</p>
+      <p style="font-size: 15px;">Our goal is simple: to make customized premium travel bookings accessible, transparent, and completely worry-free. We coordinate with local guides, handle logistics, generate instant digital tickets, and offer complete support throughout your holiday.</p>
+    </div>
+    <div class="story-img">
+      <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=600&q=80" alt="Travelers">
+    </div>
+  </section>
+
+  <!-- Mission & Vision -->
+  <section class="container mission-vision">
+    <div class="glass-card">
+      <h3 style="font-size: 20px; color: var(--secondary); margin-bottom: 15px;">🎯 Our Mission</h3>
+      <p style="font-size: 14px;">To deliver top-tier, custom-designed holiday trips that connect people with local cultures, enrich lives, and ensure total safety, while maintaining affordable price structures for all travelers.</p>
+    </div>
+    <div class="glass-card">
+      <h3 style="font-size: 20px; color: var(--primary); margin-bottom: 15px;">👁️ Our Vision</h3>
+      <p style="font-size: 14px;">To establish Travel Heaven as the world’s most trusted, digital-first travel operator, recognized for customer support, transparent booking practices, and community-driven tourism.</p>
+    </div>
+  </section>
+
+  <!-- Stats Banner -->
+  <section class="container stats-banner">
+    <div>
+      <div class="stat-val">50K+</div>
+      <div class="stat-label">Happy Travelers</div>
+    </div>
+    <div>
+      <div class="stat-val">120+</div>
+      <div class="stat-label">Tour Destinations</div>
+    </div>
+    <div>
+      <div class="stat-val">10+</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div>
+      <div class="stat-val">99.8%</div>
+      <div class="stat-label">Success Booking Rate</div>
+    </div>
+  </section>
+
+  <!-- Team Members -->
+  <section class="container" style="margin-bottom: 80px;">
+    <div class="section-header">
+      <h2>Meet Our Executives</h2>
+      <p>The core leadership driving your next dream getaway</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">👨‍💼</div>
+        <h3>Marcus Vance</h3>
+        <span>Chief Executive Officer</span>
+        <p>Founder with 15+ years in hospitality. Loves exploring high-altitude mountain trails.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍💻</div>
+        <h3>Clara Dubois</h3>
+        <span>Chief Technology Officer</span>
+        <p>Backend engineer and systems architect. Designed the ticket generation engine.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">👩‍💼</div>
+        <h3>Sophia Rodriguez</h3>
+        <span>Chief Travel Advisor</span>
+        <p>Expert in destination curation. Handpicks all international resort partners.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/logo.svg" alt="Travel Heaven Logo">
+          <span>Travel Heaven</span>
+        </a>
+        <p>Premium customized travel tours, flights booking, and hotel reservations designed around comfort and affordability.</p>
+        <div class="social-links">
+          <a href="#">📘</a>
+          <a href="#">🐦</a>
+          <a href="#">📷</a>
+          <a href="#">💼</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Support Desk</h3>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="dashboard.html">User Dashboard</a></li>
+          <li><a href="admin.html">Admin Portal</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Sign up to get discounts and latest travel reviews.</p>
+        <form class="newsletter-form" onsubmit="alert('Thank you!'); this.reset(); return false;">
+          <input type="email" placeholder="Your Email" required>
+          <button type="submit">🚀</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
+      <p>Developed with ❤️ by Antigravity</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

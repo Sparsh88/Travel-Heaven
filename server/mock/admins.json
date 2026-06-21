@@ -1,0 +1,11 @@
+[
+  {
+    "username": "admin",
+    "email": "admin@travelheaven.com",
+    "password": "$2a$10$cQGNAcEImRBbHtU5Q9gPveFFEd.6vKJfrVTRDMi4buvA6jLK4XWzC",
+    "role": "admin",
+    "_id": "b0icrsbxr1aqcojiaqt8cm",
+    "createdAt": "2026-06-19T07:24:43.634Z",
+    "updatedAt": "2026-06-19T07:24:43.634Z"
+  }
+]

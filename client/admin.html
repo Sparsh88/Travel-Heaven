@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Travel Heaven</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <!-- Chart.js for analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Admin Login styling */
+    .admin-login-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(rgba(11, 12, 16, 0.6), rgba(15, 52, 96, 0.7)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
+      padding: 24px;
+    }
+
+    .admin-login-card {
+      width: 100%;
+      max-width: 420px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Admin Auth View (visible by default, hidden via JS if logged in) -->
+  <div class="admin-login-page" id="admin-login-view">
+    <div class="glass-card admin-login-card animate-fade-in">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <a href="index.html" class="logo" style="justify-content: center;">
+          <img src="images/logo.png" alt="Travel Heaven Logo">
+          <span>Travel Heaven</span>
+        </a>
+      </div>
+      <h2 style="font-size: 26px; text-align: center; margin-bottom: 8px;">Admin Console</h2>
+      <p style="text-align: center; color: var(--text-muted); font-size: 14px; margin-bottom: 25px;">Provide admin credentials to access operations</p>
+      
+      <form id="admin-login-form" onsubmit="handleAdminLogin(event)">
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label>Username or Email</label>
+          <input type="text" id="admin-user" required placeholder="E.g., admin">
+        </div>
+        <div class="form-group" style="margin-bottom: 25px;">
+          <label>Password</label>
+          <input type="password" id="admin-pass" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 13px;">Secure Login</button>
+      </form>
+      <div style="text-align: center; margin-top: 20px; font-size: 14px;">
+        <a href="login.html" style="color: var(--secondary); text-decoration: underline;">Return to User Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Core Dashboard (hidden by default) -->
+  <div class="admin-layout" id="admin-core-view" style="display: none;">
+    
+    <!-- Sidebar Menu -->
+    <aside class="admin-sidebar">
+      <div class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span style="font-size: 18px;">Heaven Admin</span>
+      </div>
+      <ul class="admin-menu">
+        <li class="active" id="menu-analytics"><a href="#" onclick="switchAdminTab('analytics')">📊 Analytics</a></li>
+        <li id="menu-bookings"><a href="#" onclick="switchAdminTab('bookings')">✈️ Bookings</a></li>
+        <li id="menu-users"><a href="#" onclick="switchAdminTab('users')">👥 Users</a></li>
+        <li id="menu-destinations"><a href="#" onclick="switchAdminTab('destinations')">📍 Destinations</a></li>
+        <li id="menu-packages"><a href="#" onclick="switchAdminTab('packages')">🎒 Packages</a></li>
+      </ul>
+      <div class="admin-logout-btn">
+        <button onclick="handleAdminLogout()" class="btn btn-glass" style="width: 100%;">Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <main class="admin-main">
+      
+      <!-- Top Header -->
+      <header class="admin-header">
+        <div class="admin-title">
+          <h2 id="current-workspace-title">Analytics Dashboard</h2>
+        </div>
+        <div class="admin-profile-info">
+          Welcome, <span id="admin-profile-name">Administrator</span>
+        </div>
+      </header>
+
+      <!-- Workspace Body -->
+      <div class="admin-body">
+
+        <!-- Tab 1: Analytics -->
+        <div class="admin-section active" id="section-analytics">
+          <!-- Stats Board -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Total Users</h3>
+                <p id="stat-users">0</p>
+              </div>
+              <div class="stat-icon">👥</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Total Bookings</h3>
+                <p id="stat-bookings">0</p>
+              </div>
+              <div class="stat-icon">✈️</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Revenue</h3>
+                <p id="stat-revenue">₹0</p>
+              </div>
+              <div class="stat-icon">💰</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-info">
+                <h3>Pending Trips</h3>
+                <p id="stat-pending">0</p>
+              </div>
+              <div class="stat-icon">⏰</div>
+            </div>
+          </div>
+
+          <!-- Charts row -->
+          <div class="analytics-row">
+            <div class="card-container">
+              <h3 class="card-title">Monthly Revenue Stream</h3>
+              <div style="height: 300px; position: relative;">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+            <div class="card-container" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+              <h3 class="card-title">Booking Confirmation Rate</h3>
+              <div style="height: 200px; width: 200px; position: relative;">
+                <canvas id="bookingsDoughnut"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Bookings -->
+        <div class="admin-section" id="section-bookings">
+          <div class="table-container">
+            <div class="table-header">
+              <h3>All User Bookings</h3>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Ref ID</th>
+                    <th>User</th>
+                    <th>Destination</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Tracking Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-bookings-table">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Users -->
+        <div class="admin-section" id="section-users">
+          <div class="table-container">
+            <div class="table-header">
+              <h3>Registered Users</h3>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Registered Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-users-table">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 4: Destinations -->
+        <div class="admin-section" id="section-destinations">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+            <button class="btn btn-primary" onclick="openAddDestinationModal()">＋ Add New Destination</button>
+          </div>
+          <div class="table-container">
+            <div class="table-header">
+              <h3>Destination Directory</h3>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Country</th>
+                    <th>Category</th>
+                    <th>Budget Level</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-destinations-table">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 5: Packages -->
+        <div class="admin-section" id="section-packages">
+          <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+            <button class="btn btn-primary" onclick="openAddPackageModal()">＋ Add New Tour Package</button>
+          </div>
+          <div class="table-container">
+            <div class="table-header">
+              <h3>Available Tour Packages</h3>
+            </div>
+            <div style="overflow-x: auto;">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Package Title</th>
+                    <th>Destination</th>
+                    <th>Duration</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-packages-table">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Booking Status Update Modal -->
+  <div class="modal" id="booking-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Update Booking Status</h3>
+        <span class="close-modal" onclick="closeModal('booking-modal')">＆times;</span>
+      </div>
+      <form id="update-booking-form" onsubmit="handleUpdateBooking(event)">
+        <input type="hidden" id="modal-booking-id">
+        <div class="form-group">
+          <label>Overall Status</label>
+          <select id="modal-booking-status">
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Processing">Processing</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom: 25px;">
+          <label>Milestone Tracking Milestone</label>
+          <select id="modal-booking-tracking">
+            <option value="Booking Confirmed">Booking Confirmed</option>
+            <option value="Documents Verified">Documents Verified</option>
+            <option value="Tickets Generated">Tickets Generated</option>
+            <option value="Travel Started">Travel Started</option>
+            <option value="Trip Completed">Trip Completed</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Save Status</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Destination Modal -->
+  <div class="modal" id="destination-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="dest-modal-title">Add New Destination</h3>
+        <span class="close-modal" onclick="closeModal('destination-modal')">&times;</span>
+      </div>
+      <form id="destination-form" onsubmit="handleDestinationSubmit(event)">
+        <input type="hidden" id="modal-dest-id">
+        <div class="form-group">
+          <label>Destination Name</label>
+          <input type="text" id="modal-dest-name" required placeholder="E.g., Rome">
+        </div>
+        <div class="form-group">
+          <label>Country</label>
+          <input type="text" id="modal-dest-country" required placeholder="E.g., Italy">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Category</label>
+            <select id="modal-dest-category" required>
+              <option value="Domestic">Domestic</option>
+              <option value="International" selected>International</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Budget Level</label>
+            <select id="modal-dest-budget" required>
+              <option value="Budget">Budget</option>
+              <option value="Mid-Range" selected>Mid-Range</option>
+              <option value="Luxury">Luxury</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Image URL</label>
+          <input type="url" id="modal-dest-img" required placeholder="https://images.unsplash.com/photo-...">
+        </div>
+        <div class="form-group" style="margin-bottom: 25px;">
+          <label>Description</label>
+          <textarea id="modal-dest-desc" rows="4" required placeholder="Write details about destination attractions..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Save Destination</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tour Package Modal -->
+  <div class="modal" id="package-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="package-modal-title">Add New Tour Package</h3>
+        <span class="close-modal" onclick="closeModal('package-modal')">&times;</span>
+      </div>
+      <form id="package-form" onsubmit="handlePackageSubmit(event)">
+        <input type="hidden" id="modal-pkg-id">
+        <div class="form-group">
+          <label>Package Title</label>
+          <input type="text" id="modal-pkg-title" required placeholder="E.g., 5 Days Classic Rome Express">
+        </div>
+        <div class="form-group">
+          <label>Associate Destination</label>
+          <select id="modal-pkg-dest" required>
+            <!-- Dynmically loaded destinations options -->
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Duration Days</label>
+            <input type="number" id="modal-pkg-days" required min="1" value="5">
+          </div>
+          <div class="form-group">
+            <label>Duration Nights</label>
+            <input type="number" id="modal-pkg-nights" required min="1" value="4">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Price (₹)</label>
+            <input type="number" id="modal-pkg-price" required min="1" value="499">
+          </div>
+          <div class="form-group">
+            <label>Image URL</label>
+            <input type="url" id="modal-pkg-img" placeholder="Optional Unsplash image link">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="modal-pkg-desc" rows="3" required placeholder="Brief summary of package offerings..."></textarea>
+        </div>
+        <!-- Inclusions/Exclusions Simplified input -->
+        <div class="form-group">
+          <label>Inclusions (comma separated)</label>
+          <input type="text" id="modal-pkg-inclusions" placeholder="Flight, Hotel, Guided Tour">
+        </div>
+        <div class="form-group" style="margin-bottom: 25px;">
+          <label>Exclusions (comma separated)</label>
+          <input type="text" id="modal-pkg-exclusions" placeholder="Lunch, Personal shopping, Tips">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Save Tour Package</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <!-- Dedicated Admin Javascript bindings -->
+  <script src="js/admin.js"></script>
+</body>
+</html>

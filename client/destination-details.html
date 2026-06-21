@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination Details | Travel Heaven</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .details-hero {
+      height: 50vh;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 50px;
+    }
+
+    .details-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .details-hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 40px;
+      color: var(--white);
+    }
+
+    .details-header h1 {
+      font-size: 42px;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .details-meta-top {
+      display: flex;
+      gap: 25px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .details-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      color: #ffd166;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .description-card h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .description-card p {
+      margin-bottom: 25px;
+    }
+
+    /* Packages select cards */
+    .packages-section {
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+
+    .packages-section h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .package-select-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .package-select-card.selected {
+      border-color: var(--secondary);
+      background-color: rgba(255, 122, 0, 0.03);
+    }
+
+    .package-info h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .package-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .package-price {
+      text-align: right;
+    }
+
+    .package-price span {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--secondary);
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Tabs for package details */
+    .package-details-tabs {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-sm);
+      padding: 30px;
+      margin-top: 30px;
+      display: none; /* Shown when a package is selected */
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 20px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .tab-link {
+      background: none;
+      border: none;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding-bottom: 5px;
+      position: relative;
+    }
+
+    .tab-link.active {
+      color: var(--secondary);
+    }
+
+    .tab-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--secondary);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Itinerary timeline styling */
+    .timeline {
+      position: relative;
+      padding-left: 30px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      bottom: 5px;
+      left: 5px;
+      width: 2px;
+      background: #dee2e6;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      top: 5px;
+      left: -30px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--secondary);
+      border: 3px id solid var(--white);
+    }
+
+    .timeline-day {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .timeline-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .timeline-desc {
+      font-size: 14px;
+    }
+
+    /* Booking panel */
+    .booking-sidebar {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 30px 25px;
+      box-shadow: var(--shadow-sm);
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+
+    .booking-sidebar h3 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Reviews section */
+    .reviews-section {
+      margin-top: 50px;
+    }
+
+    .review-list {
+      margin-top: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .review-item {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .review-user {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--primary);
+    }
+
+    .review-rating {
+      color: #ffd166;
+    }
+
+    .review-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .details-grid {
+        grid-template-columns: 1fr;
+      }
+      .booking-sidebar {
+        position: relative;
+        top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar navbar-hero" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span>Travel Heaven</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html" class="active" style="color: var(--secondary);">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="nav-auth" id="nav-auth">
+        <a href="login.html" class="btn btn-outline" style="padding: 8px 20px;">Login</a>
+        <a href="register.html" class="btn btn-primary" style="padding: 8px 20px;">Sign Up</a>
+      </div>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Header -->
+  <section class="details-hero" id="destination-hero">
+    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" alt="Destination Banner" id="dest-img">
+    <div class="details-hero-overlay">
+      <div class="container details-header">
+        <h1 id="dest-title">Destination, Country</h1>
+        <div class="details-meta-top">
+          <span id="dest-category">International</span>
+          <span>•</span>
+          <span id="dest-budget">Luxury</span>
+          <span>•</span>
+          <div class="details-rating">
+            <span>★</span>
+            <span id="dest-rating">4.8 (0 reviews)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Details Layout -->
+  <div class="container details-grid">
+    
+    <!-- Left Main Content -->
+    <main>
+      <!-- Description -->
+      <section class="description-card">
+        <h2>About this destination</h2>
+        <p id="dest-desc">Loading details...</p>
+      </section>
+
+      <!-- Associated Packages -->
+      <section class="packages-section">
+        <h2>Select a Tour Package</h2>
+        <div id="packages-list">
+          <p style="color: var(--text-muted);">Loading packages for this destination...</p>
+        </div>
+
+        <!-- Package Details Tabs (hidden until package selected) -->
+        <div class="package-details-tabs" id="package-details-panel">
+          <div class="tab-nav">
+            <button class="tab-link active" onclick="switchTab(event, 'tab-itinerary')">Itinerary</button>
+            <button class="tab-link" onclick="switchTab(event, 'tab-inclusions')">Inclusions</button>
+            <button class="tab-link" onclick="switchTab(event, 'tab-exclusions')">Exclusions</button>
+          </div>
+
+          <!-- Tab Itinerary -->
+          <div class="tab-panel active" id="tab-itinerary">
+            <div class="timeline" id="itinerary-timeline">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Tab Inclusions -->
+          <div class="tab-panel" id="tab-inclusions">
+            <ul id="inclusions-list" style="padding-left: 20px;">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+
+          <!-- Tab Exclusions -->
+          <div class="tab-panel" id="tab-exclusions">
+            <ul id="exclusions-list" style="padding-left: 20px;">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews Section -->
+      <section class="reviews-section">
+        <h2>Traveler Reviews</h2>
+        
+        <!-- Add review form (only if logged in) -->
+        <div class="glass-card" style="margin-top: 25px; padding: 25px;" id="add-review-container">
+          <h3 style="font-size: 16px; margin-bottom: 15px;">Write a Review</h3>
+          <form id="review-form" onsubmit="submitReview(event)">
+            <div class="form-group" style="margin-bottom: 15px;">
+              <label>Rating</label>
+              <select id="review-rating-val" required style="width: fit-content;">
+                <option value="5">★★★★★ (5/5)</option>
+                <option value="4">★★★★☆ (4/5)</option>
+                <option value="3">★★★☆☆ (3/5)</option>
+                <option value="2">★★☆☆☆ (2/5)</option>
+                <option value="1">★☆☆☆☆ (1/5)</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom: 20px;">
+              <label>Your Review</label>
+              <textarea id="review-comment" rows="3" placeholder="Tell us about your experience..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-secondary">Submit Review</button>
+          </form>
+        </div>
+
+        <div class="review-list" id="reviews-container">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Right Sidebar Booking -->
+    <aside class="booking-sidebar">
+      <h3>Book Package</h3>
+      <form id="booking-form" onsubmit="proceedToBooking(event)">
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label>Selected Package</label>
+          <input type="text" id="booking-package-title" readonly value="Please select a package below" style="background: #f1f3f5; font-weight: 600;">
+          <input type="hidden" id="booking-package-id">
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label>Travel Date</label>
+          <input type="date" id="booking-date" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label>Number of Travelers</label>
+          <input type="number" id="booking-travelers" value="1" min="1" max="10" required oninput="updateBookingSummary()">
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label>Special Requests</label>
+          <textarea id="booking-requests" rows="3" placeholder="E.g., vegetarian meals, airport transfer..."></textarea>
+        </div>
+        
+        <!-- Pricing Summary -->
+        <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 15px; margin-bottom: 20px;" id="booking-summary">
+          <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+            <span>Price per traveler</span>
+            <span id="summary-price">₹0</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 700;">
+            <span>Total Cost</span>
+            <span id="summary-total">₹0</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Proceed to Booking</button>
+      </form>
+    </aside>
+
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/logo.svg" alt="Travel Heaven Logo">
+          <span>Travel Heaven</span>
+        </a>
+        <p>Premium customized travel tours, flights booking, and hotel reservations designed around comfort and affordability.</p>
+        <div class="social-links">
+          <a href="#">📘</a>
+          <a href="#">🐦</a>
+          <a href="#">📷</a>
+          <a href="#">💼</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Support Desk</h3>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="dashboard.html">User Dashboard</a></li>
+          <li><a href="admin.html">Admin Portal</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Sign up to get discounts and latest travel reviews.</p>
+        <form class="newsletter-form" onsubmit="alert('Thank you!'); this.reset(); return false;">
+          <input type="email" placeholder="Your Email" required>
+          <button type="submit">🚀</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
+      <p>Developed with ❤️ by Antigravity</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    let activePackagePrice = 0;
+    let packagesData = [];
+
+    // Switch Tab Panels
+    function switchTab(e, panelId) {
+      // Deactivate all
+      const tabs = e.target.parentElement.querySelectorAll('.tab-link');
+      const panels = e.target.parentElement.parentElement.querySelectorAll('.tab-panel');
+      
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+
+      // Activate clicked
+      e.target.classList.add('active');
+      document.getElementById(panelId).classList.add('active');
+    }
+
+    // Select Package
+    function selectPackage(pkgId) {
+      const pkg = packagesData.find(p => p._id === pkgId);
+      if (!pkg) return;
+
+      // Update selection styling
+      document.querySelectorAll('.package-select-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      document.getElementById(`pkg-card-${pkgId}`).classList.add('selected');
+
+      // Update sidebar booking form inputs
+      document.getElementById('booking-package-title').value = pkg.title;
+      document.getElementById('booking-package-id').value = pkg._id;
+      
+      activePackagePrice = pkg.price;
+      updateBookingSummary();
+
+      // Load tabs details
+      document.getElementById('package-details-panel').style.display = 'block';
+
+      // 1. Itinerary
+      const timeline = document.getElementById('itinerary-timeline');
+      timeline.innerHTML = '';
+      pkg.itinerary.forEach(it => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+        item.innerHTML = `
+          <div class="timeline-day">Day ${it.day}</div>
+          <div class="timeline-title">${it.title}</div>
+          <div class="timeline-desc">${it.description}</div>
+        `;
+        timeline.appendChild(item);
+      });
+
+      // 2. Inclusions
+      const incList = document.getElementById('inclusions-list');
+      incList.innerHTML = '';
+      pkg.inclusions.forEach(inc => {
+        const li = document.createElement('li');
+        li.style.marginBottom = '8px';
+        li.textContent = inc;
+        incList.appendChild(li);
+      });
+
+      // 3. Exclusions
+      const excList = document.getElementById('exclusions-list');
+      excList.innerHTML = '';
+      pkg.exclusions.forEach(exc => {
+        const li = document.createElement('li');
+        li.style.marginBottom = '8px';
+        li.textContent = exc;
+        excList.appendChild(li);
+      });
+    }
+
+    // Update Pricing Summary in booking card
+    function updateBookingSummary() {
+      const travelers = parseInt(document.getElementById('booking-travelers').value) || 1;
+      const total = activePackagePrice * travelers;
+      document.getElementById('summary-price').textContent = `₹${activePackagePrice}`;
+      document.getElementById('summary-total').textContent = `₹${total}`;
+    }
+
+    // Handle Review Submission
+    async function submitReview(e) {
+      e.preventDefault();
+      
+      const userToken = localStorage.getItem('token');
+      if (!userToken) {
+        showAlert('Please login to submit a review', 'error');
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const rating = document.getElementById('review-rating-val').value;
+      const comment = document.getElementById('review-comment').value;
+      const urlParams = new URLSearchParams(window.location.search);
+      const destinationId = urlParams.get('id');
+
+      try {
+        const res = await fetch('/api/reviews', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+          },
+          body: JSON.stringify({ destinationId, rating, comment })
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          showAlert('Review submitted successfully!', 'success');
+          document.getElementById('review-form').reset();
+          // Reload reviews
+          loadPageData();
+        } else {
+          showAlert(json.message || 'Error submitting review', 'error');
+        }
+      } catch (err) {
+        showAlert('Network error, please try again', 'error');
+      }
+    }
+
+    // Handle Book Now Click
+    async function proceedToBooking(e) {
+      e.preventDefault();
+
+      const userToken = localStorage.getItem('token');
+      if (!userToken) {
+        showAlert('Please login or register to book a trip', 'error');
+        // Store current path to redirect back after login
+        localStorage.setItem('redirectAfterLogin', window.location.href);
+        window.location.href = 'login.html';
+        return;
+      }
+
+      const packageId = document.getElementById('booking-package-id').value;
+      if (!packageId) {
+        showAlert('Please select a package first', 'error');
+        return;
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const destinationId = urlParams.get('id');
+      const travelDate = document.getElementById('booking-date').value;
+      const numberOfTravelers = document.getElementById('booking-travelers').value;
+      const specialRequests = document.getElementById('booking-requests').value;
+
+      try {
+        // Create booking in DB (Status: Pending, PaymentStatus: Pending)
+        const res = await fetch('/api/bookings', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userToken}`
+          },
+          body: JSON.stringify({
+            destinationId,
+            packageId,
+            travelDate,
+            numberOfTravelers,
+            specialRequests
+          })
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          // Booking created, redirect to payment page
+          window.location.href = `payment.html?bookingId=${json.data._id}`;
+        } else {
+          showAlert(json.message || 'Booking creation failed', 'error');
+        }
+      } catch (err) {
+        showAlert('Error contacting server', 'error');
+      }
+    }
+
+    // Load Destination Details
+    async function loadPageData() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const destinationId = urlParams.get('id');
+
+      if (!destinationId) {
+        window.location.href = 'destinations.html';
+        return;
+      }
+
+      // Hide or show review block depending on login
+      const userToken = localStorage.getItem('token');
+      const reviewContainer = document.getElementById('add-review-container');
+      if (!userToken) {
+        reviewContainer.innerHTML = `<p style="text-align: center; font-weight: 500; font-size: 14px;"><a href="login.html" style="color: var(--secondary); text-decoration: underline;">Login</a> to write a review for this destination.</p>`;
+      }
+
+      try {
+        const res = await fetch(`/api/destinations/${destinationId}`);
+        const json = await res.json();
+
+        if (json.success) {
+          const dest = json.data;
+          packagesData = json.packages;
+          
+          // Populate Details
+          document.getElementById('dest-img').src = dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800';
+          document.getElementById('dest-title').textContent = `${dest.name}, ${dest.country}`;
+          document.getElementById('dest-category').textContent = dest.category;
+          document.getElementById('dest-budget').textContent = dest.budgetCategory;
+          document.getElementById('dest-rating').textContent = `${dest.rating || '0.0'} (${dest.reviewsCount} reviews)`;
+          document.getElementById('dest-desc').textContent = dest.description;
+
+          // Populate Packages
+          const pkgContainer = document.getElementById('packages-list');
+          pkgContainer.innerHTML = '';
+
+          if (packagesData.length === 0) {
+            pkgContainer.innerHTML = `<p style="color: var(--text-muted);">No tour packages currently available for this destination.</p>`;
+          } else {
+            packagesData.forEach((pkg, index) => {
+              const card = document.createElement('div');
+              card.className = `package-select-card ${index === 0 ? 'selected' : ''}`;
+              card.id = `pkg-card-${pkg._id}`;
+              card.onclick = () => selectPackage(pkg._id);
+              card.innerHTML = `
+                <div class="package-info">
+                  <h3>${pkg.title}</h3>
+                  <p>Duration: ${pkg.durationDays} Days / ${pkg.durationNights} Nights</p>
+                </div>
+                <div class="package-price">
+                  <small style="color: var(--text-muted); display: block; font-size: 11px;">Starts from</small>
+                  <span>₹${pkg.price}</span>
+                </div>
+              `;
+              pkgContainer.appendChild(card);
+            });
+
+            // Automatically select first package details
+            selectPackage(packagesData[0]._id);
+          }
+
+          // Populate Reviews
+          const reviewsContainer = document.getElementById('reviews-container');
+          reviewsContainer.innerHTML = '';
+          const reviews = json.reviews;
+
+          if (reviews.length === 0) {
+            reviewsContainer.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 20px 0;">No reviews yet. Be the first to share your thoughts!</p>`;
+          } else {
+            reviews.forEach(rev => {
+              const item = document.createElement('div');
+              item.className = 'review-item';
+              item.innerHTML = `
+                <div class="review-header">
+                  <span class="review-user">${rev.user ? rev.user.fullName : 'Anonymous'}</span>
+                  <span class="review-rating">${'★'.repeat(rev.rating)}${'☆'.repeat(5 - rev.rating)}</span>
+                </div>
+                <p style="font-size: 14px;">${rev.comment}</p>
+                <div style="text-align: right; margin-top: 10px;">
+                  <span class="review-date">${new Date(rev.createdAt).toLocaleDateString()}</span>
+                </div>
+              `;
+              reviewsContainer.appendChild(item);
+            });
+          }
+        } else {
+          showAlert(json.message || 'Error loading destination data', 'error');
+        }
+      } catch (err) {
+        console.error('Fetch error details:', err);
+      }
+    }
+
+    // Lock Travel Date minimum date to today
+    document.addEventListener('DOMContentLoaded', () => {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('booking-date').setAttribute('min', today);
+      loadPageData();
+    });
+  </script>
+</body>
+</html>

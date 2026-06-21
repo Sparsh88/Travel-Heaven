@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Confirmation | Travel Heaven</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .receipt-layout {
+      margin-top: 120px;
+      margin-bottom: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .ticket-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 650px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .ticket-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .ticket-header h1 {
+      color: var(--white);
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .ticket-body {
+      padding: 40px;
+    }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+      border-bottom: 1px dashed rgba(0,0,0,0.1);
+      padding-bottom: 25px;
+    }
+
+    .ticket-item strong {
+      display: block;
+      color: var(--text-muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+      letter-spacing: 0.5px;
+    }
+
+    .ticket-item p {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    /* Print styles */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .ticket-card, .ticket-card * {
+        visibility: visible;
+      }
+      .ticket-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+        box-shadow: none;
+        border: none;
+      }
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar no-print" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span>Travel Heaven</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="nav-auth" id="nav-auth">
+        <!-- Dynamic -->
+      </div>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Receipt Layout -->
+  <div class="container receipt-layout">
+    
+    <div class="ticket-card animate-fade-in" id="ticket-container">
+      <div class="ticket-header">
+        <div style="font-size: 44px; margin-bottom: 10px;">✅</div>
+        <h1>Payment Successful!</h1>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px;">Thank you for your purchase. Your travel tickets are generated.</p>
+      </div>
+
+      <div class="ticket-body" id="ticket-content">
+        <p style="text-align: center; color: var(--text-muted);">Loading receipt details...</p>
+      </div>
+      
+      <!-- Actions -->
+      <div style="display: flex; gap: 15px; padding: 0 40px 40px;" class="no-print">
+        <button onclick="window.print()" class="btn btn-secondary" style="flex: 1;">🖨️ Print Ticket</button>
+        <a href="dashboard.html" class="btn btn-primary" style="flex: 1; text-align: center;">Go to Dashboard</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer no-print">
+    <!-- Footer standard content -->
+    <div class="container footer-bottom" style="border-top: none; padding-top: 0;">
+      <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    async function loadTransactionReceipt() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const paymentId = urlParams.get('paymentId');
+      const token = localStorage.getItem('token');
+
+      if (!paymentId || !token) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/payments/${paymentId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          const pay = json.data;
+          const booking = pay.booking;
+          
+          document.getElementById('ticket-content').innerHTML = `
+            <div class="ticket-grid">
+              <div class="ticket-item">
+                <strong>Transaction ID</strong>
+                <p>${pay.paymentId}</p>
+              </div>
+              <div class="ticket-item">
+                <strong>Booking ID</strong>
+                <p>${booking.bookingId}</p>
+              </div>
+              <div class="ticket-item">
+                <strong>Traveler Name</strong>
+                <p>${pay.user.fullName}</p>
+              </div>
+              <div class="ticket-item">
+                <strong>Destination</strong>
+                <p>${booking.destination ? booking.destination.name : 'N/A'}</p>
+              </div>
+              <div class="ticket-item">
+                <strong>Tour Package</strong>
+                <p>${booking.package ? booking.package.title : 'N/A'}</p>
+              </div>
+              <div class="ticket-item">
+                <strong>Travel Date</strong>
+                <p>${new Date(booking.travelDate).toLocaleDateString()}</p>
+              </div>
+              <div class="ticket-item">
+                <strong>Travelers Count</strong>
+                <p>${booking.numberOfTravelers} Person(s)</p>
+              </div>
+              <div class="ticket-item">
+                <strong>Payment Method</strong>
+                <p>${pay.paymentMethod}</p>
+              </div>
+            </div>
+
+            <!-- Receipt Breakdown -->
+            <div style="background: var(--theme-bg); padding: 20px; border-radius: 10px; border: 1px solid var(--theme-border);">
+              <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--primary);">Payment Summary</h3>
+              <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+                <span>Package Base Rate</span>
+                <span>₹${booking.package ? booking.package.price : 0}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
+                <span>Traveler Multiplier</span>
+                <span>x ${booking.numberOfTravelers}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 700; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 8px; margin-top: 8px;">
+                <span>Total Charge</span>
+                <span>₹${pay.amount}</span>
+              </div>
+            </div>
+
+            <!-- Digital Ticket Verification QR Code -->
+            <div style="margin-top: 30px; padding-top: 25px; border-top: 1px dashed rgba(0,0,0,0.1); text-align: center;">
+              <p style="font-size: 12px; font-weight: 700; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Digital Ticket Pass</p>
+              <div style="background: var(--white); padding: 12px; border-radius: 16px; display: inline-block; box-shadow: var(--shadow-sm); border: 1px solid rgba(0,0,0,0.05);">
+                <img id="ticket-qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent('https://travelheaven.com/verify-ticket?bookingId=' + booking.bookingId + '&paymentId=' + pay.paymentId)}" alt="Ticket QR Code" style="width: 130px; height: 130px; display: block; margin: 0 auto; object-fit: contain;">
+              </div>
+              <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Scan this code at airports, hotel desks, or tour counters to verify your booking pass.</p>
+            </div>
+          `;
+        } else {
+          document.getElementById('ticket-content').innerHTML = `<p style="text-align: center; color: var(--accent);">Failed to retrieve receipt details.</p>`;
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadTransactionReceipt);
+  </script>
+</body>
+</html>

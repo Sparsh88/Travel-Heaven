@@ -1,0 +1,609 @@
+[
+  {
+    "title": "7 Days Bali Romantic Getaway",
+    "destination": "7u2kln6nn6d4gmbuuhfqxu",
+    "description": "Experience Bali like never before. Stays in premium oceanfront private villa, couples massage, private catamaran cruise, and tours around iconic temples.",
+    "price": 63920,
+    "durationDays": 7,
+    "durationNights": 6,
+    "inclusions": [
+      "5-Star Luxury Resort Stay",
+      "All Daily Breakfasts & Private Dinners",
+      "Private Chauffeur Tour Guides",
+      "Traditional Balinese Spa Treatments"
+    ],
+    "exclusions": [
+      "International Flights",
+      "Visa & Entry Fees",
+      "Personal Souvenirs",
+      "Tips & Gratuities"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": true,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Welcome Dinner",
+        "description": "Arrive at Ngurah Rai International Airport. Transfer to your oceanfront resort in Seminyak. Enjoy a romantic candlelit dinner at the beach."
+      },
+      {
+        "day": 2,
+        "title": "Uluwatu Temple & Kecak Dance",
+        "description": "Visit the magnificent Uluwatu temple perched on a cliff edge. Watch the traditional Kecak Fire Dance performance against the sunset."
+      },
+      {
+        "day": 3,
+        "title": "Ubud Rice Paddies & Swing Tour",
+        "description": "Travel to Ubud. Walk through the Tegallalang Rice Terraces, take pictures on the famous Bali Swing, and explore the Monkey Forest."
+      },
+      {
+        "day": 4,
+        "title": "Volcano Hiking & Hot Springs",
+        "description": "Early morning hike up Mount Batur to witness the majestic sunrise. Relax in Toya Devasya natural hot springs."
+      },
+      {
+        "day": 5,
+        "title": "Nusa Penida Day Trip",
+        "description": "Speedboat to Nusa Penida island. Visit Kelingking Beach, Angel's Billabong, and snorkel at Crystal Bay."
+      },
+      {
+        "day": 6,
+        "title": "Couples Spa & Sunset Cruise",
+        "description": "Morning Ayurvedic couples massage. Afternoon luxury catamaran sunset dinner cruise."
+      },
+      {
+        "day": 7,
+        "title": "Departure",
+        "description": "Free morning for shopping. Transfer to airport for your flight home."
+      }
+    ],
+    "_id": "eel5ln8s8nenstdqo7f308",
+    "createdAt": "2026-06-19T07:51:32.278Z",
+    "updatedAt": "2026-06-19T07:51:32.278Z"
+  },
+  {
+    "title": "Luxury Paris Honeymoon & City Tour",
+    "destination": "iwe4oo5tdicheyoa42a5g",
+    "description": "Spend 5 glorious days in Paris. Includes Eiffel Tower skip-the-line, private Seine River dinner cruise, Louvre private guide, and Versailles palace day trip.",
+    "price": 119920,
+    "durationDays": 5,
+    "durationNights": 4,
+    "inclusions": [
+      "4-Star City-Center Hotel Stay",
+      "Daily Continental Breakfasts",
+      "Eiffel Tower Access & Seine Cruise",
+      "Louvre Museum Fast-Track Entry"
+    ],
+    "exclusions": [
+      "Flight tickets",
+      "Lunch & optional snacks",
+      "Hotel tourist tax",
+      "Travel insurance"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": true,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Hotel Check-in",
+        "description": "Arrive in Paris. Transfer to boutique hotel near Champs-Élysées. Explore city of lights at your own pace."
+      },
+      {
+        "day": 2,
+        "title": "Eiffel Tower & Seine Cruise",
+        "description": "Skip-the-line Eiffel Tower summit. Evening 3-course dinner cruise on the Seine River."
+      },
+      {
+        "day": 3,
+        "title": "Louvre & Notre Dame Walk",
+        "description": "Private guided Louvre tour. Walk through Latin Quarter and view Notre-Dame Cathedral."
+      },
+      {
+        "day": 4,
+        "title": "Versailles Palace Trip",
+        "description": "Train to magnificent Palace of Versailles. Explore Hall of Mirrors and royal gardens."
+      },
+      {
+        "day": 5,
+        "title": "Montmartre & Departure",
+        "description": "Explore artistic Montmartre, visit Sacré-Cœur, pick up souvenirs before airport transfer."
+      }
+    ],
+    "_id": "htbekirgb7b1o7jkylf0jh",
+    "createdAt": "2026-06-19T07:51:32.278Z",
+    "updatedAt": "2026-06-19T07:51:32.278Z"
+  },
+  {
+    "title": "Thrill Seekers Manali Adventure",
+    "destination": "rbbgd6xoolu37q0z8qxa",
+    "description": "Action-packed adventure in the snow-capped mountains. Includes trekking, river rafting, paragliding, and camping under the stars.",
+    "price": 23920,
+    "durationDays": 4,
+    "durationNights": 3,
+    "inclusions": [
+      "Riverside Camping Tents",
+      "All Meals during Camp",
+      "Adventure Gear & Safety Equipment",
+      "Qualified Trekking Guides"
+    ],
+    "exclusions": [
+      "Transit to/from Manali",
+      "Equipment rentals for personal use",
+      "Beverages",
+      "Medical expenses"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": false,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Camp Check-in & Acclimatization",
+        "description": "Arrive in Manali. Transfer to riverside campsite in Solang Valley. Bonfire and live music."
+      },
+      {
+        "day": 2,
+        "title": "Paragliding & Zorbing Solang Valley",
+        "description": "High-altitude paragliding, ATV rides, and adventure activities."
+      },
+      {
+        "day": 3,
+        "title": "White Water Rafting & Jogini Waterfalls",
+        "description": "Beas River rafting, Jogini Waterfalls hike, Vashisht Hot Springs."
+      },
+      {
+        "day": 4,
+        "title": "Hadimba Temple & Departure",
+        "description": "Explore historic Hadimba Temple, Mall Road shopping, then departure."
+      }
+    ],
+    "_id": "a29ysfuvv3u9wegix6tyb",
+    "createdAt": "2026-06-19T07:51:32.278Z",
+    "updatedAt": "2026-06-19T07:51:32.278Z"
+  },
+  {
+    "title": "Kerala Backwaters & Houseboat Experience",
+    "destination": "kgev52nkkqjxtzy4geaylf",
+    "description": "Immerse yourself in nature's greenery. Cruise serene backwaters on a private houseboat and relax with professional Ayurvedic spa therapies.",
+    "price": 39920,
+    "durationDays": 6,
+    "durationNights": 5,
+    "inclusions": [
+      "Premium Houseboat Stay in Alleppey",
+      "Resort stays in Munnar & Thekkady",
+      "Traditional Keralan Cuisine Meals",
+      "Ayurvedic Massage Session"
+    ],
+    "exclusions": [
+      "Airfare/Trainfare",
+      "Entry tickets for national parks",
+      "Camera charges",
+      "Personal laundry"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": false,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Kochi Arrival & Transfer to Munnar",
+        "description": "Arrive in Kochi, drive to Munnar through lush tea gardens and waterfalls."
+      },
+      {
+        "day": 2,
+        "title": "Munnar Tea Gardens Tour",
+        "description": "Explore Eravikulam National Park, Mattupetty Dam, and tea estates."
+      },
+      {
+        "day": 3,
+        "title": "Thekkady Wildlife Reserve",
+        "description": "Boat safari on Periyar Lake to spot elephants, deer, and exotic birds."
+      },
+      {
+        "day": 4,
+        "title": "Houseboat Boarding Alleppey",
+        "description": "Board traditional houseboat. Glide along calm canals and watch the sunset."
+      },
+      {
+        "day": 5,
+        "title": "Ayurvedic Spa & Kochi Sightseeing",
+        "description": "Authentic Ayurvedic massage. Fort Kochi sightseeing and Chinese Fishing Nets."
+      },
+      {
+        "day": 6,
+        "title": "Departure",
+        "description": "Free morning for shopping. Transfer to Kochi airport."
+      }
+    ],
+    "_id": "jkn2ey5hk5lzfs0n9j2s",
+    "createdAt": "2026-06-19T07:51:32.278Z",
+    "updatedAt": "2026-06-19T07:51:32.278Z"
+  },
+  {
+    "title": "Goa Beach Party & Heritage Tour",
+    "destination": "94qn7w462jfy63xvatdg9a",
+    "description": "Relax on sandy beaches, enjoy thrilling water sports, explore Portuguese-era heritage churches, and experience Goa's famous nightlife.",
+    "price": 15920,
+    "durationDays": 3,
+    "durationNights": 2,
+    "inclusions": [
+      "Beachside Resort Stay",
+      "Complimentary Breakfasts",
+      "Scuba Diving & Jet Ski Package",
+      "Guided heritage church tour"
+    ],
+    "exclusions": [
+      "Flights or trains",
+      "Dinner meals",
+      "Alcoholic drinks",
+      "Water activities insurance"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": true,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Goa Arrival & Calangute Beach Sunset",
+        "description": "Arrive in Goa. Check in to beach resort. Relax at Calangute beach and enjoy beach shack nightlife."
+      },
+      {
+        "day": 2,
+        "title": "Scuba Diving & North Goa Water Sports",
+        "description": "Boat trip for dolphin sighting and scuba diving. Jet ski, parasailing, and banana boat rides at Baga Beach."
+      },
+      {
+        "day": 3,
+        "title": "Old Goa Churches & Spice Plantation",
+        "description": "Visit Basilica of Bom Jesus. Traditional lunch at a tropical Spice Plantation. Airport transfer."
+      }
+    ],
+    "_id": "f1m7lf5pkdvk3tg4amj3pl",
+    "createdAt": "2026-06-19T07:51:32.278Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  },
+  {
+    "title": "Delhi Historical Heritage Tour",
+    "destination": "mun8hw5shybqd8tcagnk2m",
+    "description": "Explore the spectacular historical monuments of Old and New Delhi. Includes guided visits to Qutub Minar, Red Fort, India Gate, and Humayun's Tomb.",
+    "price": 11920,
+    "durationDays": 3,
+    "durationNights": 2,
+    "inclusions": [
+      "Boutique Hotel Stay",
+      "Daily Breakfasts",
+      "Private Chauffeur Tour",
+      "All Monument Entry Tickets"
+    ],
+    "exclusions": [
+      "Airfare/Trainfare to Delhi",
+      "Personal expenses",
+      "Tips and Gratuities"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": false,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Old Delhi Heritage",
+        "description": "Arrive in Delhi. Check-in at hotel. Visit the grand Red Fort, Jama Masjid, and take a heritage rickshaw ride in Chandni Chowk."
+      },
+      {
+        "day": 2,
+        "title": "New Delhi & Historical Monuments",
+        "description": "Visit the towering Qutub Minar, the beautiful Humayun's Tomb, India Gate, and drive past Rashtrapati Bhavan."
+      },
+      {
+        "day": 3,
+        "title": "Lotus Temple & Departure",
+        "description": "Explore the architectural marvel of Lotus Temple and Akshardham Temple before transfer to airport/station."
+      }
+    ],
+    "_id": "x2v1xgqsgcifkvfupmstt",
+    "createdAt": "2026-06-19T07:51:32.279Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  },
+  {
+    "title": "Triund Peak Camping & Trekking",
+    "destination": "etmc1ovrl8utjsgruqf2b",
+    "description": "Trek to the pristine ridge of Triund near McLeod Ganj. Enjoy panoramic views of the majestic Dhauladhar ranges, camp under a star-filled sky, and sit around a warm bonfire.",
+    "price": 6320,
+    "durationDays": 2,
+    "durationNights": 1,
+    "inclusions": [
+      "Premium Camping Tents",
+      "Dinner, Breakfast & Trekking Snacks",
+      "Professional Trekking Guide & Permits",
+      "Sleeping Bags & Camping Gear"
+    ],
+    "exclusions": [
+      "Travel to/from McLeod Ganj",
+      "Porters for personal luggage",
+      "Bottled water",
+      "Tips"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": false,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Trek from Dharamkot to Triund Peak",
+        "description": "Assemble at McLeod Ganj. Start your 9km trek to Triund, passing through rhododendron and oak forests. Check-in to campsite on the ridge, followed by bonfire and dinner."
+      },
+      {
+        "day": 2,
+        "title": "Sunrise Views & Descent",
+        "description": "Witness a breathtaking sunrise over the snow-clad Dhauladhar mountains. Have breakfast and trek back to McLeod Ganj for departure."
+      }
+    ],
+    "_id": "kdxfmcntarznlxho7l34p",
+    "createdAt": "2026-06-19T07:51:32.279Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  },
+  {
+    "title": "Hampta Pass Crossover Adventure",
+    "destination": "kux4vmkhiu98vpam2plen",
+    "description": "Experience one of the most stunning crossover treks in Himachal. Crossover from the lush green valleys of Manali to the stark, lunar-like landscapes of Spiti Valley via Hampta Pass.",
+    "price": 19920,
+    "durationDays": 5,
+    "durationNights": 4,
+    "inclusions": [
+      "High Altitude Trekking Tents & Gear",
+      "All Veg Meals during Trek",
+      "Qualified Alpine Trek Leaders & Helpers",
+      "Forest Permissions & Permits"
+    ],
+    "exclusions": [
+      "Transportation to Manali",
+      "Offloading of personal backpack",
+      "Any emergency evacuation charges"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": false,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Drive to Jobra & Trek to Chika",
+        "description": "Drive from Manali to Jobra. Start a gentle 2-hour trek along the Rani Nallah stream to the beautiful campsite of Chika."
+      },
+      {
+        "day": 2,
+        "title": "Trek from Chika to Balu ka Gera",
+        "description": "Trek through alpine wildflower meadows, crossing boulder sections and streams to reach the Balu ka Gera campsite at 11,900 ft."
+      },
+      {
+        "day": 3,
+        "title": "Pass Crossover to Shea Goru via Hampta Pass",
+        "description": "Steep climb to the summit of Hampta Pass (14,100 ft). Soak in views of the majestic peaks and slide down snowy slopes to reach Shea Goru."
+      },
+      {
+        "day": 4,
+        "title": "Trek to Chatru & Drive to Chandra Taal",
+        "description": "Descend through the barren mountains of Lahaul to Chatru. Drive to the crescent-shaped sacred Chandra Taal lake (Moon Lake) and camp."
+      },
+      {
+        "day": 5,
+        "title": "Drive from Chatru to Manali",
+        "description": "Drive back to Manali via the famous Atal Tunnel. Disband at Manali in the afternoon."
+      }
+    ],
+    "_id": "44d7rd2clrfz621nh8cyb",
+    "createdAt": "2026-06-19T07:51:32.279Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  },
+  {
+    "title": "Chopta Chandrashila & Tungnath Trek",
+    "destination": "e95oux0fkgl2um71bq1pn",
+    "description": "Trek to the highest Shiva temple in the world at Tungnath, and ascend to the majestic Chandrashila Peak. Witness a 360-degree panoramic view of the massive Garhwal Himalayas.",
+    "price": 10320,
+    "durationDays": 3,
+    "durationNights": 2,
+    "inclusions": [
+      "Hotel/Guesthouse Stay in Chopta",
+      "All Meals (Veg)",
+      "Trek Guide, Support Staff & Entry Fees",
+      "Traditional Bonfire evenings"
+    ],
+    "exclusions": [
+      "Transit to/from Rishikesh",
+      "Mules for personal bags",
+      "Tips or personal expenses"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": false,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Rishikesh to Chopta Scenic Drive",
+        "description": "Drive along the sacred Ganga and Alaknanda rivers, passing Devprayag. Arrive at the scenic meadows of Chopta (Mini Switzerland of Uttarakhand)."
+      },
+      {
+        "day": 2,
+        "title": "Summit Day: Tungnath & Chandrashila",
+        "description": "Trek 4km to the historic Tungnath Temple. Ascend another steep 1.5km to Chandrashila Peak (12,100 ft) for a 360-degree view of Chaukhamba and Nanda Devi peaks. Return to Chopta."
+      },
+      {
+        "day": 3,
+        "title": "Sari Village, Deoriatal Hike & Return",
+        "description": "Trek 2.3km to the beautiful Deoriatal lake, reflecting the Chaukhamba peaks. Drive back to Rishikesh."
+      }
+    ],
+    "_id": "i6n76wzbnj5rznw1n01ks",
+    "createdAt": "2026-06-19T07:51:32.279Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  },
+  {
+    "title": "Bavarian Castles & Munich Tour",
+    "destination": "qdp7nutjd67ridzl9ayyn",
+    "description": "Explore the rich culture of Bavaria! Tour Munich's historic Marienplatz, and take day trips to the fairytale Neuschwanstein Castle and the pristine Alps.",
+    "price": 51920,
+    "durationDays": 4,
+    "durationNights": 3,
+    "inclusions": [
+      "4-Star Munich Hotel Stay",
+      "Daily Bavarian Buffet Breakfasts",
+      "Neuschwanstein Castle Guided Tour & Bus",
+      "Bavarian Alps Rail Day Trip"
+    ],
+    "exclusions": [
+      "International Flights",
+      "Luncheon & Dinner meals",
+      "Schengen Visa fee"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1595853035070-59a39fe84de3?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": false,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Munich & Old Town Walk",
+        "description": "Arrive in Munich, check-in to hotel. Enjoy a guided walking tour of Marienplatz, the Glockenspiel, and the English Garden."
+      },
+      {
+        "day": 2,
+        "title": "Fairytale Neuschwanstein Castle Tour",
+        "description": "Take a scenic coach journey through the Bavarian countryside to visit King Ludwig II's stunning Neuschwanstein Castle."
+      },
+      {
+        "day": 3,
+        "title": "Bavarian Alps & Lake Starnberg",
+        "description": "Train trip to the edge of the Alps. Cruise beautiful Lake Starnberg and explore local alpine villages."
+      },
+      {
+        "day": 4,
+        "title": "Museums & Departure",
+        "description": "Visit the Deutsches Museum or BMW Welt before departure."
+      }
+    ],
+    "_id": "7ljtdoo53j9tc5xse1d0zm",
+    "createdAt": "2026-06-19T07:51:32.279Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  },
+  {
+    "title": "Canadian Rockies & Vancouver Scenic Tour",
+    "destination": "7jr0db2eodmmin72heppu8",
+    "description": "Discover the gorgeous Pacific Northwest and the majestic Canadian Rockies. Travel from coastal Vancouver to the glacier lakes of Banff National Park.",
+    "price": 95920,
+    "durationDays": 6,
+    "durationNights": 5,
+    "inclusions": [
+      "Premium Resort & Lodge Stays",
+      "Daily Breakfasts",
+      "Rocky Mountaineer Train Ticket",
+      "Banff & Lake Louise National Park Tours"
+    ],
+    "exclusions": [
+      "Airfare to/from Canada",
+      "Canadian ETA/Visa fees",
+      "National park camera permits"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": true,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Vancouver & City Highlights",
+        "description": "Arrive in Vancouver. Explore Stanley Park, Gastown historic steam clock, and Granville Island Public Market."
+      },
+      {
+        "day": 2,
+        "title": "Capilano Suspension Bridge & Whistler Drive",
+        "description": "Walk across the thrilling Capilano Suspension Bridge. Drive the Sea-to-Sky Highway to Whistler alpine resort."
+      },
+      {
+        "day": 3,
+        "title": "Rocky Mountaineer Train: Vancouver to Kamloops",
+        "description": "Board the luxury Rocky Mountaineer train. Experience spectacular vistas of the Fraser River Canyon and river rapids."
+      },
+      {
+        "day": 4,
+        "title": "Rocky Mountaineer Train: Kamloops to Banff",
+        "description": "Continue train journey into the Canadian Rockies. Arrive in the beautiful mountain town of Banff."
+      },
+      {
+        "day": 5,
+        "title": "Lake Louise & Columbia Icefield Glacier Tour",
+        "description": "Visit the turquoise waters of Lake Louise. Take an ice-explorer tour onto the massive Athabasca Glacier."
+      },
+      {
+        "day": 6,
+        "title": "Banff Gondola & Calgary Departure",
+        "description": "Ride the Banff Gondola for a 360-degree view. Transfer to Calgary airport for departure."
+      }
+    ],
+    "_id": "oyvhz90cpw82c1aiycic39",
+    "createdAt": "2026-06-19T07:51:32.279Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  },
+  {
+    "title": "Sydney Harbour & Coastal Wonders Tour",
+    "destination": "ymfc0i9dpw9u0ba33z249",
+    "description": "Experience the absolute best of Australia's iconic city. Tour the Sydney Opera House, take a private harbor yacht cruise, and walk along Bondi beach.",
+    "price": 79920,
+    "durationDays": 5,
+    "durationNights": 4,
+    "inclusions": [
+      "5-Star Luxury Harbourfront Hotel",
+      "Daily Breakfasts",
+      "Sydney Opera House Private Behind-the-scenes Tour",
+      "Harbor Sunset Catamaran Dinner Cruise"
+    ],
+    "exclusions": [
+      "International Flights",
+      "Australian Visa & Entry Fees",
+      "Personal expenses"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=80"
+    ],
+    "featured": true,
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Sydney & Harbour Walk",
+        "description": "Arrive in Sydney. Transfer to your luxury hotel. Take a walking tour of Circular Quay, Sydney Harbour Bridge, and historical Rocks district."
+      },
+      {
+        "day": 2,
+        "title": "Sydney Opera House & Sunset Yacht Cruise",
+        "description": "Private tour of the legendary Sydney Opera House. Relax on a sunset catamaran dinner cruise around the harbor."
+      },
+      {
+        "day": 3,
+        "title": "Bondi Beach & Spectacular Coastal Walk",
+        "description": "Visit famous Bondi Beach. Walk the scenic Bondi to Coogee coastal trail, enjoying ocean vistas and rocky cliffs."
+      },
+      {
+        "day": 4,
+        "title": "Blue Mountains Day Trip",
+        "description": "Take a day tour to the World Heritage-listed Blue Mountains. Witness the Three Sisters rock formation and ride the Scenic World cableway."
+      },
+      {
+        "day": 5,
+        "title": "Royal Botanic Gardens & Departure",
+        "description": "Free morning to stroll the Royal Botanic Gardens and shop in Pitt Street Mall before your flight home."
+      }
+    ],
+    "_id": "tlhpy7q8hqjagb4kgrhvn",
+    "createdAt": "2026-06-19T07:51:32.279Z",
+    "updatedAt": "2026-06-19T07:51:32.279Z"
+  }
+]

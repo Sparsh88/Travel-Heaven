@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Database Setup | Travel Heaven</title>
+  <meta name="description" content="Travel Heaven database setup and seeding utility for administrators.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('th-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .setup-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .setup-card {
+      max-width: 600px;
+      width: 100%;
+      background: var(--theme-surface);
+      border-radius: 24px;
+      padding: 50px 40px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--theme-border);
+      text-align: center;
+    }
+
+    .setup-icon {
+      font-size: 60px;
+      margin-bottom: 20px;
+    }
+
+    .setup-card h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .setup-card p {
+      color: var(--theme-text-muted);
+      font-size: 15px;
+      margin-bottom: 30px;
+      line-height: 1.7;
+    }
+
+    .status-box {
+      background: var(--theme-bg);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid var(--theme-border);
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--theme-border);
+    }
+
+    .status-row:last-child {
+      border-bottom: none;
+    }
+
+    .status-badge {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-green { background: #d4edda; color: #155724; }
+    .badge-yellow { background: #fff3cd; color: #856404; }
+    .badge-red { background: #f8d7da; color: #721c24; }
+
+    [data-theme="dark"] .badge-green { background: #1a3a24; color: #56d98a; }
+    [data-theme="dark"] .badge-yellow { background: #3a2e00; color: #f0c040; }
+    [data-theme="dark"] .badge-red { background: #3a1018; color: #f07080; }
+
+    .btn-seed {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .btn-check {
+      width: 100%;
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 12px;
+      margin-top: 10px;
+    }
+
+    .log-box {
+      background: #0d1117;
+      color: #58d68d;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: left;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .log-box.show { display: block; }
+
+    .log-line { margin-bottom: 4px; }
+    .log-success { color: #58d68d; }
+    .log-error { color: #e74c3c; }
+    .log-info { color: #5dade2; }
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar scrolled" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <span>Travel Heaven</span>
+      </a>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <a href="index.html" class="btn btn-outline" style="padding: 8px 18px; font-size: 13px;">← Back to Home</a>
+        <a href="admin.html" class="btn btn-secondary" style="padding: 8px 18px; font-size: 13px;">Admin Panel</a>
+        <div class="nav-auth" id="nav-auth"></div>
+      </div>
+      <div class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+
+  <div class="setup-page">
+    <div class="setup-card">
+      <div class="setup-icon">🗄️</div>
+      <h1>Database Setup Utility</h1>
+      <p>
+        Use this page to populate the database with demo destinations, packages, and an admin account.
+        Run the <strong>Status Check</strong> first to see what's in the database, then <strong>Seed Database</strong> to add demo data.
+      </p>
+
+      <!-- Status Box -->
+      <div class="status-box" id="status-box">
+        <div class="status-row">
+          <span>Database Connection</span>
+          <span class="status-badge badge-yellow" id="db-status">Checking...</span>
+        </div>
+        <div class="status-row">
+          <span>Destinations</span>
+          <span class="status-badge badge-yellow" id="dest-count">—</span>
+        </div>
+        <div class="status-row">
+          <span>Packages</span>
+          <span class="status-badge badge-yellow" id="pkg-count">—</span>
+        </div>
+        <div class="status-row">
+          <span>Admin Accounts</span>
+          <span class="status-badge badge-yellow" id="admin-count">—</span>
+        </div>
+        <div class="status-row">
+          <span>Users</span>
+          <span class="status-badge badge-yellow" id="user-count">—</span>
+        </div>
+      </div>
+
+      <!-- Log Box -->
+      <div class="log-box" id="log-box"></div>
+
+      <!-- Action Buttons -->
+      <button class="btn btn-outline btn-check" id="btn-status" onclick="checkStatus()">
+        🔍 Check Database Status
+      </button>
+      <button class="btn btn-primary btn-seed" id="btn-seed" onclick="seedDatabase()">
+        🌱 Seed Database with Demo Data
+      </button>
+
+      <p style="font-size: 12px; color: var(--theme-text-muted); margin-top: 20px;">
+        ⚠️ Seeding will <strong>replace</strong> existing destinations and packages. Admin and user accounts are preserved if they exist.
+      </p>
+
+      <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid var(--theme-border);">
+        <h3 style="font-size: 15px; margin-bottom: 10px;">🔑 Default Credentials After Seeding</h3>
+        <div class="status-box" style="margin: 0;">
+          <div class="status-row">
+            <span>Admin Login</span>
+            <span style="font-size: 12px; font-family: monospace;">admin@travelheaven.com / admin123</span>
+          </div>
+          <div class="status-row">
+            <span>Demo User</span>
+            <span style="font-size: 12px; font-family: monospace;">user@travelheaven.com / user1234</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    function addLog(msg, type = 'info') {
+      const box = document.getElementById('log-box');
+      box.classList.add('show');
+      const line = document.createElement('div');
+      line.className = `log-line log-${type}`;
+      const time = new Date().toLocaleTimeString();
+      line.textContent = `[${time}] ${msg}`;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function updateBadge(id, value, type) {
+      const el = document.getElementById(id);
+      el.textContent = value;
+      el.className = `status-badge badge-${type}`;
+    }
+
+    async function checkStatus() {
+      const btn = document.getElementById('btn-status');
+      btn.disabled = true;
+      btn.textContent = '⏳ Checking...';
+      addLog('Fetching database status...', 'info');
+
+      try {
+        const res = await fetch('/api/seed/status');
+        const json = await res.json();
+
+        if (json.success) {
+          updateBadge('db-status', json.database, json.database === 'Connected' ? 'green' : 'red');
+          updateBadge('dest-count', json.destinations, json.destinations > 0 ? 'green' : 'yellow');
+          updateBadge('pkg-count', json.packages, json.packages > 0 ? 'green' : 'yellow');
+          updateBadge('admin-count', json.admins, json.admins > 0 ? 'green' : 'red');
+          updateBadge('user-count', json.users, json.users > 0 ? 'green' : 'yellow');
+          addLog(json.message, 'success');
+          addLog(`Database: ${json.database} | Destinations: ${json.destinations} | Packages: ${json.packages}`, 'info');
+        } else {
+          addLog('Failed to get status: ' + json.message, 'error');
+        }
+      } catch (err) {
+        addLog('ERROR: Cannot connect to server. Make sure the server is running on port 5000.', 'error');
+        updateBadge('db-status', 'Error', 'red');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🔍 Check Database Status';
+      }
+    }
+
+    async function seedDatabase() {
+      const btn = document.getElementById('btn-seed');
+      btn.disabled = true;
+      btn.textContent = '⏳ Seeding...';
+      addLog('Starting database seeding...', 'info');
+
+      try {
+        const res = await fetch('/api/seed', { method: 'POST' });
+        const json = await res.json();
+
+        if (json.success) {
+          addLog('✅ ' + json.message, 'success');
+          addLog(`Created: ${json.destinations} destinations, ${json.packages} packages`, 'success');
+          // Refresh status
+          await checkStatus();
+          addLog('✅ You can now visit the Destinations page to see all loaded destinations!', 'success');
+        } else {
+          addLog('❌ Seeding failed: ' + json.message, 'error');
+        }
+      } catch (err) {
+        addLog('❌ ERROR: Cannot connect to server. Make sure the server is running.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🌱 Seed Database with Demo Data';
+      }
+    }
+
+    // Auto check on load
+    document.addEventListener('DOMContentLoaded', checkStatus);
+  </script>
+</body>
+</html>

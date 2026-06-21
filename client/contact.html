@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Travel Heaven</title>
+  <meta name="description" content="Get in touch with Travel Heaven for queries, group bookings, and custom itinerary requests.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('th-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .contact-layout {
+      margin-top: 120px;
+      margin-bottom: 80px;
+      display: grid;
+      grid-template-columns: 1.2fr 1.8fr;
+      gap: 40px;
+    }
+
+    .contact-info-card {
+      background: var(--primary);
+      color: var(--white);
+      border-radius: var(--border-radius);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .contact-info-card h2 {
+      color: var(--white);
+      font-size: 28px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    .info-icon {
+      font-size: 20px;
+      color: var(--secondary);
+    }
+
+    .info-text h3 {
+      color: var(--white);
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .info-text p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Google Map stub styling */
+    .map-container {
+      margin-top: auto;
+      border-radius: 12px;
+      overflow: hidden;
+      height: 200px;
+      border: 1px solid rgba(255,255,255,0.1);
+      position: relative;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Form Card */
+    .contact-form-card {
+      background: var(--theme-card);
+      border-radius: var(--border-radius);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--theme-border);
+    }
+
+    .contact-form-card h2 {
+      font-size: 26px;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .form-group input, .form-group textarea {
+      padding: 12px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--theme-input-border);
+      outline: none;
+      font-size: 14px;
+      background: var(--theme-input-bg);
+      color: var(--theme-text);
+      transition: var(--transition);
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.1);
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .contact-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span>Travel Heaven</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="contact.html" class="active" style="color: var(--secondary);">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="nav-auth" id="nav-auth">
+        <a href="login.html" class="btn btn-outline" style="padding: 8px 20px;">Login</a>
+        <a href="register.html" class="btn btn-primary" style="padding: 8px 20px;">Sign Up</a>
+      </div>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contact Layout -->
+  <div class="container contact-layout">
+    
+    <!-- Left Info Sidebar -->
+    <aside class="contact-info-card">
+      <h2>Get In Touch</h2>
+      <p style="font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.5;">Have questions about pricing, customized itineraries, or group bookings? Write to us or call our agents directly.</p>
+      
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div class="info-text">
+          <h3>Office Location</h3>
+          <p>100 Travel Street, Suite 500, San Francisco, CA 94103</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <span class="info-icon">📞</span>
+        <div class="info-text">
+          <h3>Phone Number</h3>
+          <p>+1 (555) 123-4567</p>
+          <p>+1 (555) 765-4321</p>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <span class="info-icon">✉️</span>
+        <div class="info-text">
+          <h3>Email Address</h3>
+          <p>info@travelheaven.com</p>
+          <p>support@travelheaven.com</p>
+        </div>
+      </div>
+
+      <!-- Google Maps Embed stub -->
+      <div class="map-container">
+        <!-- Structured Google Map Mockup Frame -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.835964572538!2d-122.4194155!3d37.7749295!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807000000001%3A0x8673f1390d40134f!2sSan+Francisco%2C+CA!5e0!3m2!1sen!2sus!4v1565257123456" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </aside>
+
+    <!-- Right Query Form -->
+    <main class="contact-form-card">
+      <h2>Send Us A Message</h2>
+      <form id="contact-form" onsubmit="submitContactForm(event)">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="contact-name" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="contact-email" placeholder="john@example.com" required>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" id="contact-subject" placeholder="E.g., Group booking details..." required>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea id="contact-message" rows="5" placeholder="Write your query here..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Send Query</button>
+      </form>
+    </main>
+
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/logo.svg" alt="Travel Heaven Logo">
+          <span>Travel Heaven</span>
+        </a>
+        <p>Premium customized travel tours, flights booking, and hotel reservations designed around comfort and affordability.</p>
+        <div class="social-links">
+          <a href="#">📘</a>
+          <a href="#">🐦</a>
+          <a href="#">📷</a>
+          <a href="#">💼</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Support Desk</h3>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="dashboard.html">User Dashboard</a></li>
+          <li><a href="admin.html">Admin Portal</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Sign up to get discounts and latest travel reviews.</p>
+        <form class="newsletter-form" onsubmit="alert('Thank you!'); this.reset(); return false;">
+          <input type="email" placeholder="Your Email" required>
+          <button type="submit">🚀</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
+      <p>Developed with ❤️ by Antigravity</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    async function submitContactForm(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('contact-name').value;
+      const email = document.getElementById('contact-email').value;
+      const subject = document.getElementById('contact-subject').value;
+      const message = document.getElementById('contact-message').value;
+
+      try {
+        const res = await fetch('/api/contacts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          showAlert('Your message was sent successfully!', 'success');
+          document.getElementById('contact-form').reset();
+        } else {
+          showAlert(json.message || 'Submission failed, try again.', 'error');
+        }
+      } catch (err) {
+        showAlert('Network error, please verify internet connection.', 'error');
+      }
+    }
+  </script>
+</body>
+</html>

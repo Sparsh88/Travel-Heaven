@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore Destinations | Travel Heaven</title>
+  <meta name="description" content="Browse all travel destinations with filters for category, budget and rating. Find your perfect escape with Travel Heaven.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('th-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    .dest-layout {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 30px;
+      margin-top: 120px;
+      margin-bottom: 80px;
+    }
+
+    /* Filters Sidebar */
+    .filter-sidebar {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      padding: 30px 24px;
+      box-shadow: var(--shadow-sm);
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+
+    .filter-group {
+      margin-bottom: 25px;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      padding-bottom: 20px;
+    }
+
+    .filter-group:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .filter-group h3 {
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .search-box-sidebar {
+      position: relative;
+    }
+
+    .search-box-sidebar input {
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(0,0,0,0.1);
+      outline: none;
+      font-size: 14px;
+    }
+
+    .search-box-sidebar input:focus {
+      border-color: var(--secondary);
+    }
+
+    /* Checkbox / Radio filters */
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--secondary);
+    }
+
+    /* Grid layout */
+    .dest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    /* Destination card */
+    .destination-card {
+      background: var(--white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid rgba(0,0,0,0.03);
+    }
+
+    .destination-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(255, 122, 0, 0.1);
+    }
+
+    .destination-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .destination-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .destination-card:hover .destination-img img {
+      transform: scale(1.06);
+    }
+
+    .destination-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .destination-body {
+      padding: 20px;
+    }
+
+    .destination-body h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .destination-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .destination-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #ffd166;
+      font-weight: 600;
+    }
+
+    /* Responsive */
+    @media (max-width: 992px) {
+      .dest-layout {
+        grid-template-columns: 1fr;
+      }
+      .filter-sidebar {
+        position: relative;
+        top: 0;
+      }
+      .dest-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .dest-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="loader-wrapper" id="loader">
+    <div class="loader"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="Travel Heaven Logo">
+        <span>Travel Heaven</span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html" class="active" style="color: var(--secondary);">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </nav>
+      <div class="nav-auth" id="nav-auth">
+        <a href="login.html" class="btn btn-outline" style="padding: 8px 20px;">Login</a>
+        <a href="register.html" class="btn btn-primary" style="padding: 8px 20px;">Sign Up</a>
+      </div>
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Destinations Layout -->
+  <div class="container dest-layout">
+    
+    <!-- Sidebar Filters -->
+    <aside class="filter-sidebar">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="font-size: 20px;">Filters</h2>
+        <button onclick="resetFilters()" style="background: none; border: none; color: var(--secondary); font-weight: 600; cursor: pointer; font-size: 13px;">Clear All</button>
+      </div>
+
+      <!-- Search Filter -->
+      <div class="filter-group">
+        <h3>Search</h3>
+        <div class="search-box-sidebar">
+          <input type="text" id="filter-search" placeholder="Type name or country..." oninput="fetchFilteredDestinations()">
+        </div>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <h3>Category</h3>
+        <div class="checkbox-item">
+          <input type="radio" name="category" id="cat-all" value="" checked onchange="fetchFilteredDestinations()">
+          <label for="cat-all">All Categories</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="radio" name="category" id="cat-domestic" value="Domestic" onchange="fetchFilteredDestinations()">
+          <label for="cat-domestic">Domestic</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="radio" name="category" id="cat-international" value="International" onchange="fetchFilteredDestinations()">
+          <label for="cat-international">International</label>
+        </div>
+      </div>
+
+      <!-- Budget Filter -->
+      <div class="filter-group">
+        <h3>Budget Category</h3>
+        <div class="checkbox-item">
+          <input type="radio" name="budget" id="budget-all" value="" checked onchange="fetchFilteredDestinations()">
+          <label for="budget-all">All Budgets</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="radio" name="budget" id="budget-budget" value="Budget" onchange="fetchFilteredDestinations()">
+          <label for="budget-budget">Budget</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="radio" name="budget" id="budget-mid" value="Mid-Range" onchange="fetchFilteredDestinations()">
+          <label for="budget-mid">Mid-Range</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="radio" name="budget" id="budget-luxury" value="Luxury" onchange="fetchFilteredDestinations()">
+          <label for="budget-luxury">Luxury</label>
+        </div>
+      </div>
+
+      <!-- Rating Filter -->
+      <div class="filter-group">
+        <h3>Minimum Rating</h3>
+        <div class="checkbox-item">
+          <input type="radio" name="rating" id="rating-all" value="" checked onchange="fetchFilteredDestinations()">
+          <label for="rating-all">Show All</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="radio" name="rating" id="rating-4" value="4" onchange="fetchFilteredDestinations()">
+          <label for="rating-4">★ 4.0 & above</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="radio" name="rating" id="rating-3" value="3" onchange="fetchFilteredDestinations()">
+          <label for="rating-3">★ 3.0 & above</label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Results Grid -->
+    <main>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <h2 style="font-size: 22px;">Available Destinations</h2>
+        <span id="results-count" style="font-size: 14px; color: var(--text-muted); font-weight: 500;">0 destinations found</span>
+      </div>
+
+      <div class="dest-grid" id="destinations-container">
+        <!-- Dynmic Content loaded from API -->
+        <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Loading destinations...</div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="images/logo.svg" alt="Travel Heaven Logo">
+          <span>Travel Heaven</span>
+        </a>
+        <p>Premium customized travel tours, flights booking, and hotel reservations designed around comfort and affordability.</p>
+        <div class="social-links">
+          <a href="#">📘</a>
+          <a href="#">🐦</a>
+          <a href="#">📷</a>
+          <a href="#">💼</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="packages.html">Packages</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Support Desk</h3>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="dashboard.html">User Dashboard</a></li>
+          <li><a href="admin.html">Admin Portal</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+      <div class="footer-newsletter">
+        <h3>Newsletter</h3>
+        <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">Sign up to get discounts and latest travel reviews.</p>
+        <form class="newsletter-form" onsubmit="alert('Thank you!'); this.reset(); return false;">
+          <input type="email" placeholder="Your Email" required>
+          <button type="submit">🚀</button>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
+      <p>Developed with ❤️ by Antigravity</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script>
+    // Filters reset
+    function resetFilters() {
+      document.getElementById('filter-search').value = '';
+      document.getElementById('cat-all').checked = true;
+      document.getElementById('budget-all').checked = true;
+      document.getElementById('rating-all').checked = true;
+      fetchFilteredDestinations();
+    }
+
+    // Dynamic Filter & Fetch query
+    async function fetchFilteredDestinations() {
+      const search = document.getElementById('filter-search').value;
+      const category = document.querySelector('input[name="category"]:checked')?.value || '';
+      const budget = document.querySelector('input[name="budget"]:checked')?.value || '';
+      const rating = document.querySelector('input[name="rating"]:checked')?.value || '';
+
+      const queryParams = new URLSearchParams();
+      if (search) queryParams.append('search', search);
+      if (category) queryParams.append('category', category);
+      if (budget) queryParams.append('budget', budget);
+      if (rating) queryParams.append('rating', rating);
+
+      const container = document.getElementById('destinations-container');
+      const countEl = document.getElementById('results-count');
+
+      try {
+        const res = await fetch(`/api/destinations?${queryParams.toString()}`);
+        const json = await res.json();
+        
+        if (json.success) {
+          container.innerHTML = '';
+          countEl.textContent = `${json.count} destinations found`;
+
+          if (json.data.length === 0) {
+            container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">No destinations match your filters. Try checking other items.</div>`;
+            return;
+          }
+
+          json.data.forEach(dest => {
+            const card = document.createElement('div');
+            card.className = 'destination-card';
+            card.innerHTML = `
+              <div class="destination-img">
+                <span class="destination-badge">${dest.category}</span>
+                <img src="${dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}" alt="${dest.name}">
+              </div>
+              <div class="destination-body">
+                <h3>${dest.name}, ${dest.country}</h3>
+                <p style="font-size: 13px; color: var(--text-muted); height: 55px; overflow: hidden; margin-bottom: 15px;">${dest.description}</p>
+                <div class="destination-meta">
+                  <div class="destination-rating">
+                    <span>★</span>
+                    <span>${dest.rating || '0.0'}</span>
+                  </div>
+                  <span style="font-weight: 600; color: var(--primary);">${dest.budgetCategory}</span>
+                </div>
+                <div style="margin-top: 15px;">
+                  <a href="destination-details.html?id=${dest._id}" class="btn btn-primary" style="width: 100%; font-size: 13px; padding: 10px; border-radius: 8px;">Explore Packages</a>
+                </div>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching destinations:', err);
+      }
+    }
+
+    // Read initial filters from URL params (e.g. category=Domestic)
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const search = params.get('search');
+      const category = params.get('category');
+      const budget = params.get('budget');
+
+      if (search) document.getElementById('filter-search').value = search;
+      if (category) {
+        const el = document.getElementById(`cat-${category.toLowerCase()}`);
+        if (el) el.checked = true;
+      }
+      if (budget) {
+        const el = document.getElementById(`budget-${budget.toLowerCase()}`);
+        if (el) el.checked = true;
+      }
+
+      fetchFilteredDestinations();
+    });
+  </script>
+</body>
+</html>
