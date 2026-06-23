@@ -8,7 +8,7 @@ const errorHandler = require('./middlewares/errorMiddleware');
 const { apiLimiter } = require('./middlewares/securityMiddleware');
 
 // Load environment variables
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 // Enable Mongoose mock mode if configured
 if (process.env.USE_MOCK_DATA === 'true') {
@@ -65,16 +65,20 @@ app.use('/api/seed', require('./routes/seedRoutes'));
 // Global Error Handler
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
 
-const server = app.listen(PORT, () => {
-  console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-  console.log(`Open http://localhost:${PORT} to view the Travel Heaven application.`);
-});
+  const server = app.listen(PORT, () => {
+    console.log(`Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+    console.log(`Open http://localhost:${PORT} to view the Travel Heaven application.`);
+  });
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
-  console.error(`Error: ${err.message}`);
-  // Close server & exit process
-  server.close(() => process.exit(1));
-});
+  // Handle unhandled promise rejections
+  process.on('unhandledRejection', (err, promise) => {
+    console.error(`Error: ${err.message}`);
+    // Close server & exit process
+    server.close(() => process.exit(1));
+  });
+}
+
+module.exports = app;

@@ -1,0 +1,13 @@
+{
+  "name": "travel-heaven",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "server"
+  ],
+  "scripts": {
+    "start": "npm start -w server",
+    "dev": "npm run dev -w server",
+    "seed": "npm run seed -w server"
+  }
+}

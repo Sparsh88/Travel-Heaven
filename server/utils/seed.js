@@ -8,8 +8,9 @@ const Payment = require('../models/Payment');
 const Review = require('../models/Review');
 const Contact = require('../models/Contact');
 const User = require('../models/User');
+const path = require('path');
 
-dotenv.config({ path: './.env' });
+dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const seedData = async () => {
   try {
