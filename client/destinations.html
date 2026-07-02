@@ -221,7 +221,7 @@
   <div class="container dest-layout">
     
     <!-- Sidebar Filters -->
-    <aside class="filter-sidebar">
+    <aside class="filter-sidebar reveal-left">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 style="font-size: 20px;">Filters</h2>
         <button onclick="resetFilters()" style="background: none; border: none; color: var(--secondary); font-weight: 600; cursor: pointer; font-size: 13px;">Clear All</button>
@@ -231,71 +231,56 @@
       <div class="filter-group">
         <h3>Search</h3>
         <div class="search-box-sidebar">
-          <input type="text" id="filter-search" placeholder="Type name or country..." oninput="fetchFilteredDestinations()">
+          <input type="text" id="filter-search" placeholder="Type name or country..." oninput="debouncedFetch()">
         </div>
       </div>
 
       <!-- Category Filter -->
       <div class="filter-group">
         <h3>Category</h3>
-        <div class="checkbox-item">
-          <input type="radio" name="category" id="cat-all" value="" checked onchange="fetchFilteredDestinations()">
-          <label for="cat-all">All Categories</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="radio" name="category" id="cat-domestic" value="Domestic" onchange="fetchFilteredDestinations()">
-          <label for="cat-domestic">Domestic</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="radio" name="category" id="cat-international" value="International" onchange="fetchFilteredDestinations()">
-          <label for="cat-international">International</label>
+        <div class="filter-chips" id="category-chips">
+          <button class="chip-btn active" data-value="">All</button>
+          <button class="chip-btn" data-value="Domestic">Domestic</button>
+          <button class="chip-btn" data-value="International">International</button>
         </div>
       </div>
 
       <!-- Budget Filter -->
       <div class="filter-group">
         <h3>Budget Category</h3>
-        <div class="checkbox-item">
-          <input type="radio" name="budget" id="budget-all" value="" checked onchange="fetchFilteredDestinations()">
-          <label for="budget-all">All Budgets</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="radio" name="budget" id="budget-budget" value="Budget" onchange="fetchFilteredDestinations()">
-          <label for="budget-budget">Budget</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="radio" name="budget" id="budget-mid" value="Mid-Range" onchange="fetchFilteredDestinations()">
-          <label for="budget-mid">Mid-Range</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="radio" name="budget" id="budget-luxury" value="Luxury" onchange="fetchFilteredDestinations()">
-          <label for="budget-luxury">Luxury</label>
+        <div class="filter-chips" id="budget-chips">
+          <button class="chip-btn active" data-value="">All</button>
+          <button class="chip-btn" data-value="Budget">Budget</button>
+          <button class="chip-btn" data-value="Mid-Range">Mid-Range</button>
+          <button class="chip-btn" data-value="Luxury">Luxury</button>
         </div>
       </div>
 
       <!-- Rating Filter -->
       <div class="filter-group">
         <h3>Minimum Rating</h3>
-        <div class="checkbox-item">
-          <input type="radio" name="rating" id="rating-all" value="" checked onchange="fetchFilteredDestinations()">
-          <label for="rating-all">Show All</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="radio" name="rating" id="rating-4" value="4" onchange="fetchFilteredDestinations()">
-          <label for="rating-4">★ 4.0 & above</label>
-        </div>
-        <div class="checkbox-item">
-          <input type="radio" name="rating" id="rating-3" value="3" onchange="fetchFilteredDestinations()">
-          <label for="rating-3">★ 3.0 & above</label>
+        <div class="filter-chips" id="rating-chips">
+          <button class="chip-btn active" data-value="">Show All</button>
+          <button class="chip-btn" data-value="4">★ 4.0+</button>
+          <button class="chip-btn" data-value="3">★ 3.0+</button>
         </div>
       </div>
     </aside>
 
     <!-- Main Results Grid -->
-    <main>
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+    <main class="reveal">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px;">
         <h2 style="font-size: 22px;">Available Destinations</h2>
-        <span id="results-count" style="font-size: 14px; color: var(--text-muted); font-weight: 500;">0 destinations found</span>
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <span id="results-count" style="font-size: 14px; color: var(--text-muted); font-weight: 500;">0 destinations found</span>
+          <div class="sort-select-wrapper">
+            <select id="sort-destinations" onchange="fetchFilteredDestinations()" aria-label="Sort destinations">
+              <option value="">Sort: Recommended</option>
+              <option value="name-asc">Alphabetical (A-Z)</option>
+              <option value="rating-desc">Rating: High to Low</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <div class="dest-grid" id="destinations-container">
@@ -358,21 +343,70 @@
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script>
+    // Setup debounced fetch
+    const debouncedFetch = debounce(fetchFilteredDestinations, 300);
+
+    // Setup filter chip click handlers
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.filter-chips .chip-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const siblings = btn.parentElement.querySelectorAll('.chip-btn');
+          siblings.forEach(s => s.classList.remove('active'));
+          btn.classList.add('active');
+          fetchFilteredDestinations();
+        });
+      });
+      
+      // Parse URL parameters for initial filters
+      const params = new URLSearchParams(window.location.search);
+      const search = params.get('search');
+      const category = params.get('category');
+      const budget = params.get('budget');
+
+      if (search) document.getElementById('filter-search').value = search;
+      if (category) {
+        setChipActive('category-chips', category);
+      }
+      if (budget) {
+        setChipActive('budget-chips', budget);
+      }
+
+      fetchFilteredDestinations();
+    });
+
+    function setChipActive(containerId, value) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const btn = Array.from(container.querySelectorAll('.chip-btn')).find(b => b.dataset.value.toLowerCase() === value.toLowerCase());
+      if (btn) {
+        container.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    }
+
     // Filters reset
     function resetFilters() {
       document.getElementById('filter-search').value = '';
-      document.getElementById('cat-all').checked = true;
-      document.getElementById('budget-all').checked = true;
-      document.getElementById('rating-all').checked = true;
+      document.getElementById('sort-destinations').value = '';
+      
+      // Reset chips to first (All/Show All)
+      document.querySelectorAll('.filter-chips').forEach(container => {
+        container.querySelectorAll('.chip-btn').forEach((btn, idx) => {
+          if (idx === 0) btn.classList.add('active');
+          else btn.classList.remove('active');
+        });
+      });
+
       fetchFilteredDestinations();
     }
 
     // Dynamic Filter & Fetch query
     async function fetchFilteredDestinations() {
       const search = document.getElementById('filter-search').value;
-      const category = document.querySelector('input[name="category"]:checked')?.value || '';
-      const budget = document.querySelector('input[name="budget"]:checked')?.value || '';
-      const rating = document.querySelector('input[name="rating"]:checked')?.value || '';
+      const category = document.querySelector('#category-chips .chip-btn.active')?.dataset.value || '';
+      const budget = document.querySelector('#budget-chips .chip-btn.active')?.dataset.value || '';
+      const rating = document.querySelector('#rating-chips .chip-btn.active')?.dataset.value || '';
 
       const queryParams = new URLSearchParams();
       if (search) queryParams.append('search', search);
@@ -389,16 +423,28 @@
         
         if (json.success) {
           container.innerHTML = '';
-          countEl.textContent = `${json.count} destinations found`;
+          let data = json.data || [];
 
-          if (json.data.length === 0) {
+          // Client-side Sorting
+          const sortVal = document.getElementById('sort-destinations').value;
+          if (sortVal === 'name-asc') {
+            data.sort((a, b) => a.name.localeCompare(b.name));
+          } else if (sortVal === 'rating-desc') {
+            data.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+          }
+
+          countEl.textContent = `${data.length} destinations found`;
+
+          if (data.length === 0) {
             container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">No destinations match your filters. Try checking other items.</div>`;
             return;
           }
 
-          json.data.forEach(dest => {
+          data.forEach((dest, idx) => {
             const card = document.createElement('div');
-            card.className = 'destination-card';
+            card.className = 'destination-card card-fade-in';
+            card.style.animationDelay = `${idx * 0.05}s`;
+            
             card.innerHTML = `
               <div class="destination-img">
                 <span class="destination-badge">${dest.category}</span>
@@ -426,26 +472,6 @@
         console.error('Error fetching destinations:', err);
       }
     }
-
-    // Read initial filters from URL params (e.g. category=Domestic)
-    document.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(window.location.search);
-      const search = params.get('search');
-      const category = params.get('category');
-      const budget = params.get('budget');
-
-      if (search) document.getElementById('filter-search').value = search;
-      if (category) {
-        const el = document.getElementById(`cat-${category.toLowerCase()}`);
-        if (el) el.checked = true;
-      }
-      if (budget) {
-        const el = document.getElementById(`budget-${budget.toLowerCase()}`);
-        if (el) el.checked = true;
-      }
-
-      fetchFilteredDestinations();
-    });
   </script>
 </body>
 </html>

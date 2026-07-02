@@ -24,6 +24,7 @@
       color: var(--white);
       text-align: center;
       margin-bottom: 60px;
+      z-index: 1;
     }
 
     .about-hero h1 {
@@ -216,21 +217,21 @@
   </section>
 
   <!-- Stats Banner -->
-  <section class="container stats-banner">
+  <section class="container stats-banner" id="stats-section">
     <div>
-      <div class="stat-val">50K+</div>
+      <div class="stat-val" data-target="50" data-suffix="K+">0</div>
       <div class="stat-label">Happy Travelers</div>
     </div>
     <div>
-      <div class="stat-val">120+</div>
+      <div class="stat-val" data-target="120" data-suffix="+">0</div>
       <div class="stat-label">Tour Destinations</div>
     </div>
     <div>
-      <div class="stat-val">10+</div>
+      <div class="stat-val" data-target="10" data-suffix="+">0</div>
       <div class="stat-label">Years Experience</div>
     </div>
     <div>
-      <div class="stat-val">99.8%</div>
+      <div class="stat-val" data-target="99.8" data-suffix="%" data-decimal="true">0</div>
       <div class="stat-label">Success Booking Rate</div>
     </div>
   </section>
@@ -313,5 +314,52 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const statsSection = document.getElementById('stats-section');
+      if (!statsSection) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            startCounters();
+            observer.unobserve(statsSection);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      observer.observe(statsSection);
+    });
+
+    function startCounters() {
+      document.querySelectorAll('.stat-val').forEach(el => {
+        const target = parseFloat(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        const isDecimal = el.dataset.decimal === 'true';
+
+        let startTimestamp = null;
+        const duration = 1500;
+
+        const step = (timestamp) => {
+          if (!startTimestamp) startTimestamp = timestamp;
+          const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+          let currentVal = progress * target;
+          
+          if (isDecimal) {
+            currentVal = currentVal.toFixed(1);
+          } else {
+            currentVal = Math.floor(currentVal);
+          }
+
+          el.textContent = currentVal + suffix;
+
+          if (progress < 1) {
+            window.requestAnimationFrame(step);
+          }
+        };
+        window.requestAnimationFrame(step);
+      });
+    }
+  </script>
 </body>
 </html>

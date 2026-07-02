@@ -328,9 +328,18 @@
     </div>
   </header>
 
-  <!-- Hero Header -->
-  <section class="details-hero" id="destination-hero">
-    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" alt="Destination Banner" id="dest-img">
+  <!-- Hero Header / Carousel -->
+  <section class="details-hero" id="destination-hero" style="height: 55vh; position: relative;">
+    <div class="gallery-carousel" style="height: 100%; border-radius: 0; margin-bottom: 0;">
+      <button class="carousel-arrow prev" onclick="moveCarousel(-1)" aria-label="Previous Slide">❮</button>
+      <button class="carousel-arrow next" onclick="moveCarousel(1)" aria-label="Next Slide">❯</button>
+      <div class="gallery-slides" id="carousel-slides">
+        <div class="gallery-slide">
+          <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800" alt="Destination Banner" id="dest-img">
+        </div>
+      </div>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
     <div class="details-hero-overlay">
       <div class="container details-header">
         <h1 id="dest-title">Destination, Country</h1>
@@ -407,13 +416,14 @@
           <form id="review-form" onsubmit="submitReview(event)">
             <div class="form-group" style="margin-bottom: 15px;">
               <label>Rating</label>
-              <select id="review-rating-val" required style="width: fit-content;">
-                <option value="5">★★★★★ (5/5)</option>
-                <option value="4">★★★★☆ (4/5)</option>
-                <option value="3">★★★☆☆ (3/5)</option>
-                <option value="2">★★☆☆☆ (2/5)</option>
-                <option value="1">★☆☆☆☆ (1/5)</option>
-              </select>
+              <div class="star-rating-widget" id="star-rating-select">
+                <span data-value="1">★</span>
+                <span data-value="2">★</span>
+                <span data-value="3">★</span>
+                <span data-value="4">★</span>
+                <span data-value="5" class="selected">★</span>
+              </div>
+              <input type="hidden" id="review-rating-val" value="5" required>
             </div>
             <div class="form-group" style="margin-bottom: 20px;">
               <label>Your Review</label>
@@ -594,12 +604,19 @@
       });
     }
 
+    let previousTotal = 0;
+
     // Update Pricing Summary in booking card
     function updateBookingSummary() {
       const travelers = parseInt(document.getElementById('booking-travelers').value) || 1;
       const total = activePackagePrice * travelers;
-      document.getElementById('summary-price').textContent = `₹${activePackagePrice}`;
-      document.getElementById('summary-total').textContent = `₹${total}`;
+      document.getElementById('summary-price').textContent = `₹${activePackagePrice.toLocaleString()}`;
+      
+      const totalEl = document.getElementById('summary-total');
+      if (totalEl) {
+        animateValue(totalEl, previousTotal, total, 350, (val) => `₹${val.toLocaleString()}`);
+      }
+      previousTotal = total;
     }
 
     // Handle Review Submission
@@ -696,6 +713,93 @@
       }
     }
 
+    // Carousel Gallery implementation
+    let currentCarouselIndex = 0;
+    let carouselImages = [];
+
+    function populateCarousel(images) {
+      const slidesContainer = document.getElementById('carousel-slides');
+      const dotsContainer = document.getElementById('carousel-dots');
+      if (!slidesContainer || !dotsContainer) return;
+
+      slidesContainer.innerHTML = '';
+      dotsContainer.innerHTML = '';
+      carouselImages = images && images.length > 0 ? images : ['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'];
+
+      carouselImages.forEach((imgSrc, idx) => {
+        const slide = document.createElement('div');
+        slide.className = 'gallery-slide';
+        slide.innerHTML = `<img src="${imgSrc}" alt="Destination Banner Image ${idx+1}">`;
+        slidesContainer.appendChild(slide);
+
+        const dot = document.createElement('button');
+        dot.className = `carousel-dot ${idx === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', `Go to slide ${idx+1}`);
+        dot.addEventListener('click', () => {
+          goToCarouselIndex(idx);
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      currentCarouselIndex = 0;
+      updateCarouselDisplay();
+    }
+
+    function moveCarousel(direction) {
+      if (carouselImages.length <= 1) return;
+      currentCarouselIndex = (currentCarouselIndex + direction + carouselImages.length) % carouselImages.length;
+      updateCarouselDisplay();
+    }
+
+    function goToCarouselIndex(index) {
+      currentCarouselIndex = index;
+      updateCarouselDisplay();
+    }
+
+    function updateCarouselDisplay() {
+      const slidesContainer = document.getElementById('carousel-slides');
+      const dots = document.querySelectorAll('.carousel-dot');
+      if (slidesContainer) {
+        slidesContainer.style.transform = `translateX(-${currentCarouselIndex * 100}%)`;
+      }
+      dots.forEach((dot, idx) => {
+        if (idx === currentCarouselIndex) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+
+    // Interactive Star Rating Selector logic
+    function initStarRating() {
+      const selectContainer = document.getElementById('star-rating-select');
+      if (!selectContainer) return;
+      const stars = selectContainer.querySelectorAll('span');
+      const ratingInput = document.getElementById('review-rating-val');
+      if (!stars.length || !ratingInput) return;
+
+      stars.forEach(star => {
+        star.addEventListener('mouseover', () => {
+          const val = parseInt(star.dataset.value);
+          stars.forEach((s, idx) => {
+            if (idx < val) s.classList.add('hovered');
+            else s.classList.remove('hovered');
+          });
+        });
+
+        star.addEventListener('mouseout', () => {
+          stars.forEach(s => s.classList.remove('hovered'));
+        });
+
+        star.addEventListener('click', () => {
+          const val = parseInt(star.dataset.value);
+          ratingInput.value = val;
+          stars.forEach((s, idx) => {
+            if (idx < val) s.classList.add('selected');
+            else s.classList.remove('selected');
+          });
+        });
+      });
+    }
+
     // Load Destination Details
     async function loadPageData() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -710,7 +814,9 @@
       const userToken = localStorage.getItem('token');
       const reviewContainer = document.getElementById('add-review-container');
       if (!userToken) {
-        reviewContainer.innerHTML = `<p style="text-align: center; font-weight: 500; font-size: 14px;"><a href="login.html" style="color: var(--secondary); text-decoration: underline;">Login</a> to write a review for this destination.</p>`;
+        if (reviewContainer) {
+          reviewContainer.innerHTML = `<p style="text-align: center; font-weight: 500; font-size: 14px;"><a href="login.html" style="color: var(--secondary); text-decoration: underline;">Login</a> to write a review for this destination.</p>`;
+        }
       }
 
       try {
@@ -721,8 +827,8 @@
           const dest = json.data;
           packagesData = json.packages;
           
-          // Populate Details
-          document.getElementById('dest-img').src = dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800';
+          // Populate Details & Carousel
+          populateCarousel(dest.images);
           document.getElementById('dest-title').textContent = `${dest.name}, ${dest.country}`;
           document.getElementById('dest-category').textContent = dest.category;
           document.getElementById('dest-budget').textContent = dest.budgetCategory;
@@ -793,7 +899,10 @@
     // Lock Travel Date minimum date to today
     document.addEventListener('DOMContentLoaded', () => {
       const today = new Date().toISOString().split('T')[0];
-      document.getElementById('booking-date').setAttribute('min', today);
+      const bookingDateEl = document.getElementById('booking-date');
+      if (bookingDateEl) bookingDateEl.setAttribute('min', today);
+      
+      initStarRating();
       loadPageData();
     });
   </script>

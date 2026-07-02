@@ -29,6 +29,7 @@
       text-align: center;
       padding: 0 24px;
       margin-bottom: 80px;
+      z-index: 1;
     }
 
     .hero-content h1 {
@@ -436,11 +437,11 @@
 
   <!-- Categories Section -->
   <section class="categories container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <h2>Travel Categories</h2>
       <p>Pick a category to filter your favorite escape</p>
     </div>
-    <div class="category-grid">
+    <div class="category-grid stagger-grid">
       <div class="category-card" onclick="window.location.href='destinations.html?category=Domestic'">
         <div class="category-icon">🏞️</div>
         <h3>Domestic Escapes</h3>
@@ -466,26 +467,26 @@
 
   <!-- Featured Destinations Section -->
   <section class="destinations-home container">
-    <div class="section-header">
+    <div class="section-header reveal">
       <h2>Featured Destinations</h2>
       <p>Explore our highly-recommended premium locations</p>
     </div>
-    <div class="destination-grid" id="featured-destinations">
+    <div class="destination-grid stagger-grid" id="featured-destinations">
       <!-- Dynamic Content loaded from JS -->
       <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">Loading featured destinations...</div>
     </div>
-    <div style="text-align: center; margin-top: 40px;">
+    <div style="text-align: center; margin-top: 40px;" class="reveal">
       <a href="destinations.html" class="btn btn-secondary">View All Destinations</a>
     </div>
   </section>
 
   <!-- Why Choose Us Section -->
-  <section class="why-us container">
+  <section class="why-us container reveal">
     <div class="section-header">
       <h2>Why Choose Travel Heaven</h2>
       <p>We provide standard services and customized tour packages for all customers</p>
     </div>
-    <div class="why-us-grid">
+    <div class="why-us-grid stagger-grid">
       <div class="why-item">
         <div class="why-icon">🔒</div>
         <h3>Safe & Secure Bookings</h3>
@@ -506,11 +507,11 @@
 
   <!-- Testimonials Section -->
   <section class="container" style="margin-bottom: 80px;">
-    <div class="section-header">
+    <div class="section-header reveal">
       <h2>What Our Travelers Say</h2>
       <p>Real experiences from our global travel community</p>
     </div>
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;">
+    <div class="stagger-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;">
       <div class="glass-card" style="padding: 25px;">
         <p style="font-style: italic; font-size: 14px; color: var(--text-dark); margin-bottom: 20px;">"Our Bali trip was amazing. The itinerary was perfectly structured and the private villa stay was gorgeous. Recommended Travel Heaven to all!"</p>
         <div style="display: flex; align-items: center; gap: 15px;">

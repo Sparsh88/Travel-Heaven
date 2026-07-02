@@ -17,6 +17,9 @@
       align-items: center;
       background: linear-gradient(rgba(11, 12, 16, 0.6), rgba(15, 52, 96, 0.7)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
       padding: 24px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
 
     .admin-login-card {
@@ -34,6 +37,10 @@
 
   <!-- Admin Auth View (visible by default, hidden via JS if logged in) -->
   <div class="admin-login-page" id="admin-login-view">
+    <video autoplay loop muted playsinline class="hero-video-bg">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-thick-forest-and-river-42205-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay" style="background: linear-gradient(rgba(11, 12, 16, 0.6), rgba(15, 52, 96, 0.7));"></div>
     <div class="glass-card admin-login-card animate-fade-in">
       <div style="text-align: center; margin-bottom: 20px;">
         <a href="index.html" class="logo" style="justify-content: center;">

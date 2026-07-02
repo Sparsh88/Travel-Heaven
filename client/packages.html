@@ -245,36 +245,57 @@
 
   <!-- Packages Layout -->
   <div class="container packages-layout">
-    <div class="section-header">
+    <div class="section-header reveal">
       <h2>Tour Packages</h2>
       <p>Browse our curated standard holiday and adventure packages</p>
     </div>
 
     <!-- Filter Bar -->
-    <div class="packages-filter-bar">
-      <div class="filter-item">
-        <label>Budget Level</label>
-        <select id="filter-price" onchange="fetchPackages()">
-          <option value="">All Prices</option>
-          <option value="15000">Under ₹15,000</option>
-          <option value="40000">Under ₹40,000</option>
-          <option value="80000">Under ₹80,000</option>
-        </select>
+    <div class="packages-filter-bar reveal" style="display: flex; gap: 20px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 40px; padding: 25px 30px;">
+      <!-- Search Filter -->
+      <div class="filter-item" style="flex: 1.5; min-width: 200px;">
+        <label for="filter-search" style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 6px; display: block;">Search Packages</label>
+        <input type="text" id="filter-search" placeholder="Search title or location..." oninput="debouncedFetch()" style="width: 100%; padding: 10px 15px; border-radius: 8px; border: 1px solid var(--theme-input-border); background: var(--theme-input-bg); color: var(--theme-text); outline: none; font-size: 14px;">
       </div>
-      <div class="filter-item">
-        <label>Duration</label>
-        <select id="filter-duration" onchange="fetchPackages()">
-          <option value="">Any Duration</option>
-          <option value="4">Up to 4 Days</option>
-          <option value="6">Up to 6 Days</option>
-          <option value="10">Up to 10 Days</option>
-        </select>
+
+      <!-- Price Range Slider -->
+      <div class="filter-item" style="flex: 2; min-width: 220px;">
+        <div class="range-slider-container">
+          <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 6px; display: block;">Max Price: <span id="price-slider-val" class="range-slider-value" style="display: inline; color: var(--secondary); font-weight: 700;">All</span></label>
+          <input type="range" id="filter-price-slider" class="slider-input" min="15000" max="150000" step="5000" value="150000" oninput="updatePriceSliderLabel()">
+        </div>
       </div>
-      <button onclick="resetFilters()" style="background: none; border: none; color: var(--secondary); font-weight: 600; cursor: pointer; font-size: 13px; margin-left: auto;">Reset</button>
+
+      <!-- Duration Chips -->
+      <div class="filter-item" style="flex: 2; min-width: 250px;">
+        <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 6px; display: block;">Duration</label>
+        <div class="filter-chips" id="duration-chips">
+          <button class="chip-btn active" data-value="">Any</button>
+          <button class="chip-btn" data-value="4">≤ 4 Days</button>
+          <button class="chip-btn" data-value="6">≤ 6 Days</button>
+          <button class="chip-btn" data-value="10">≤ 10 Days</button>
+        </div>
+      </div>
+
+      <!-- Sort Selection -->
+      <div class="filter-item" style="flex: 1.2; min-width: 150px;">
+        <label style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 6px; display: block;">Sort By</label>
+        <div class="sort-select-wrapper" style="width: 100%;">
+          <select id="sort-packages" onchange="fetchPackages()" style="width: 100%;">
+            <option value="">Recommended</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="duration-asc">Duration: Shortest</option>
+            <option value="duration-desc">Duration: Longest</option>
+          </select>
+        </div>
+      </div>
+
+      <button onclick="resetFilters()" style="background: none; border: none; color: var(--secondary); font-weight: 700; cursor: pointer; font-size: 13px; margin-left: auto; height: 38px;">Reset</button>
     </div>
 
     <!-- Grid Container -->
-    <div class="pkg-grid" id="packages-container">
+    <div class="pkg-grid stagger-grid" id="packages-container">
       <div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">Loading packages...</div>
     </div>
   </div>
@@ -331,18 +352,55 @@
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script>
+    const debouncedFetch = debounce(fetchPackages, 300);
+
+    function updatePriceSliderLabel() {
+      const val = document.getElementById('filter-price-slider').value;
+      const label = document.getElementById('price-slider-val');
+      if (parseInt(val) === 150000) {
+        label.textContent = 'All';
+      } else {
+        label.textContent = `₹${parseInt(val).toLocaleString()}`;
+      }
+      debouncedFetch();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Setup chips
+      document.querySelectorAll('#duration-chips .chip-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const siblings = btn.parentElement.querySelectorAll('.chip-btn');
+          siblings.forEach(s => s.classList.remove('active'));
+          btn.classList.add('active');
+          fetchPackages();
+        });
+      });
+      fetchPackages();
+    });
+
     function resetFilters() {
-      document.getElementById('filter-price').value = '';
-      document.getElementById('filter-duration').value = '';
+      document.getElementById('filter-search').value = '';
+      document.getElementById('filter-price-slider').value = 150000;
+      document.getElementById('price-slider-val').textContent = 'All';
+      document.getElementById('sort-packages').value = '';
+      
+      // Reset chips
+      const chips = document.querySelectorAll('#duration-chips .chip-btn');
+      chips.forEach((btn, idx) => {
+        if (idx === 0) btn.classList.add('active');
+        else btn.classList.remove('active');
+      });
+
       fetchPackages();
     }
 
     async function fetchPackages() {
-      const maxPrice = document.getElementById('filter-price').value;
-      const maxDays = document.getElementById('filter-duration').value;
+      const maxPriceSlider = document.getElementById('filter-price-slider').value;
+      const maxDays = document.querySelector('#duration-chips .chip-btn.active')?.dataset.value || '';
 
       const params = new URLSearchParams();
-      if (maxPrice) params.append('maxPrice', maxPrice);
+      if (parseInt(maxPriceSlider) < 150000) params.append('maxPrice', maxPriceSlider);
       if (maxDays) params.append('maxDays', maxDays);
 
       const container = document.getElementById('packages-container');
@@ -352,16 +410,40 @@
 
         if (json.success) {
           container.innerHTML = '';
-          if (json.data.length === 0) {
+          let data = json.data || [];
+
+          // Client-side text search filter
+          const searchVal = document.getElementById('filter-search').value.toLowerCase().trim();
+          if (searchVal) {
+            data = data.filter(pkg => 
+              pkg.title.toLowerCase().includes(searchVal) || 
+              (pkg.destination && pkg.destination.name.toLowerCase().includes(searchVal)) ||
+              (pkg.destination && pkg.destination.country.toLowerCase().includes(searchVal))
+            );
+          }
+
+          // Client-side sorting
+          const sortVal = document.getElementById('sort-packages').value;
+          if (sortVal === 'price-asc') {
+            data.sort((a, b) => a.price - b.price);
+          } else if (sortVal === 'price-desc') {
+            data.sort((a, b) => b.price - a.price);
+          } else if (sortVal === 'duration-asc') {
+            data.sort((a, b) => a.durationDays - b.durationDays);
+          } else if (sortVal === 'duration-desc') {
+            data.sort((a, b) => b.durationDays - a.durationDays);
+          }
+
+          if (data.length === 0) {
             container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px 0;">No tour packages match your filters.</div>`;
             return;
           }
 
-          json.data.forEach(pkg => {
+          data.forEach((pkg, idx) => {
             const card = document.createElement('div');
-            card.className = 'pkg-card';
+            card.className = 'pkg-card card-fade-in';
+            card.style.animationDelay = `${idx * 0.05}s`;
             
-            // Map icons for inclusions
             const inclusionsHtml = pkg.inclusions.slice(0, 3).map(inc => `<li>✓ ${inc}</li>`).join('');
 
             card.innerHTML = `
@@ -393,8 +475,6 @@
         console.error('Error fetching packages:', err);
       }
     }
-
-    document.addEventListener('DOMContentLoaded', fetchPackages);
   </script>
 </body>
 </html>

@@ -255,6 +255,15 @@
 
             // Calculate active step index for tracker
             const activeStepIndex = steps.indexOf(b.trackingStatus);
+            const percent = activeStepIndex >= 0 ? (activeStepIndex / (steps.length - 1)) * 100 : 0;
+
+            const stepTooltips = {
+              'Booking Confirmed': 'Your trip request is confirmed and secured',
+              'Documents Verified': 'Passport, visas and permits verified by our team',
+              'Tickets Generated': 'Digital boarding pass and hotel vouchers issued',
+              'Travel Started': 'You are currently on your dream journey!',
+              'Trip Completed': 'Trip successfully completed. Welcome home!'
+            };
 
             // Construct tracking progress steps
             let stepsHtml = '';
@@ -264,7 +273,7 @@
               else if (idx < activeStepIndex) stateClass = 'completed';
 
               stepsHtml += `
-                <div class="tracking-step ${stateClass}">
+                <div class="tracking-step ${stateClass}" data-tooltip="${stepTooltips[step]}">
                   <div class="step-node">${idx + 1}</div>
                   <div class="step-label">${step}</div>
                 </div>
@@ -318,7 +327,7 @@
               ${b.status !== 'Cancelled' ? `
                 <div class="tracking-wrapper">
                   <div class="tracking-title">Trip Milestones Progress</div>
-                  <div class="tracking-bar">
+                  <div class="tracking-bar" style="--progress-percent: ${percent}%">
                     ${stepsHtml}
                   </div>
                 </div>

@@ -20,6 +20,9 @@
       align-items: center;
       background: linear-gradient(rgba(11, 12, 16, 0.4), rgba(15, 52, 96, 0.5)), url('https://images.unsplash.com/photo-1506013013546-f401a0e17676?auto=format&fit=crop&w=1200&q=80') no-repeat center center/cover;
       padding: 40px 24px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
 
     .auth-card {
@@ -109,6 +112,10 @@
   </div>
 
   <div class="auth-page">
+    <video autoplay loop muted playsinline class="hero-video-bg">
+      <source src="https://assets.mixkit.co/videos/preview/mixkit-beautiful-aerial-view-of-a-mountain-valley-41951-large.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay" style="background: linear-gradient(rgba(11, 12, 16, 0.4), rgba(15, 52, 96, 0.5));"></div>
     <div class="glass-card auth-card animate-fade-in">
       
       <!-- Back Home Logo -->

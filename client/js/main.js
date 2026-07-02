@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupAuthNavbar();
   initThemeToggle();
   initChatbot();
+  initScrollReveal();
 });
 
 // ---- Dynamic Alert banners ----
@@ -72,20 +73,45 @@ function showAlert(message, type = 'success') {
 // ---- Session navbar update ----
 function setupAuthNavbar() {
   const navAuth = document.getElementById('nav-auth');
+  const navLinks = document.getElementById('nav-links');
   if (!navAuth) return;
   const token = localStorage.getItem('token');
   const userStr = localStorage.getItem('user');
+  
+  let html = '';
   if (token && userStr) {
     const user = JSON.parse(userStr);
-    navAuth.innerHTML = `
+    html = `
       <a href="dashboard.html" class="btn btn-outline" style="padding: 8px 18px; font-size: 13px;">Dashboard</a>
       <button onclick="handleUserLogout()" class="btn btn-secondary" style="padding: 8px 18px; font-size: 13px;">Sign Out</button>
     `;
   } else {
-    navAuth.innerHTML = `
+    html = `
       <a href="login.html" class="btn btn-outline" style="padding: 8px 18px; font-size: 13px;">Login</a>
       <a href="register.html" class="btn btn-primary" style="padding: 8px 18px; font-size: 13px;">Sign Up</a>
     `;
+  }
+
+  // Set desktop auth HTML
+  navAuth.innerHTML = html;
+
+  // Set mobile auth inside the drawer to prevent empty states or overlaps
+  if (navLinks) {
+    // Remove existing mobile auth item if it exists (for logout updates)
+    const existingMobileAuth = navLinks.querySelector('.mobile-auth-item');
+    if (existingMobileAuth) existingMobileAuth.remove();
+
+    const li = document.createElement('li');
+    li.className = 'mobile-auth-item';
+    li.style.marginTop = '15px';
+    li.style.paddingTop = '15px';
+    li.style.borderTop = '1px solid var(--theme-border)';
+    li.style.display = 'flex';
+    li.style.gap = '10px';
+    li.style.width = '100%';
+    li.innerHTML = html;
+
+    navLinks.appendChild(li);
   }
 }
 
@@ -310,6 +336,12 @@ function initChatbot() {
   // Show welcome message
   setTimeout(() => addBotMessage("👋 Hi! I'm **TravelBot** — your personal travel assistant! Ask me about destinations, packages, prices, visa info, or anything travel-related! 🌍✈️"), 500);
 
+  // Trigger introductory wiggle animation to invite user click after 2.5 seconds
+  setTimeout(() => {
+    toggleBtn.classList.add('chatbot-wobble');
+    setTimeout(() => toggleBtn.classList.remove('chatbot-wobble'), 3000);
+  }, 2500);
+
   // Toggle open/close
   toggleBtn.addEventListener('click', () => {
     const isOpen = chatWindow.classList.contains('open');
@@ -405,3 +437,116 @@ function sendQuickReply(text) {
 function escapeHtml(str) {
   return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+// ---- Debounce Helper ----
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+// ---- Count-Up Number Animation Helper ----
+function animateValue(obj, start, end, duration, formatFn = (val) => val) {
+  let startTimestamp = null;
+  const step = (timestamp) => {
+    if (!startTimestamp) startTimestamp = timestamp;
+    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    const val = Math.floor(progress * (end - start) + start);
+    obj.innerHTML = formatFn(val);
+    if (progress < 1) {
+      window.requestAnimationFrame(step);
+    }
+  };
+  window.requestAnimationFrame(step);
+}
+
+// =============================================
+// INTERSECTION OBSERVER FOR SCROLL REVEALS
+// =============================================
+function initScrollReveal() {
+  const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger-grid');
+  
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          // Once animated, we don't need to observe it anymore
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.01,
+      rootMargin: '0px 0px 80px 0px'
+    });
+    
+    revealElements.forEach(el => revealObserver.observe(el));
+  } else {
+    // Fallback if browser doesn't support IntersectionObserver
+    revealElements.forEach(el => el.classList.add('active'));
+  }
+}
+
+// =============================================
+// INTERACTIVE LOADER PHRASE CYCLER
+// =============================================
+(function() {
+  const setupLoader = () => {
+    const loaderWrapper = document.getElementById('loader');
+    if (loaderWrapper) {
+      const innerLoader = loaderWrapper.querySelector('.loader');
+      if (innerLoader && !loaderWrapper.querySelector('.loader-text')) {
+        const container = document.createElement('div');
+        container.style.textAlign = 'center';
+        container.style.display = 'flex';
+        container.style.flexDirection = 'column';
+        container.style.alignItems = 'center';
+
+        // Swap loader into the container wrapper
+        loaderWrapper.removeChild(innerLoader);
+        container.appendChild(innerLoader);
+
+        const loaderText = document.createElement('div');
+        loaderText.className = 'loader-text';
+        loaderText.innerHTML = '✨ Discovering Paradise...';
+        container.appendChild(loaderText);
+
+        loaderWrapper.appendChild(container);
+
+        const phrases = [
+          "✨ Discovering Paradise...",
+          "✈️ Packing your virtual bags...",
+          "🌍 Mapping out adventures...",
+          "🏨 Finding cozy rooms...",
+          "⭐ Finding the best packages..."
+        ];
+        let phraseIdx = 0;
+        const interval = setInterval(() => {
+          const currentLoader = document.getElementById('loader');
+          if (!currentLoader || currentLoader.style.display === 'none' || currentLoader.style.opacity === '0') {
+            clearInterval(interval);
+          } else {
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+            loaderText.innerHTML = phrases[phraseIdx];
+          }
+        }, 800);
+      }
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupLoader);
+  } else {
+    setupLoader();
+  }
+})();
+
+
+
+

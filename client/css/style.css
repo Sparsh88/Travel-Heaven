@@ -90,6 +90,8 @@ body {
   line-height: 1.6;
   background-color: var(--theme-bg);
   color: var(--theme-text);
+  animation: pageEntrance 0.4s ease-out forwards;
+  opacity: 0;
 }
 
 /* Dark mode element overrides */
@@ -527,17 +529,7 @@ a {
 
 /* Page Loader */
 .loader-wrapper {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: var(--bg-dark);
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.5s ease;
+  display: none !important;
 }
 
 .loader {
@@ -983,3 +975,607 @@ a {
     height: 54px;
   }
 }
+
+/* =============================================
+   INTERACTIVE UI ENHANCEMENTS (Antigravity additions)
+   ============================================= */
+
+/* Micro-animations and Transitions */
+.card-fade-in {
+  animation: cardFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes cardFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Interactive filter chips style */
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 5px;
+}
+
+.chip-btn {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--theme-border);
+  background: var(--theme-card);
+  color: var(--theme-text);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip-btn:hover {
+  border-color: var(--secondary);
+  color: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.chip-btn.active {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--white);
+  box-shadow: 0 4px 10px rgba(255, 122, 0, 0.25);
+}
+
+/* Star Rating Selector Widget */
+.star-rating-widget {
+  display: inline-flex;
+  gap: 6px;
+  font-size: 26px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.star-rating-widget span {
+  color: var(--theme-text-muted);
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.star-rating-widget span:hover {
+  transform: scale(1.25);
+}
+
+.star-rating-widget span.hovered,
+.star-rating-widget span.selected {
+  color: #ffd166;
+  text-shadow: 0 0 6px rgba(255, 209, 102, 0.6);
+}
+
+/* Carousel Gallery Component */
+.gallery-carousel {
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  height: 50vh;
+  margin-bottom: 30px;
+}
+
+.gallery-slides {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.gallery-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(15, 52, 96, 0.75);
+  backdrop-filter: blur(5px);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: var(--transition);
+  z-index: 10;
+  outline: none;
+}
+
+.carousel-arrow:hover {
+  background: var(--secondary);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 15px rgba(255, 122, 0, 0.45);
+}
+
+.carousel-arrow.prev { left: 20px; }
+.carousel-arrow.next { right: 20px; }
+
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  transition: var(--transition);
+  border: none;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  background: var(--secondary);
+  width: 24px;
+  border-radius: 10px;
+}
+
+/* Premium range slider */
+.range-slider-container {
+  padding-top: 10px;
+  width: 100%;
+}
+
+.range-slider-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--secondary);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.slider-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 5px;
+  background: var(--theme-border);
+  outline: none;
+  transition: var(--transition);
+}
+
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.slider-input::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 10px rgba(255,122,0,0.3);
+}
+
+/* Tab slider indicator details */
+.tab-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+.tab-link::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--secondary);
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  transition: transform 0.3s ease;
+}
+.tab-link.active::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Interactive Sort drop down styling */
+.sort-select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.sort-select-wrapper select {
+  padding: 10px 35px 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  background: var(--theme-input-bg);
+  color: var(--theme-text);
+  border: 1px solid var(--theme-input-border);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  transition: var(--transition);
+}
+.sort-select-wrapper select:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.12);
+}
+.sort-select-wrapper::after {
+  content: '▼';
+  font-size: 10px;
+  color: var(--text-muted);
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   ANTIGRAVITY PREMIUM ANIMATIONS & INTERACTIVE EFFECTS
+   ========================================================================== */
+
+/* Smooth Liquid Theme-switching Transition */
+body, .navbar, .footer, .glass-card, input, select, textarea, .btn, .category-card, .destination-card, .pkg-card {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scroll Reveal Classes */
+.reveal {
+  opacity: 0 !important;
+  transform: translateY(30px) scale(0.99);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.reveal-left {
+  opacity: 0 !important;
+  transform: translateX(-30px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.reveal-right {
+  opacity: 0 !important;
+  transform: translateX(30px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.reveal.active,
+.reveal-left.active,
+.reveal-right.active {
+  opacity: 1 !important;
+  transform: translate(0) scale(1) !important;
+}
+
+.stagger-grid > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stagger-grid.active > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-grid.active > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger-grid.active > *:nth-child(2) { transition-delay: 0.12s; }
+.stagger-grid.active > *:nth-child(3) { transition-delay: 0.19s; }
+.stagger-grid.active > *:nth-child(4) { transition-delay: 0.26s; }
+.stagger-grid.active > *:nth-child(5) { transition-delay: 0.33s; }
+.stagger-grid.active > *:nth-child(6) { transition-delay: 0.40s; }
+.stagger-grid.active > *:nth-child(7) { transition-delay: 0.47s; }
+.stagger-grid.active > *:nth-child(8) { transition-delay: 0.54s; }
+
+/* Micro-animations: Global Nav Links */
+.nav-links li a {
+  position: relative;
+  padding: 6px 0;
+}
+
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background: var(--secondary);
+  transform-origin: bottom right;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-links li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Card Zoom and Hover Glow Enhancements */
+.destination-card, .pkg-card, .category-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.destination-card:hover, .pkg-card:hover, .category-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="dark"] .destination-card:hover,
+[data-theme="dark"] .pkg-card:hover,
+[data-theme="dark"] .category-card:hover {
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Glimmer Shimmer Shiner on buttons */
+.btn-primary, .btn-secondary {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before, .btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: all 0.6s ease;
+}
+
+.btn-primary:hover::before, .btn-secondary:hover::before {
+  left: 100%;
+}
+
+.btn:active {
+  transform: scale(0.96) translateY(-1px) !important;
+}
+
+/* Custom Text and Pulsing spinner for Page Loader */
+.loader-text {
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  margin-top: 25px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  animation: pulseText 1.5s infinite ease-in-out;
+}
+
+.loader {
+  border: 4px solid rgba(255, 255, 255, 0.1) !important;
+  border-top-color: var(--secondary) !important;
+  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite !important;
+  box-shadow: 0 0 15px rgba(255, 122, 0, 0.2);
+}
+
+@keyframes pulseText {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+}
+
+/* Chatbot Pop-in Message and Wobble */
+.chat-msg {
+  animation: bounceBubble 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  transform-origin: left bottom;
+}
+
+.chat-msg.user {
+  transform-origin: right bottom;
+}
+
+@keyframes bounceBubble {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Chatbot icon welcome wobble */
+.chatbot-wobble {
+  animation: wiggleChat 1s ease 3;
+}
+
+@keyframes wiggleChat {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-15deg) scale(1.1); }
+  75% { transform: rotate(15deg) scale(1.1); }
+}
+
+/* Star Rating Selector Widget interaction */
+.star-rating-widget span {
+  display: inline-block;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.star-rating-widget span:hover {
+  transform: scale(1.4) rotate(15deg);
+}
+
+/* Floating animation helper */
+.floating-element {
+  animation: floatMotion 4s ease-in-out infinite;
+}
+
+@keyframes floatMotion {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+/* Modern focus state for input elements */
+input:focus, select:focus, textarea:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 122, 0, 0.1) !important;
+  border-color: var(--secondary) !important;
+}
+
+@keyframes pageEntrance {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE MOBILE SPACING & LAYOUT CORRECTIONS
+   ========================================================================== */
+
+/* Force desktop navLinks display to bypass menu-toggle click inline-styles on resize */
+@media (min-width: 993px) {
+  #nav-links {
+    display: flex !important;
+    position: relative !important;
+    flex-direction: row !important;
+    top: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+  .mobile-auth-item {
+    display: none !important;
+  }
+}
+
+/* Mobile & Tablet Specific overrides */
+@media (max-width: 992px) {
+  .nav-auth {
+    display: none !important; /* Hide desktop auth row from header */
+  }
+
+  /* Force links inside vertical mobile menu to be a visible theme color at all scroll levels */
+  .navbar-hero:not(.scrolled) .nav-links a,
+  .nav-links a {
+    color: var(--theme-text) !important;
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Style mobile auth drawer buttons to span evenly */
+  .mobile-auth-item {
+    display: flex !important;
+    gap: 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .mobile-auth-item a, 
+  .mobile-auth-item button {
+    flex: 1;
+    text-align: center;
+    padding: 10px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    white-space: nowrap;
+  }
+
+  .theme-toggle-btn {
+    margin-left: auto !important; /* Push theme toggle to the right next to menu toggle */
+    margin-right: 15px !important;
+  }
+
+  .logo span {
+    font-size: 18px !important; /* Prevent text overflow on small viewports */
+  }
+  
+  .navbar {
+    padding: 15px 0 !important;
+  }
+  
+  /* Reset spacing on content page layouts to prevent header collisions */
+  .dest-layout, .packages-layout, .contact-layout, .about-hero {
+    margin-top: 90px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px !important;
+  }
+  
+  section {
+    margin-bottom: 45px !important;
+  }
+  
+  .section-header {
+    margin-bottom: 30px !important;
+  }
+  
+  .section-header h2 {
+    font-size: 26px !important;
+    line-height: 1.3 !important;
+  }
+  
+  .section-header p {
+    font-size: 14px !important;
+  }
+  
+  .hero-content h1 {
+    font-size: 32px !important;
+  }
+  
+  /* Prevent full-width button scaling issues */
+  .btn {
+    padding: 10px 22px !important;
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo span {
+    display: none; /* Hide 'Travel Heaven' text on tiny screens to fit toggle buttons */
+  }
+}
+
+
+
