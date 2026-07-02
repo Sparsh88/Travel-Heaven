@@ -1,75 +1,113 @@
-✈️ Travel Heaven
+# ✈️ Travel Heaven
 
-A Full Stack Travel Booking Platform built with the MERN ecosystem (Node.js, Express.js, MongoDB) and a responsive HTML/CSS/JavaScript frontend.
+A **Full Stack Travel Booking Platform** built using the **MERN Stack (MongoDB, Express.js, Node.js)** with a responsive **HTML, CSS, and JavaScript frontend**.
 
-Travel Heaven is a modern travel booking portal that allows users to explore destinations, book travel packages, manage reservations, make payments, track trip progress, and interact with an administrator dashboard.
+Travel Heaven allows users to explore destinations, book travel packages, manage reservations, make payments, track trips, and provides administrators with a powerful dashboard for managing users and bookings.
 
-Inspired by platforms like Expedia, MakeMyTrip, and Booking.com.
+Inspired by platforms like **Expedia**, **MakeMyTrip**, and **Booking.com**.
 
-🌟 Features
-User Features
-User Registration & Login
-JWT Authentication
-Password Recovery
-Explore Travel Destinations
-Search & Filter Packages
-Detailed Destination Pages
-Package Booking System
-Secure Payment Simulation
-Booking History
-Travel Progress Tracking
-User Dashboard
-Admin Features
-Admin Authentication
-Booking Management
-User Management
-Analytics Dashboard
-Package Monitoring
-Booking Status Updates
-Trip Milestone Tracking
-🖥️ Demo
-Frontend : http://localhost:5000
-Backend  : http://localhost:5000/api
-🏗️ System Architecture
-┌──────────────┐
-│   Frontend   │
-│ HTML CSS JS  │
-└──────┬───────┘
-       │ REST APIs
-       ▼
-┌──────────────┐
-│ Express.js   │
-│ Backend API  │
-└──────┬───────┘
-       │
-       ▼
-┌──────────────┐
-│ MongoDB      │
-│ Database     │
-└──────────────┘
-🛠️ Tech Stack
-Frontend
-HTML5
-CSS3
-JavaScript (ES6)
-Chart.js
-Backend
-Node.js
-Express.js
-JWT Authentication
-bcrypt.js
-Database
-MongoDB
-Mongoose ODM
-Development Tools
-Nodemon
-Postman
-Git & GitHub
-📂 Complete Project Structure
+---
+
+## 🌟 Features
+
+### 👤 User Features
+
+- User Registration & Login
+- JWT Authentication
+- Password Recovery
+- Explore Travel Destinations
+- Search & Filter Packages
+- Detailed Destination Pages
+- Package Booking System
+- Secure Payment Simulation
+- Booking History
+- Travel Progress Tracking
+- User Dashboard
+
+### 🛠 Admin Features
+
+- Admin Authentication
+- User Management
+- Booking Management
+- Analytics Dashboard
+- Package Monitoring
+- Booking Status Updates
+- Trip Milestone Tracking
+
+---
+
+## 🖥️ Demo
+
+### Frontend
+```
+http://localhost:5000
+```
+
+### Backend API
+```
+http://localhost:5000/api
+```
+
+---
+
+# 🏗️ System Architecture
+
+```
+┌──────────────────┐
+│     Frontend     │
+│ HTML • CSS • JS  │
+└────────┬─────────┘
+         │ REST APIs
+         ▼
+┌──────────────────┐
+│   Express.js     │
+│   Backend API    │
+└────────┬─────────┘
+         │
+         ▼
+┌──────────────────┐
+│     MongoDB      │
+│     Database     │
+└──────────────────┘
+```
+
+---
+
+# 🛠️ Tech Stack
+
+## Frontend
+
+- HTML5
+- CSS3
+- JavaScript (ES6)
+- Chart.js
+
+## Backend
+
+- Node.js
+- Express.js
+- JWT Authentication
+- bcrypt.js
+
+## Database
+
+- MongoDB
+- Mongoose ODM
+
+## Development Tools
+
+- Nodemon
+- Postman
+- Git & GitHub
+
+---
+
+# 📂 Project Structure
+
+```bash
 Travel-Heaven/
 │
 ├── client/
-│   │
 │   ├── css/
 │   │   ├── style.css
 │   │   ├── dashboard.css
@@ -94,7 +132,6 @@ Travel-Heaven/
 │   └── admin.html
 │
 ├── server/
-│   │
 │   ├── config/
 │   │   └── db.js
 │   │
@@ -132,18 +169,37 @@ Travel-Heaven/
 │
 ├── README.md
 └── .gitignore
-⚙️ Installation Guide
-1. Clone Repository
+```
+
+---
+
+# ⚙️ Installation Guide
+
+## 1. Clone Repository
+
+```bash
 git clone https://github.com/yourusername/travel-heaven.git
 
 cd travel-heaven
-2. Install Dependencies
+```
+
+---
+
+## 2. Install Dependencies
+
+```bash
 cd server
+
 npm install
-3. Configure Environment Variables
+```
 
-Create a .env file inside the server folder.
+---
 
+## 3. Configure Environment Variables
+
+Create a `.env` file inside the server folder.
+
+```env
 PORT=5000
 
 MONGODB_URI=mongodb://127.0.0.1:27017/travel-heaven
@@ -153,130 +209,261 @@ JWT_SECRET=your_secret_key
 JWT_EXPIRES_IN=7d
 
 NODE_ENV=development
-4. Seed Database
+```
+
+---
+
+## 4. Seed Database
+
+```bash
 npm run seed
-5. Start Application
+```
 
-Development Mode
+---
 
+## 5. Start Application
+
+### Development Mode
+
+```bash
 npm run dev
+```
 
-Production Mode
+### Production Mode
 
+```bash
 npm start
-🔐 Default Admin Credentials
-Username : admin
+```
 
-Email    : admin@travelheaven.com
+---
 
-Password : admin123
-📡 API Endpoints
-Authentication
-POST   /api/auth/register
-POST   /api/auth/login
-GET    /api/auth/me
-GET    /api/auth/logout
-POST   /api/auth/forgotpassword
-POST   /api/auth/resetpassword/:token
-Users
-PUT    /api/users/profile
-PUT    /api/users/updatepassword
-GET    /api/users/bookings
-Destinations
-GET    /api/destinations
-GET    /api/destinations/:id
-Packages
-GET    /api/packages
-GET    /api/packages/:id
-Bookings
-POST   /api/bookings
-GET    /api/bookings/:id
-PUT    /api/bookings/:id/cancel
-Payments
-POST   /api/payments/checkout
-Admin
-POST   /api/admin/login
-GET    /api/admin/analytics
-GET    /api/admin/bookings
-PUT    /api/admin/bookings/:id/confirm
-PUT    /api/admin/bookings/:id/status
-DELETE /api/admin/users/:id
-📊 Database Design
-Collections
-Users
-Destinations
-Packages
-Bookings
-Payments
-Reviews
-Relationships
+# 🔐 Default Admin Credentials
+
+| Field | Value |
+|---------|--------|
+| Username | admin |
+| Email | admin@travelheaven.com |
+| Password | admin123 |
+
+---
+
+# 📡 API Endpoints
+
+## Authentication
+
+| Method | Endpoint |
+|----------|---------|
+| POST | `/api/auth/register` |
+| POST | `/api/auth/login` |
+| GET | `/api/auth/me` |
+| GET | `/api/auth/logout` |
+| POST | `/api/auth/forgotpassword` |
+| POST | `/api/auth/resetpassword/:token` |
+
+---
+
+## Users
+
+| Method | Endpoint |
+|----------|---------|
+| PUT | `/api/users/profile` |
+| PUT | `/api/users/updatepassword` |
+| GET | `/api/users/bookings` |
+
+---
+
+## Destinations
+
+| Method | Endpoint |
+|----------|---------|
+| GET | `/api/destinations` |
+| GET | `/api/destinations/:id` |
+
+---
+
+## Packages
+
+| Method | Endpoint |
+|----------|---------|
+| GET | `/api/packages` |
+| GET | `/api/packages/:id` |
+
+---
+
+## Bookings
+
+| Method | Endpoint |
+|----------|---------|
+| POST | `/api/bookings` |
+| GET | `/api/bookings/:id` |
+| PUT | `/api/bookings/:id/cancel` |
+
+---
+
+## Payments
+
+| Method | Endpoint |
+|----------|---------|
+| POST | `/api/payments/checkout` |
+
+---
+
+## Admin
+
+| Method | Endpoint |
+|----------|---------|
+| POST | `/api/admin/login` |
+| GET | `/api/admin/analytics` |
+| GET | `/api/admin/bookings` |
+| PUT | `/api/admin/bookings/:id/confirm` |
+| PUT | `/api/admin/bookings/:id/status` |
+| DELETE | `/api/admin/users/:id` |
+
+---
+
+# 📊 Database Design
+
+### Collections
+
+- Users
+- Destinations
+- Packages
+- Bookings
+- Payments
+- Reviews
+
+### Relationships
+
+```text
 User
- ├── Bookings
- ├── Payments
- └── Reviews
+├── Bookings
+├── Payments
+└── Reviews
 
 Destination
- ├── Packages
- ├── Reviews
- └── Bookings
+├── Packages
+├── Reviews
+└── Bookings
 
 Package
- └── Bookings
+└── Bookings
 
 Booking
- └── Payment
-🧪 Testing
-Failed Card Payment
-Use card number containing 0000
-Failed UPI Payment
-Use UPI containing "fail"
-🚀 Future Enhancements
-Razorpay Integration
-Stripe Integration
-Google Authentication
-Email Verification
-Hotel Booking Module
-Flight Booking Module
-AI Travel Recommendations
-Real-Time Notifications
-Multi-Language Support
-Mobile Application
-📸 Screenshots
+└── Payment
+```
 
-Add screenshots here:
+---
 
+# 🧪 Testing
+
+### Failed Card Payment
+
+Use card number containing:
+
+```text
+0000
+```
+
+### Failed UPI Payment
+
+Use UPI ID containing:
+
+```text
+fail
+```
+
+---
+
+# 🚀 Future Enhancements
+
+- Razorpay Integration
+- Stripe Integration
+- Google Authentication
+- Email Verification
+- Hotel Booking Module
+- Flight Booking Module
+- AI Travel Recommendations
+- Real-Time Notifications
+- Multi-Language Support
+- Mobile Application
+
+---
+
+# 📸 Screenshots
+
+```
 screenshots/
+│
 ├── home.png
 ├── destinations.png
 ├── package-details.png
 ├── dashboard.png
-├── admin-dashboard.png
-![Home Page](screenshots/home.png)
+└── admin-dashboard.png
+```
 
-![Destinations](screenshots/destinations.png)
+### Home Page
 
-![Dashboard](screenshots/dashboard.png)
-🤝 Contributing
+Add screenshot here.
 
-Contributions are welcome.
+### Destinations
 
-Fork the repository
-Create a feature branch
-Commit your changes
-Push the branch
-Create a Pull Request
-👨‍💻 Author
+Add screenshot here.
 
-Sparsh Chauhan
+### Dashboard
 
-B.Tech Computer Science Engineering
+Add screenshot here.
 
-Full Stack Web Developer
+---
 
-GitHub: https://github.com/your-github-username
+# 🤝 Contributing
 
-LinkedIn: https://linkedin.com/in/your-linkedin-profile
+Contributions are welcome!
 
-⭐ Support
+1. Fork the repository.
+2. Create a feature branch.
 
-If you found this project helpful, please consider giving it a ⭐ on GitHub.
+```bash
+git checkout -b feature-name
+```
+
+3. Commit your changes.
+
+```bash
+git commit -m "Added new feature"
+```
+
+4. Push to your branch.
+
+```bash
+git push origin feature-name
+```
+
+5. Open a Pull Request.
+
+---
+
+# 👨‍💻 Author
+
+### Sparsh Chauhan
+
+**B.Tech Computer Science Engineering**  
+**Full Stack Web Developer**
+
+- GitHub: https://github.com/Sparsh88
+- LinkedIn: https://linkedin.com/in/sparshchauhan08
+
+---
+
+# ⭐ Support
+
+If you found this project helpful, please give it a ⭐ on GitHub.
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License.
+
+---
+
+### Made with ❤️ by Sparsh Chauhan
