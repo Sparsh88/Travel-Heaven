@@ -222,7 +222,7 @@ const seedDatabase = async () => {
       category: 'International',
       budgetCategory: 'Mid-Range',
       featured: true,
-      images: ['https://images.unsplash.com/photo-1528181304800-2f1258bb9cf7?auto=format&fit=crop&w=800&q=80'],
+      images: ['https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80'],
     },
     {
       name: 'USA',
@@ -567,7 +567,7 @@ const seedDatabase = async () => {
       durationNights: 4,
       inclusions: ['3-Star Hotels', 'Daily Breakfasts', 'Bangkok Temple Tour', 'Phi Phi Islands Speedboat Tour with Lunch'],
       exclusions: ['International Flights', 'National Park entry fees', 'Personal water sports rentals'],
-      images: ['https://images.unsplash.com/photo-1528181304800-2f1258bb9cf7?auto=format&fit=crop&w=800&q=80'],
+      images: ['https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80'],
       featured: true,
       itinerary: [
         { day: 1, title: 'Bangkok Arrival & Chao Phraya Cruise', description: 'Arrive in Bangkok. Check in to hotel. Dinner cruise along the Chao Phraya River.' },

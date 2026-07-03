@@ -339,6 +339,8 @@
             `;
             container.appendChild(card);
           });
+        } else {
+          showAlert(json.message || 'Failed to load bookings.', 'error');
         }
       } catch (err) {
         console.error(err);

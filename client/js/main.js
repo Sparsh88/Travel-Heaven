@@ -68,6 +68,18 @@ function showAlert(message, type = 'success') {
     alert.style.animation = 'slideIn 0.3s ease reverse forwards';
     setTimeout(() => alert.remove(), 300);
   }, 3000);
+
+  // Auto sign-out if token/authorization errors occur
+  if (type === 'error' && typeof message === 'string') {
+    const lowerMsg = message.toLowerCase();
+    if (lowerMsg.includes('token') || lowerMsg.includes('not authorized') || lowerMsg.includes('user not found')) {
+      setTimeout(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.href = 'login.html';
+      }, 2000);
+    }
+  }
 }
 
 // ---- Session navbar update ----
