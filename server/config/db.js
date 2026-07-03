@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const Destination = require('../models/Destination');
+const seedDatabase = require('../utils/seedHelper');
 
 const connectDB = async () => {
   if (process.env.USE_MOCK_DATA === 'true') {
@@ -8,9 +10,21 @@ const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/travel-heaven');
     console.log(`MongoDB Connected: ${conn.connection.host}`);
+
+    // Auto-seed if database is empty on connection
+    const count = await Destination.countDocuments();
+    if (count === 0) {
+      console.log('Database is empty. Initiating background auto-seeding...');
+      await seedDatabase();
+      console.log('Database auto-seeded successfully!');
+    }
   } catch (error) {
     console.error(`Error connecting to MongoDB: ${error.message}`);
-    process.exit(1);
+    if (process.env.VERCEL) {
+      console.error('Bypassing process.exit(1) inside Vercel environment.');
+    } else {
+      process.exit(1);
+    }
   }
 };
 

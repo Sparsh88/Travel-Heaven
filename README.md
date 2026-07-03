@@ -460,10 +460,4 @@ If you found this project helpful, please give it a ⭐ on GitHub.
 
 ---
 
-## 📜 License
-
-This project is licensed under the MIT License.
-
----
-
-### Made with ❤️ by Sparsh Chauhan
+### Made by Sparsh Chauhan
