@@ -3,6 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const helmet = require('helmet');
 const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const connectDB = require('./config/db');
 const errorHandler = require('./middlewares/errorMiddleware');
 const { apiLimiter } = require('./middlewares/securityMiddleware');
@@ -15,10 +16,30 @@ if (process.env.USE_MOCK_DATA === 'true') {
   require('./mock/mockMongoose');
 }
 
-// Connect to Database
-connectDB();
+// Connect to Database (background connection on startup)
+connectDB().catch(err => console.error('Database connection failed on startup:', err.message));
 
 const app = express();
+
+// Middleware to ensure DB connection is ready (critical for serverless / Vercel cold starts)
+app.use(async (req, res, next) => {
+  if (process.env.USE_MOCK_DATA === 'true') {
+    return next();
+  }
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      console.log('Database connection is not ready. Attempting connection now...');
+      await connectDB();
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Database connection failed. Please verify that your MongoDB connection string (MONGODB_URI) is correctly configured in Vercel.',
+        error: err.message
+      });
+    }
+  }
+  next();
+});
 
 // Custom Cookie Parser middleware
 app.use((req, res, next) => {
