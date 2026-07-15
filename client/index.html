@@ -465,6 +465,34 @@
     </div>
   </section>
 
+  <!-- Trending Destinations Slider Section -->
+  <section class="trending-slider-section container">
+    <div class="section-header reveal">
+      <h2>Trending Escapes</h2>
+      <p>Embark on our top 5 handpicked luxury vacations & adventures</p>
+    </div>
+    <div class="slider-wrapper">
+      <button class="slider-arrow prev-arrow" id="slider-prev" aria-label="Previous slide">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+      <div class="slider-container" id="slider-container">
+        <div class="slider-track" id="slider-track">
+          <!-- Dynamic Slides loaded from JS -->
+        </div>
+      </div>
+      <button class="slider-arrow next-arrow" id="slider-next" aria-label="Next slide">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="slider-dots" id="slider-dots">
+      <!-- Dynamic Dots loaded from JS -->
+    </div>
+  </section>
+
   <!-- Featured Destinations Section -->
   <section class="destinations-home container">
     <div class="section-header reveal">
@@ -613,47 +641,254 @@
   <!-- Scripts -->
   <script src="js/main.js"></script>
   <script>
-    // Load Featured Destinations on Home Page
+    // Load Featured Destinations & Initialize Trending Slider on Home Page
     document.addEventListener('DOMContentLoaded', async () => {
       try {
         const res = await fetch('/api/destinations');
         const json = await res.json();
+        
         if (json.success && json.data.length > 0) {
+          // --- 1. POPULATE FEATURED DESTINATIONS GRID ---
           const grid = document.getElementById('featured-destinations');
-          grid.innerHTML = '';
-          
-          // Get featured or first 3 destinations
-          const featured = json.data.filter(d => d.featured).slice(0, 3);
-          const displayList = featured.length > 0 ? featured : json.data.slice(0, 3);
+          if (grid) {
+            grid.innerHTML = '';
+            
+            // Get featured or first 3 destinations
+            const featured = json.data.filter(d => d.featured).slice(0, 3);
+            const displayList = featured.length > 0 ? featured : json.data.slice(0, 3);
 
-          displayList.forEach(dest => {
-            const card = document.createElement('div');
-            card.className = 'destination-card';
-            card.innerHTML = `
-              <div class="destination-img">
-                <span class="destination-badge">${dest.category}</span>
-                <img src="${dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}" alt="${dest.name}">
-              </div>
-              <div class="destination-body">
-                <h3>${dest.name}, ${dest.country}</h3>
-                <p style="font-size: 14px; color: var(--text-muted); height: 65px; overflow: hidden;">${dest.description}</p>
-                <div class="destination-meta">
-                  <div class="destination-rating">
-                    <span>★</span>
-                    <span>${dest.rating || 'N/A'}</span>
+            displayList.forEach(dest => {
+              const card = document.createElement('div');
+              card.className = 'destination-card';
+              card.innerHTML = `
+                <div class="destination-img">
+                  <span class="destination-badge">${dest.category}</span>
+                  <img src="${dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}" alt="${dest.name}">
+                </div>
+                <div class="destination-body">
+                  <h3>${dest.name}, ${dest.country}</h3>
+                  <p style="font-size: 14px; color: var(--text-muted); height: 65px; overflow: hidden;">${dest.description}</p>
+                  <div class="destination-meta">
+                    <div class="destination-rating">
+                      <span>★</span>
+                      <span>${dest.rating || 'N/A'}</span>
+                    </div>
+                    <span style="font-weight: 600; color: var(--primary);">${dest.budgetCategory}</span>
                   </div>
-                  <span style="font-weight: 600; color: var(--primary);">${dest.budgetCategory}</span>
+                  <div style="margin-top: 20px;">
+                    <a href="destination-details.html?id=${dest._id}" class="btn btn-outline" style="width: 100%; font-size: 13px; padding: 8px 12px; border-radius: 8px;">Explore Details</a>
+                  </div>
                 </div>
-                <div style="margin-top: 20px;">
-                  <a href="destination-details.html?id=${dest._id}" class="btn btn-outline" style="width: 100%; font-size: 13px; padding: 8px 12px; border-radius: 8px;">Explore Details</a>
+              `;
+              grid.appendChild(card);
+            });
+          }
+
+          // --- 2. POPULATE AND SETUP TRENDING SLIDER ---
+          const sliderTrack = document.getElementById('slider-track');
+          const sliderDots = document.getElementById('slider-dots');
+          const sliderContainer = document.getElementById('slider-container');
+
+          if (sliderTrack && sliderDots && sliderContainer) {
+            // Prioritize featured, fall back to sequential to ensure we have exactly 5 slides
+            const sliderDests = [
+              ...json.data.filter(d => d.featured),
+              ...json.data.filter(d => !d.featured)
+            ].slice(0, 5);
+
+            sliderTrack.innerHTML = '';
+            sliderDots.innerHTML = '';
+
+            sliderDests.forEach((dest, index) => {
+              // Generate slide card HTML
+              const card = document.createElement('div');
+              card.className = `slider-card`;
+              
+              // Map budget categories to realistic starting prices
+              let startingPrice = '₹19,999';
+              if (dest.budgetCategory === 'Luxury') startingPrice = '₹79,999';
+              else if (dest.budgetCategory === 'Mid-Range') startingPrice = '₹39,999';
+
+              card.innerHTML = `
+                <img src="${dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}" alt="${dest.name}" class="slider-img" loading="lazy">
+                <div class="slider-overlay"></div>
+                <div class="slider-content">
+                  <span class="slider-badge">${dest.category}</span>
+                  <h3>${dest.name}</h3>
+                  <div class="slider-meta">
+                    <span class="slider-location">📍 ${dest.country}</span>
+                    <span class="slider-rating">★ ${dest.rating || '4.5'}</span>
+                  </div>
+                  <p class="slider-desc">${dest.description}</p>
+                  <div class="slider-footer">
+                    <div class="slider-price">
+                      <span class="label">Starting From</span>
+                      <span class="value">${startingPrice}</span>
+                    </div>
+                    <button class="slider-btn" onclick="window.location.href='destination-details.html?id=${dest._id}'">Explore Details</button>
+                  </div>
                 </div>
-              </div>
-            `;
-            grid.appendChild(card);
-          });
+              `;
+
+              // Click active slide to navigate, click inactive slide to center it
+              card.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'BUTTON') {
+                  if (currentIndex !== index) {
+                    e.preventDefault();
+                    currentIndex = index;
+                    updateSlider();
+                    resetAutoPlay();
+                  }
+                }
+              });
+
+              sliderTrack.appendChild(card);
+
+              // Generate dot navigation
+              const dot = document.createElement('div');
+              dot.className = 'slider-dot';
+              dot.title = `Go to slide ${index + 1}`;
+              dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlider();
+                resetAutoPlay();
+              });
+              sliderDots.appendChild(dot);
+            });
+
+            let currentIndex = 2; // Default start at middle card (index 2)
+            const totalSlides = sliderDests.length;
+
+            function updateSlider() {
+              const cards = sliderTrack.children;
+              const dots = sliderDots.children;
+              const containerWidth = sliderContainer.offsetWidth;
+              if (cards.length === 0) return;
+
+              const cardWidth = cards[0].offsetWidth;
+              const gap = 30; // space between cards
+
+              // Calculate transition offset to center the active card perfectly
+              const targetX = (containerWidth / 2) - (cardWidth / 2) - (currentIndex * (cardWidth + gap));
+              sliderTrack.style.transform = `translate3d(${targetX}px, 0px, 0px)`;
+
+              // Toggle CSS active states
+              for (let i = 0; i < cards.length; i++) {
+                if (i === currentIndex) {
+                  cards[i].classList.add('active-slide');
+                  cards[i].classList.remove('inactive-slide');
+                  if (dots[i]) dots[i].classList.add('active-dot');
+                } else {
+                  cards[i].classList.remove('active-slide');
+                  cards[i].classList.add('inactive-slide');
+                  if (dots[i]) dots[i].classList.remove('active-dot');
+                }
+              }
+            }
+
+            // Bind Navigation Arrows
+            const prevArrow = document.getElementById('slider-prev');
+            const nextArrow = document.getElementById('slider-next');
+
+            if (prevArrow && nextArrow) {
+              prevArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateSlider();
+                resetAutoPlay();
+              });
+
+              nextArrow.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateSlider();
+                resetAutoPlay();
+              });
+            }
+
+            // Re-center active slide on window resize
+            window.addEventListener('resize', () => {
+              updateSlider();
+            });
+
+            // Initial center layout update
+            setTimeout(updateSlider, 250);
+
+            // --- AUTO-PLAY CYCLES ---
+            let autoPlayTimer = setInterval(nextSlide, 5000);
+
+            function nextSlide() {
+              currentIndex = (currentIndex + 1) % totalSlides;
+              updateSlider();
+            }
+
+            function resetAutoPlay() {
+              clearInterval(autoPlayTimer);
+              autoPlayTimer = setInterval(nextSlide, 5000);
+            }
+
+            // Pause on hover
+            sliderContainer.addEventListener('mouseenter', () => {
+              clearInterval(autoPlayTimer);
+            });
+
+            sliderContainer.addEventListener('mouseleave', () => {
+              resetAutoPlay();
+            });
+
+            // --- TOUCH / DRAG SWIPE GESTURES ---
+            let startX = 0;
+            let isDragging = false;
+
+            sliderContainer.addEventListener('touchstart', (e) => {
+              startX = e.touches[0].clientX;
+              isDragging = true;
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchmove', (e) => {
+              if (!isDragging) return;
+              const diffX = e.touches[0].clientX - startX;
+              if (Math.abs(diffX) > 60) {
+                if (diffX > 0) {
+                  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                } else {
+                  currentIndex = (currentIndex + 1) % totalSlides;
+                }
+                updateSlider();
+                isDragging = false;
+                resetAutoPlay();
+              }
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchend', () => {
+              isDragging = false;
+            });
+
+            // Desktop Mouse-Swipe drag controls
+            sliderContainer.addEventListener('mousedown', (e) => {
+              startX = e.clientX;
+              isDragging = true;
+            });
+
+            sliderContainer.addEventListener('mousemove', (e) => {
+              if (!isDragging) return;
+              const diffX = e.clientX - startX;
+              if (Math.abs(diffX) > 85) {
+                if (diffX > 0) {
+                  currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                } else {
+                  currentIndex = (currentIndex + 1) % totalSlides;
+                }
+                updateSlider();
+                isDragging = false;
+                resetAutoPlay();
+              }
+            });
+
+            sliderContainer.addEventListener('mouseup', () => { isDragging = false; });
+            sliderContainer.addEventListener('mouseleave', () => { isDragging = false; });
+          }
         }
       } catch (err) {
-        console.error('Error fetching featured destinations:', err);
+        console.error('Error fetching destinations data:', err);
       }
     });
   </script>
