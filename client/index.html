@@ -395,10 +395,9 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <video autoplay loop muted playsinline class="hero-video-bg">
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-thick-forest-and-river-42205-large.mp4" type="video/mp4">
-    </video>
-    <div class="hero-overlay" style="background: linear-gradient(rgba(11, 12, 16, 0.4), rgba(15, 52, 96, 0.6));"></div>
+    <!-- Hero Slider Background -->
+    <div class="hero-slider" id="hero-slider"></div>
+    <div class="hero-overlay" style="background: linear-gradient(rgba(11, 12, 16, 0.45), rgba(15, 52, 96, 0.65));"></div>
     <div class="hero-content container">
       <h1>Explore The World, Live The Heaven</h1>
       <p>Find the best destinations and premium customized tour packages. Book now and start your dream journey with us.</p>
@@ -695,6 +694,28 @@
               ...json.data.filter(d => d.featured),
               ...json.data.filter(d => !d.featured)
             ].slice(0, 5);
+
+            // --- 3. POPULATE AND SETUP HERO BACKGROUND SLIDER ---
+            const heroSlider = document.getElementById('hero-slider');
+            if (heroSlider) {
+              heroSlider.innerHTML = '';
+              sliderDests.forEach((dest, idx) => {
+                const slide = document.createElement('div');
+                slide.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+                slide.style.backgroundImage = `linear-gradient(rgba(11, 12, 16, 0.45), rgba(15, 52, 96, 0.65)), url('${dest.images[0] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800'}')`;
+                heroSlider.appendChild(slide);
+              });
+
+              let heroIndex = 0;
+              const heroSlides = heroSlider.children;
+              if (heroSlides.length > 1) {
+                setInterval(() => {
+                  heroSlides[heroIndex].classList.remove('active');
+                  heroIndex = (heroIndex + 1) % heroSlides.length;
+                  heroSlides[heroIndex].classList.add('active');
+                }, 6000); // Transitions background slide every 6 seconds
+              }
+            }
 
             sliderTrack.innerHTML = '';
             sliderDots.innerHTML = '';

@@ -365,7 +365,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -2;
+  z-index: -3; /* Shifted back to allow hero slider layers */
 }
 
 .hero-overlay {
@@ -376,6 +376,39 @@ a {
   height: 100%;
   z-index: -1;
 }
+
+/* ===== HERO SLIDER BACKGROUND ===== */
+.hero-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.04);
+  transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), transform 6.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform, opacity;
+}
+
+/* Active slide: fade-in and scale zoom (Ken Burns) */
+.hero-slide.active {
+  opacity: 1;
+  transform: scale(1.13);
+}
+
 
 
 /* Glass Card */
