@@ -399,7 +399,7 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   transform: scale(1.04);
-  transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1), transform 6.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 4.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   will-change: transform, opacity;
 }
 
