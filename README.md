@@ -1,171 +1,136 @@
 # ✈️ Travel Heaven
 
-A **Full Stack Travel Booking Platform** built using the **MERN Stack (MongoDB, Express.js, Node.js)** with a responsive **HTML, CSS, and JavaScript frontend**.
-
-Travel Heaven allows users to explore destinations, book travel packages, manage reservations, make payments, track trips, and provides administrators with a powerful dashboard for managing users and bookings.
+> A modern **Full Stack Travel Booking Platform** built with the **MERN Stack**, allowing users to discover destinations, book travel packages, manage reservations, and track their trips through an intuitive dashboard.
 
 Inspired by platforms like **Expedia**, **MakeMyTrip**, and **Booking.com**.
 
 ---
 
-## 🌟 Features
+## 🌐 Live Demo
 
-### 👤 User Features
+**Application**
 
-- User Registration & Login
-- JWT Authentication
-- Password Recovery
-- Explore Travel Destinations
-- Search & Filter Packages
-- Detailed Destination Pages
-- Package Booking System
-- Secure Payment Simulation
-- Booking History
-- Travel Progress Tracking
-- User Dashboard
+👉 https://travel-heaven-server.vercel.app/
 
-### 🛠 Admin Features
-
-- Admin Authentication
-- User Management
-- Booking Management
-- Analytics Dashboard
-- Package Monitoring
-- Booking Status Updates
-- Trip Milestone Tracking
+> **Deployment:** Hosted on **Vercel**
 
 ---
 
-## 🖥️ Demo
+# 📖 Overview
 
-### Frontend
-```
-http://localhost:5000
-```
+Travel Heaven is a full-stack web application designed to simplify travel planning and booking. Users can browse destinations, search travel packages, make bookings, simulate secure payments, and monitor their travel progress. An admin panel enables efficient management of users, bookings, destinations, and analytics.
 
-### Backend API
-```
-http://localhost:5000/api
-```
+This project demonstrates practical implementation of:
 
----
-
-# 🏗️ System Architecture
-
-```
-┌──────────────────┐
-│     Frontend     │
-│ HTML • CSS • JS  │
-└────────┬─────────┘
-         │ REST APIs
-         ▼
-┌──────────────────┐
-│   Express.js     │
-│   Backend API    │
-└────────┬─────────┘
-         │
-         ▼
-┌──────────────────┐
-│     MongoDB      │
-│     Database     │
-└──────────────────┘
-```
+* RESTful API development
+* Authentication & Authorization
+* CRUD Operations
+* MongoDB Database Design
+* Dashboard Development
+* Role-Based Access Control (RBAC)
 
 ---
 
-# 🛠️ Tech Stack
+# ✨ Features
+
+## 👤 User Features
+
+* User Registration & Login
+* JWT Authentication
+* Password Recovery
+* Browse Popular Destinations
+* Search & Filter Travel Packages
+* Destination Details
+* Package Booking
+* Payment Simulation
+* Booking History
+* Travel Progress Tracking
+* Personal Dashboard
+
+---
+
+## 🛠️ Admin Features
+
+* Secure Admin Login
+* Manage Users
+* Manage Bookings
+* Package Monitoring
+* Booking Status Updates
+* Analytics Dashboard
+* Trip Milestone Tracking
+
+---
+
+# 🛠 Tech Stack
 
 ## Frontend
 
-- HTML5
-- CSS3
-- JavaScript (ES6)
-- Chart.js
+* HTML5
+* CSS3
+* JavaScript (ES6)
+* Chart.js
 
 ## Backend
 
-- Node.js
-- Express.js
-- JWT Authentication
-- bcrypt.js
+* Node.js
+* Express.js
+* JWT Authentication
+* bcrypt.js
 
 ## Database
 
-- MongoDB
-- Mongoose ODM
+* MongoDB
+* Mongoose ODM
 
-## Development Tools
+## Tools
 
-- Nodemon
-- Postman
-- Git & GitHub
+* Git & GitHub
+* Postman
+* Nodemon
+* Vercel
 
 ---
 
-# 📂 Project Structure
+# 🏗 System Architecture
+
+```text
+Client (HTML/CSS/JavaScript)
+            │
+            │ REST API
+            ▼
+      Express.js Server
+            │
+            ▼
+        MongoDB Database
+```
+
+---
+
+# 📁 Project Structure
 
 ```bash
-Travel-Heaven/
+Travel-Heaven
 │
-├── client/
-│   ├── css/
-│   │   ├── style.css
-│   │   ├── dashboard.css
-│   │   └── admin.css
-│   │
-│   ├── js/
-│   │   ├── main.js
-│   │   └── admin.js
-│   │
+├── client
+│   ├── css
+│   ├── js
 │   ├── index.html
-│   ├── about.html
-│   ├── destinations.html
-│   ├── destination-details.html
-│   ├── packages.html
-│   ├── contact.html
+│   ├── dashboard.html
 │   ├── login.html
 │   ├── register.html
-│   ├── forgot-password.html
-│   ├── payment.html
-│   ├── payment-confirmation.html
-│   ├── dashboard.html
-│   └── admin.html
+│   ├── packages.html
+│   ├── destinations.html
+│   └── ...
 │
-├── server/
-│   ├── config/
-│   │   └── db.js
-│   │
-│   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── bookingController.js
-│   │   ├── packageController.js
-│   │   ├── destinationController.js
-│   │   └── adminController.js
-│   │
-│   ├── middleware/
-│   │   ├── auth.js
-│   │   └── roleProtect.js
-│   │
-│   ├── models/
-│   │   ├── User.js
-│   │   ├── Booking.js
-│   │   ├── Package.js
-│   │   ├── Destination.js
-│   │   └── Payment.js
-│   │
-│   ├── routes/
-│   │   ├── authRoutes.js
-│   │   ├── bookingRoutes.js
-│   │   ├── destinationRoutes.js
-│   │   ├── packageRoutes.js
-│   │   └── adminRoutes.js
-│   │
-│   ├── utils/
-│   │   └── seedData.js
-│   │
-│   ├── .env
-│   ├── package.json
-│   └── server.js
+├── server
+│   ├── config
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   ├── utils
+│   ├── server.js
+│   └── package.json
 │
 ├── README.md
 └── .gitignore
@@ -173,19 +138,60 @@ Travel-Heaven/
 
 ---
 
-# ⚙️ Installation Guide
+# 🔑 Authentication
 
-## 1. Clone Repository
+* JWT Token Authentication
+* Password Hashing using bcrypt
+* Protected Routes
+* Role-Based Authorization
+* Admin Access Control
+
+---
+
+# 📊 Database Collections
+
+* Users
+* Destinations
+* Packages
+* Bookings
+* Payments
+* Reviews
+
+### Entity Relationship
+
+```text
+User
+ ├── Bookings
+ ├── Payments
+ └── Reviews
+
+Destination
+ ├── Packages
+ ├── Reviews
+ └── Bookings
+
+Package
+ └── Bookings
+
+Booking
+ └── Payment
+```
+
+---
+
+# 🚀 Getting Started
+
+## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/travel-heaven.git
+git clone https://github.com/Sparsh88/travel-heaven.git
 
 cd travel-heaven
 ```
 
 ---
 
-## 2. Install Dependencies
+## Install Dependencies
 
 ```bash
 cd server
@@ -195,9 +201,9 @@ npm install
 
 ---
 
-## 3. Configure Environment Variables
+## Configure Environment Variables
 
-Create a `.env` file inside the server folder.
+Create a `.env` file inside the **server** directory.
 
 ```env
 PORT=5000
@@ -213,7 +219,7 @@ NODE_ENV=development
 
 ---
 
-## 4. Seed Database
+## Seed Database
 
 ```bash
 npm run seed
@@ -221,152 +227,101 @@ npm run seed
 
 ---
 
-## 5. Start Application
-
-### Development Mode
+## Start Development Server
 
 ```bash
 npm run dev
-```
-
-### Production Mode
-
-```bash
-npm start
 ```
 
 ---
 
 # 🔐 Default Admin Credentials
 
-| Field | Value |
-|---------|--------|
-| Username | admin |
-| Email | admin@travelheaven.com |
-| Password | admin123 |
+| Field    | Value                                                   |
+| -------- | ------------------------------------------------------- |
+| Username | admin                                                   |
+| Email    | [admin@travelheaven.com](mailto:admin@travelheaven.com) |
+| Password | admin123                                                |
 
 ---
 
-# 📡 API Endpoints
+# 📡 REST API
 
 ## Authentication
 
-| Method | Endpoint |
-|----------|---------|
-| POST | `/api/auth/register` |
-| POST | `/api/auth/login` |
-| GET | `/api/auth/me` |
-| GET | `/api/auth/logout` |
-| POST | `/api/auth/forgotpassword` |
-| POST | `/api/auth/resetpassword/:token` |
-
----
-
-## Users
-
-| Method | Endpoint |
-|----------|---------|
-| PUT | `/api/users/profile` |
-| PUT | `/api/users/updatepassword` |
-| GET | `/api/users/bookings` |
+| Method | Endpoint                         |
+| ------ | -------------------------------- |
+| POST   | `/api/auth/register`             |
+| POST   | `/api/auth/login`                |
+| GET    | `/api/auth/me`                   |
+| GET    | `/api/auth/logout`               |
+| POST   | `/api/auth/forgotpassword`       |
+| POST   | `/api/auth/resetpassword/:token` |
 
 ---
 
 ## Destinations
 
-| Method | Endpoint |
-|----------|---------|
-| GET | `/api/destinations` |
-| GET | `/api/destinations/:id` |
+| Method | Endpoint                |
+| ------ | ----------------------- |
+| GET    | `/api/destinations`     |
+| GET    | `/api/destinations/:id` |
 
 ---
 
 ## Packages
 
-| Method | Endpoint |
-|----------|---------|
-| GET | `/api/packages` |
-| GET | `/api/packages/:id` |
+| Method | Endpoint            |
+| ------ | ------------------- |
+| GET    | `/api/packages`     |
+| GET    | `/api/packages/:id` |
 
 ---
 
 ## Bookings
 
-| Method | Endpoint |
-|----------|---------|
-| POST | `/api/bookings` |
-| GET | `/api/bookings/:id` |
-| PUT | `/api/bookings/:id/cancel` |
+| Method | Endpoint                   |
+| ------ | -------------------------- |
+| POST   | `/api/bookings`            |
+| GET    | `/api/bookings/:id`        |
+| PUT    | `/api/bookings/:id/cancel` |
 
 ---
 
 ## Payments
 
-| Method | Endpoint |
-|----------|---------|
-| POST | `/api/payments/checkout` |
+| Method | Endpoint                 |
+| ------ | ------------------------ |
+| POST   | `/api/payments/checkout` |
 
 ---
 
 ## Admin
 
-| Method | Endpoint |
-|----------|---------|
-| POST | `/api/admin/login` |
-| GET | `/api/admin/analytics` |
-| GET | `/api/admin/bookings` |
-| PUT | `/api/admin/bookings/:id/confirm` |
-| PUT | `/api/admin/bookings/:id/status` |
-| DELETE | `/api/admin/users/:id` |
+| Method | Endpoint                          |
+| ------ | --------------------------------- |
+| POST   | `/api/admin/login`                |
+| GET    | `/api/admin/analytics`            |
+| GET    | `/api/admin/bookings`             |
+| PUT    | `/api/admin/bookings/:id/confirm` |
+| PUT    | `/api/admin/bookings/:id/status`  |
+| DELETE | `/api/admin/users/:id`            |
 
 ---
 
-# 📊 Database Design
+# 🧪 Test Payment
 
-### Collections
+### Card Payment
 
-- Users
-- Destinations
-- Packages
-- Bookings
-- Payments
-- Reviews
-
-### Relationships
-
-```text
-User
-├── Bookings
-├── Payments
-└── Reviews
-
-Destination
-├── Packages
-├── Reviews
-└── Bookings
-
-Package
-└── Bookings
-
-Booking
-└── Payment
-```
-
----
-
-# 🧪 Testing
-
-### Failed Card Payment
-
-Use card number containing:
+Use a card number containing:
 
 ```text
 0000
 ```
 
-### Failed UPI Payment
+### UPI Payment
 
-Use UPI ID containing:
+Use a UPI ID containing:
 
 ```text
 fail
@@ -374,26 +329,25 @@ fail
 
 ---
 
-# 🚀 Future Enhancements
+# 📈 Future Improvements
 
-- Razorpay Integration
-- Stripe Integration
-- Google Authentication
-- Email Verification
-- Hotel Booking Module
-- Flight Booking Module
-- AI Travel Recommendations
-- Real-Time Notifications
-- Multi-Language Support
-- Mobile Application
+* Razorpay Integration
+* Stripe Payment Gateway
+* Google OAuth Login
+* Email Verification
+* Hotel Booking
+* Flight Booking
+* AI Travel Recommendations
+* Real-Time Notifications
+* Multi-language Support
+* Mobile Application
 
 ---
 
 # 📸 Screenshots
 
-```
+```text
 screenshots/
-│
 ├── home.png
 ├── destinations.png
 ├── package-details.png
@@ -401,63 +355,46 @@ screenshots/
 └── admin-dashboard.png
 ```
 
-### Home Page
-
-Add screenshot here.
-
-### Destinations
-
-Add screenshot here.
-
-### Dashboard
-
-Add screenshot here.
+> Add screenshots of your application after deployment for a more attractive GitHub repository.
 
 ---
 
-# 🤝 Contributing
+# 🎯 Learning Outcomes
 
-Contributions are welcome!
+Through this project, I gained hands-on experience with:
 
-1. Fork the repository.
-2. Create a feature branch.
-
-```bash
-git checkout -b feature-name
-```
-
-3. Commit your changes.
-
-```bash
-git commit -m "Added new feature"
-```
-
-4. Push to your branch.
-
-```bash
-git push origin feature-name
-```
-
-5. Open a Pull Request.
+* Building RESTful APIs using Express.js
+* Designing MongoDB schemas with Mongoose
+* JWT Authentication & Authorization
+* Role-Based Access Control
+* CRUD Operations
+* Full-Stack Application Architecture
+* API Testing using Postman
+* Deploying applications on Vercel
 
 ---
 
 # 👨‍💻 Author
 
-### Sparsh Chauhan
+**Sparsh Chauhan**
 
-**B.Tech Computer Science Engineering**  
-**Full Stack Web Developer**
+B.Tech Computer Science Engineering
+Full Stack Web Developer
 
-- GitHub: https://github.com/Sparsh88
-- LinkedIn: https://linkedin.com/in/sparshchauhan08
+**GitHub:** https://github.com/Sparsh88
 
----
-
-# ⭐ Support
-
-If you found this project helpful, please give it a ⭐ on GitHub.
+**LinkedIn:** https://linkedin.com/in/sparshchauhan08
 
 ---
 
-### Made by Sparsh Chauhan
+# ⭐ Show Your Support
+
+If you found this project useful or learned something from it, consider giving the repository a **⭐ Star**.
+
+It helps others discover the project and motivates future improvements.
+
+---
+
+<p align="center">
+Made with ❤️ by <strong>Sparsh Chauhan</strong>
+</p>
