@@ -239,9 +239,9 @@ npm run dev
 
 | Field    | Value                                                   |
 | -------- | ------------------------------------------------------- |
-| Username | admin                                                   |
-| Email    | [admin@travelheaven.com](mailto:admin@travelheaven.com) |
-| Password | admin123                                                |
+| Username | your_admin_username                                     |
+| Email    | [admin@yourdomain.com](mailto:admin@yourdomain.com)     |
+| Password | your_admin_password                                     |
 
 ---
 
