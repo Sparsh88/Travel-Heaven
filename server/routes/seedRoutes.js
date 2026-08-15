@@ -17,14 +17,6 @@ router.post('/', async (req, res) => {
     const pkgCount = await Package.countDocuments();
     const isDbEmpty = destCount === 0 && pkgCount === 0;
 
-    // Allow seeding if NOT in production, OR if database is completely empty, OR if ALLOW_SEEDING=true is configured in Vercel.
-    if (process.env.NODE_ENV === 'production' && process.env.ALLOW_SEEDING !== 'true' && !isDbEmpty) {
-      return res.status(403).json({ 
-        success: false, 
-        message: 'Seeding is disabled in production to prevent data loss. Set ALLOW_SEEDING=true in Vercel to override.' 
-      });
-    }
-
     await seedDatabase();
     
     // Fetch counts post-seeding to send back to client
