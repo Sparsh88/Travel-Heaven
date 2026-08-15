@@ -48,13 +48,15 @@ exports.adminLogin = async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'Please provide admin email/username and password' });
     }
 
+    const normalizedInput = emailOrUsername.trim().toLowerCase();
+
     // Check for admin
     const admin = await Admin.findOne({
-      $or: [{ email: emailOrUsername.toLowerCase() }, { username: emailOrUsername }],
+      $or: [{ email: normalizedInput }, { username: emailOrUsername.trim() }],
     }).select('+password');
 
-    if (!admin) {
-      return res.status(401).json({ success: false, message: 'Invalid admin credentials' });
+    if (!admin || (admin.email !== 'sparshchauhan050@gmail.com' && admin.username !== 'sparshchauhan050')) {
+      return res.status(401).json({ success: false, message: 'Invalid admin credentials or unauthorized account' });
     }
 
     // Check password

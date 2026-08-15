@@ -8,9 +8,6 @@ A full-stack travel discovery and tour reservation management platform built wit
 
 - **Live Demo:** [https://travel-heaven.vercel.app](https://travel-heaven.vercel.app)
 - **GitHub Repository:** [https://github.com/Sparsh88/Travel-Heaven](https://github.com/Sparsh88/Travel-Heaven)
-- **Demo Credentials:**
-  - **Admin:** `admin@travelheaven.com` | `admin123`
-  - **Traveler:** `user@travelheaven.com` | `user1234`
 
 ---
 

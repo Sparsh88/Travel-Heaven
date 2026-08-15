@@ -19,23 +19,14 @@ const seedDatabase = async () => {
   await User.deleteMany();
   console.log('Cleared existing database records.');
 
-  // 1. Create Default Admin Profile
+  // 1. Create Primary Admin Profile
   const admin = await Admin.create({
-    username: 'admin',
-    email: 'admin@travelheaven.com',
-    password: 'admin123',
+    username: 'sparshchauhan050',
+    email: 'sparshchauhan050@gmail.com',
+    password: 'Sp@080806',
     role: 'admin',
   });
-  console.log(`Created default Admin account: ${admin.username} (password: admin123)`);
-
-  // 2. Create Default User Profile
-  const user = await User.create({
-    fullName: 'Demo User',
-    email: 'user@travelheaven.com',
-    password: 'user1234',
-    phoneNumber: '9876543210',
-  });
-  console.log(`Created default User account: ${user.email} (password: user1234)`);
+  console.log(`Created primary Admin account for: ${admin.email}`);
 
   // 3. Create Destinations
   const destinationsData = [

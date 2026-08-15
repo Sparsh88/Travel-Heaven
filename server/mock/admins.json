@@ -1,10 +1,10 @@
 [
   {
-    "username": "admin",
-    "email": "admin@travelheaven.com",
-    "password": "$2a$10$cQGNAcEImRBbHtU5Q9gPveFFEd.6vKJfrVTRDMi4buvA6jLK4XWzC",
+    "username": "sparshchauhan050",
+    "email": "sparshchauhan050@gmail.com",
+    "password": "$2a$10$w.5KJoH7Xv83i4H/JMcRMuVcvIDD1o9iqFXeS68T2SmC2Nu32fWau",
     "role": "admin",
-    "_id": "b0icrsbxr1aqcojiaqt8cm",
+    "_id": "sparshadmin050authid",
     "createdAt": "2026-06-19T07:24:43.634Z",
     "updatedAt": "2026-06-19T07:24:43.634Z"
   }

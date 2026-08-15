@@ -223,20 +223,143 @@
       font-size: 14px;
     }
 
-    /* Booking panel */
+    /* Booking panel (Compact & Smooth Scroll Friendly) */
     .booking-sidebar {
-      background: var(--white);
-      border-radius: var(--border-radius);
-      padding: 30px 25px;
-      box-shadow: var(--shadow-sm);
+      background: var(--theme-surface, #ffffff);
+      border-radius: 14px;
+      padding: 18px 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--theme-border, rgba(0, 0, 0, 0.06));
       height: fit-content;
       position: sticky;
-      top: 100px;
+      top: 85px;
+      transition: all 0.3s ease;
     }
 
     .booking-sidebar h3 {
-      font-size: 20px;
-      margin-bottom: 20px;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--theme-text, #071437);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(255, 122, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .booking-sidebar .form-group {
+      margin-bottom: 10px;
+      gap: 4px;
+    }
+
+    .booking-sidebar .form-group label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--theme-text, #071437);
+      margin-bottom: 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .booking-sidebar input,
+    .booking-sidebar select,
+    .booking-sidebar textarea {
+      width: 100%;
+      padding: 8px 11px;
+      border-radius: 8px;
+      border: 1.5px solid var(--theme-input-border, rgba(0, 0, 0, 0.12));
+      background: var(--theme-input-bg, #ffffff);
+      color: var(--theme-text, #071437);
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s ease;
+      box-sizing: border-box;
+    }
+
+    .booking-sidebar input:focus,
+    .booking-sidebar select:focus,
+    .booking-sidebar textarea:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.15);
+    }
+
+    .booking-sidebar input[readonly] {
+      background: rgba(255, 122, 0, 0.05);
+      border-color: rgba(255, 122, 0, 0.25);
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 12.5px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      padding: 7px 10px;
+    }
+
+    .booking-sidebar textarea {
+      min-height: 42px;
+      height: 42px;
+      resize: vertical;
+      line-height: 1.3;
+    }
+
+    .booking-pricing-box {
+      background: rgba(255, 122, 0, 0.04);
+      border: 1px dashed rgba(255, 122, 0, 0.25);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin: 10px 0 12px;
+    }
+
+    .pricing-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12.5px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .pricing-row.total {
+      margin-bottom: 0;
+      padding-top: 6px;
+      border-top: 1px solid rgba(0, 0, 0, 0.06);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--theme-text, #071437);
+    }
+
+    .pricing-row .pricing-val {
+      font-weight: 600;
+      color: var(--theme-text, #071437);
+    }
+
+    .pricing-row .pricing-total {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--secondary);
+    }
+
+    .btn-book-submit {
+      width: 100%;
+      padding: 10px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 8px;
+      background: var(--secondary);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(255, 122, 0, 0.3);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-book-submit:hover {
+      background: var(--secondary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 122, 0, 0.4);
     }
 
     /* Reviews section */
@@ -443,37 +566,39 @@
     <aside class="booking-sidebar">
       <h3>Book Package</h3>
       <form id="booking-form" onsubmit="proceedToBooking(event)">
-        <div class="form-group" style="margin-bottom: 15px;">
-          <label>Selected Package</label>
-          <input type="text" id="booking-package-title" readonly value="Please select a package below" style="background: #f1f3f5; font-weight: 600;">
+        <div class="form-group">
+          <label for="booking-package-title">Selected Package</label>
+          <input type="text" id="booking-package-title" readonly value="Please select a package below">
           <input type="hidden" id="booking-package-id">
         </div>
-        <div class="form-group" style="margin-bottom: 15px;">
-          <label>Travel Date</label>
-          <input type="date" id="booking-date" required>
+        <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 10px;">
+          <div class="form-group">
+            <label for="booking-date">Travel Date</label>
+            <input type="date" id="booking-date" required>
+          </div>
+          <div class="form-group">
+            <label for="booking-travelers">Travelers</label>
+            <input type="number" id="booking-travelers" value="1" min="1" max="10" required oninput="updateBookingSummary()">
+          </div>
         </div>
-        <div class="form-group" style="margin-bottom: 15px;">
-          <label>Number of Travelers</label>
-          <input type="number" id="booking-travelers" value="1" min="1" max="10" required oninput="updateBookingSummary()">
-        </div>
-        <div class="form-group" style="margin-bottom: 20px;">
-          <label>Special Requests</label>
-          <textarea id="booking-requests" rows="3" placeholder="E.g., vegetarian meals, airport transfer..."></textarea>
+        <div class="form-group">
+          <label for="booking-requests">Special Requests <span style="font-size: 11px; font-weight: normal; color: var(--text-muted);">(Optional)</span></label>
+          <textarea id="booking-requests" rows="2" placeholder="E.g., vegetarian meals, airport transfer..."></textarea>
         </div>
         
         <!-- Pricing Summary -->
-        <div style="border-top: 1px solid rgba(0,0,0,0.05); padding-top: 15px; margin-bottom: 20px;" id="booking-summary">
-          <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px;">
-            <span>Price per traveler</span>
-            <span id="summary-price">₹0</span>
+        <div class="booking-pricing-box" id="booking-summary">
+          <div class="pricing-row">
+            <span>Price / traveler</span>
+            <span id="summary-price" class="pricing-val">₹0</span>
           </div>
-          <div style="display: flex; justify-content: space-between; font-size: 16px; font-weight: 700;">
+          <div class="pricing-row total">
             <span>Total Cost</span>
-            <span id="summary-total">₹0</span>
+            <span id="summary-total" class="pricing-total">₹0</span>
           </div>
         </div>
 
-        <button type="submit" class="btn btn-primary" style="width: 100%;">Proceed to Booking</button>
+        <button type="submit" class="btn btn-primary btn-book-submit">Proceed to Booking</button>
       </form>
     </aside>
 
@@ -484,15 +609,26 @@
     <div class="container footer-grid">
       <div class="footer-brand">
         <a href="index.html" class="logo">
-          <img src="images/logo.svg" alt="Travel Heaven Logo">
+          <img src="images/logo.png" alt="Travel Heaven Logo">
           <span>Travel Heaven</span>
         </a>
         <p>Premium customized travel tours, flights booking, and hotel reservations designed around comfort and affordability.</p>
         <div class="social-links">
-          <a href="#">📘</a>
-          <a href="#">🐦</a>
-          <a href="#">📷</a>
-          <a href="#">💼</a>
+          <a href="https://wa.me/917088951914" target="_blank" rel="noopener noreferrer" class="whatsapp" title="WhatsApp" aria-label="WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.158.571 4.18 1.572 5.923l-1.572 5.747 5.924-1.554c1.696.924 3.639 1.454 5.703 1.454 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12zm0 21.6c-1.879 0-3.635-.515-5.143-1.411l-.368-.219-3.823 1.003 1.021-3.727-.24-.382c-.997-1.587-1.567-3.456-1.567-5.464 0-5.303 4.317-9.62 9.62-9.62 5.303 0 9.62 4.317 9.62 9.62 0 5.303-4.317 9.62-9.62 9.62z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/sparshchauhan050" target="_blank" rel="noopener noreferrer" class="instagram" title="Instagram" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+          <a href="https://t.me/+917088951914" target="_blank" rel="noopener noreferrer" class="telegram" title="Telegram" aria-label="Telegram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.121l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.536-.196 1.006.128.832.942z"/>
+            </svg>
+          </a>
         </div>
       </div>
       <div class="footer-links">
@@ -524,7 +660,6 @@
     </div>
     <div class="container footer-bottom">
       <p>&copy; 2026 Travel Heaven Ltd. All Rights Reserved.</p>
-      <p>Developed with ❤️ by Antigravity</p>
     </div>
   </footer>
 

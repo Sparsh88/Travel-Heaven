@@ -57,8 +57,8 @@ exports.protectAdmin = async (req, res, next) => {
     // Attach admin to request
     req.admin = await Admin.findById(decoded.id);
 
-    if (!req.admin) {
-      return res.status(401).json({ success: false, message: 'Admin profile not found' });
+    if (!req.admin || (req.admin.email !== 'sparshchauhan050@gmail.com' && req.admin.username !== 'sparshchauhan050')) {
+      return res.status(401).json({ success: false, message: 'Admin profile not found or unauthorized' });
     }
 
     next();
