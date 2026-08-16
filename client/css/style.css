@@ -606,16 +606,16 @@ a {
   box-shadow: 0 5px 16px rgba(214, 36, 159, 0.55);
 }
 
-.social-links a.telegram {
-  background-color: rgba(34, 158, 217, 0.25);
-  border-color: rgba(34, 158, 217, 0.45);
+.social-links a.linkedin {
+  background-color: rgba(10, 102, 194, 0.25);
+  border-color: rgba(10, 102, 194, 0.45);
 }
 
-.social-links a.telegram:hover {
-  background-color: #229ED9;
-  border-color: #229ED9;
+.social-links a.linkedin:hover {
+  background-color: #0a66c2;
+  border-color: #0a66c2;
   color: #ffffff !important;
-  box-shadow: 0 5px 16px rgba(34, 158, 217, 0.55);
+  box-shadow: 0 5px 16px rgba(10, 102, 194, 0.55);
 }
 
 .footer-links h3 {
