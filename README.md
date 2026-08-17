@@ -151,7 +151,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 **Sparsh Chauhan**  
 *Computer Science & Engineering Student | Full Stack Developer*
 
-- **Portfolio:** [portfolio-flame-rho-29.vercel.app](https://portfolio-flame-rho-29.vercel.app/)
+- **Portfolio:** [portfolio-delta-topaz-jsfd5oekgj.vercel.app](https://portfolio-delta-topaz-jsfd5oekgj.vercel.app/)
 - **GitHub:** [@Sparsh88](https://github.com/Sparsh88)
 - **LinkedIn:** [linkedin.com/in/sparshchauhan08](https://linkedin.com/in/sparshchauhan08)
 - **Email:** [sparshchauhan050@gmail.com](mailto:sparshchauhan050@gmail.com)
